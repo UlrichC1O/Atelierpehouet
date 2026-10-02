@@ -17,6 +17,10 @@ return [
 
     'default' => env('CACHE_STORE', 'database'),
 
+    // Store used by rate limiting (throttle middleware); null means the default store.
+    // On Vercel the default store only lives for one request, so point this at a shared one.
+    'limiter' => env('CACHE_LIMITER'),
+
     /*
     |--------------------------------------------------------------------------
     | Cache Stores
