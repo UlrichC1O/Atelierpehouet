@@ -1,0 +1,86 @@
+/* Scene · art-textile — a painted, stitched banner in the wind (8 s loop). */
+
+.scene--art-textile .textile__bg { fill: var(--ap-black); }
+.scene--art-textile .textile__pole { stroke: var(--ap-amber); stroke-width: 7; stroke-linecap: round; }
+.scene--art-textile .textile__knob { fill: var(--ap-yellow); }
+.scene--art-textile .textile__cords { stroke: var(--ap-mist); stroke-width: 2.5; }
+
+.scene--art-textile .textile__banner {
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+    animation: ap-sc-textile-wave 3.2s var(--ap-ease-in-out) infinite;
+}
+
+.scene--art-textile .textile__cloth { fill: var(--ap-ink); }
+
+.scene--art-textile .textile__band {
+    animation: ap-sc-textile-paint 8s var(--ap-ease-in-out) var(--d, 0s) infinite backwards;
+}
+
+.scene--art-textile .textile__band--red { fill: var(--ap-red); }
+.scene--art-textile .textile__band--yellow { fill: var(--ap-yellow); }
+.scene--art-textile .textile__band--blue { fill: var(--ap-blue); }
+
+.scene--art-textile .textile__folds path {
+    fill: none;
+    stroke: var(--ap-black);
+    stroke-width: 10;
+    opacity: 0.35;
+    animation: ap-sc-textile-fold 3.2s var(--ap-ease-in-out) infinite;
+}
+
+.scene--art-textile .textile__hem { fill: none; stroke: var(--ap-white); stroke-width: 3; stroke-linejoin: round; }
+
+.scene--art-textile .textile__stitch {
+    fill: var(--ap-red-deep);
+    stroke: var(--ap-white);
+    stroke-width: 2.5;
+    stroke-dasharray: 0.025 0.02;
+    animation: ap-sc-textile-stitch 3s linear infinite;
+}
+
+.scene--art-textile .textile__needle {
+    transform: translate(250px, 270px);
+    animation: ap-sc-textile-needle 3s var(--ap-ease-in-out) infinite;
+}
+
+.scene--art-textile .textile__thread { fill: none; stroke: var(--ap-red-bright); stroke-width: 1.6; }
+.scene--art-textile .textile__needle-body { stroke: var(--ap-white); stroke-width: 3; stroke-linecap: round; }
+.scene--art-textile .textile__needle-eye { fill: var(--ap-black); }
+
+/** @anim group=scene demo=scene scene=art-textile dur=3.2s fr="Bannière qui ondule au vent" en="Banner rippling in the wind" */
+@keyframes ap-sc-textile-wave {
+    0%,
+    100% { transform: skewY(0deg) scaleX(1); }
+    25% { transform: skewY(-2.5deg) scaleX(0.97); }
+    75% { transform: skewY(2.5deg) scaleX(0.98); }
+}
+
+/** @anim group=scene demo=scene scene=art-textile dur=8s fr="Bandes peintes sur le tissu" en="Bands painted onto the fabric" */
+@keyframes ap-sc-textile-paint {
+    0% { clip-path: inset(0 100% 0 0); opacity: 1; }
+    16% { clip-path: inset(0 0 0 0); opacity: 1; }
+    82% { clip-path: inset(0 0 0 0); opacity: 1; }
+    92%,
+    100% { clip-path: inset(0 0 0 0); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=art-textile dur=3s ease=linear fr="Points de couture qui avancent" en="Running stitches" */
+@keyframes ap-sc-textile-stitch {
+    to { stroke-dashoffset: -0.18; }
+}
+
+/** @anim group=scene demo=scene scene=art-textile dur=3s fr="Aiguille qui coud" en="Needle sewing" */
+@keyframes ap-sc-textile-needle {
+    0%,
+    100% { transform: translate(250px, 270px) rotate(0deg); }
+    33% { transform: translate(200px, 190px) rotate(-12deg); }
+    66% { transform: translate(150px, 262px) rotate(8deg); }
+}
+
+/** @anim group=scene demo=scene scene=art-textile dur=3.2s fr="Plis du tissu" en="Folds in the cloth" */
+@keyframes ap-sc-textile-fold {
+    0%,
+    100% { transform: translateX(0); opacity: 0.35; }
+    50% { transform: translateX(10px); opacity: 0.15; }
+}

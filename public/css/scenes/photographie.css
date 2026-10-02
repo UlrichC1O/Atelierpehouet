@@ -1,0 +1,75 @@
+/* Scene · photographie — aperture, flash and instant print (8 s loop). */
+
+.scene--photographie .photo__bg { fill: var(--ap-black); }
+.scene--photographie .photo__body { fill: var(--ap-graphite); stroke: var(--ap-steel); stroke-width: 4; }
+.scene--photographie .photo__scene-bg { fill: var(--ap-ink); }
+.scene--photographie .photo__view--yellow { fill: var(--ap-yellow); }
+.scene--photographie .photo__view--blue { fill: var(--ap-blue); }
+.scene--photographie .photo__view--red { fill: var(--ap-red); }
+.scene--photographie .photo__view--white { fill: var(--ap-white); }
+
+.scene--photographie .photo__blade {
+    fill: var(--ap-coal);
+    stroke: var(--ap-steel);
+    stroke-width: 2;
+    transform: translate(var(--dx), var(--dy));
+    animation: ap-sc-photo-iris 8s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--photographie .photo__ring { fill: none; stroke: var(--ap-white); stroke-width: 3; }
+.scene--photographie .photo__ring--thin { stroke: var(--ap-steel); stroke-width: 6; }
+
+.scene--photographie .photo__flash {
+    fill: var(--ap-white);
+    opacity: 0;
+    pointer-events: none;
+    animation: ap-sc-photo-flash 8s ease-out infinite;
+}
+
+.scene--photographie .photo__print {
+    animation: ap-sc-photo-print 8s var(--ap-ease-out) infinite backwards;
+}
+
+.scene--photographie .photo__print-paper { fill: var(--ap-white); }
+.scene--photographie .photo__print-image { fill: var(--ap-blue-deep); }
+.scene--photographie .photo__print-tri { fill: var(--ap-yellow); stroke: var(--ap-red); stroke-width: 2; }
+.scene--photographie .photo__print-image,
+.scene--photographie .photo__print-tri { animation: ap-sc-photo-develop 8s ease-in-out infinite backwards; }
+
+/** @anim group=scene demo=scene scene=photographie dur=8s fr="Diaphragme à six lames" en="Six-blade aperture" */
+@keyframes ap-sc-photo-iris {
+    0%,
+    6% { transform: translate(0, 0); }
+    24% { transform: translate(var(--dx, 60px), var(--dy, 0)); }
+    40% { transform: translate(calc(var(--dx, 60px) * 0.55), calc(var(--dy, 0px) * 0.55)); }
+    46% { transform: translate(0, 0); }
+    54% { transform: translate(var(--dx, 60px), var(--dy, 0)); }
+    100% { transform: translate(var(--dx, 60px), var(--dy, 0)); }
+}
+
+/** @anim group=scene demo=scene scene=photographie dur=8s fr="Éclair de flash doux" en="Soft camera flash" */
+@keyframes ap-sc-photo-flash {
+    0%,
+    45% { opacity: 0; }
+    46% { opacity: 0.55; }
+    56%,
+    100% { opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=photographie dur=8s ease=var(--ap-ease-out) fr="Tirage instantané qui sort" en="Instant print sliding out" */
+@keyframes ap-sc-photo-print {
+    0%,
+    50% { transform: translateY(80px); opacity: 0; }
+    54% { opacity: 1; }
+    66% { transform: translateY(0); opacity: 1; }
+    92% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=photographie dur=8s fr="L’image se révèle" en="The picture developing" */
+@keyframes ap-sc-photo-develop {
+    0%,
+    60% { opacity: 0.1; }
+    84%,
+    100% { opacity: 1; }
+}

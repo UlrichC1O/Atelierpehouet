@@ -1,0 +1,69 @@
+/* Scene · art-numerique — pixels assemble on a tablet (8 s loop). */
+
+.scene--art-numerique .numerique__bg { fill: var(--ap-black); }
+.scene--art-numerique .numerique__tablet { fill: var(--ap-graphite); stroke: var(--ap-steel); stroke-width: 2; }
+.scene--art-numerique .numerique__screen { fill: var(--ap-ink); stroke: var(--ap-blue-deep); stroke-width: 2; }
+.scene--art-numerique .numerique__button { fill: none; stroke: var(--ap-smoke); stroke-width: 2; }
+
+.scene--art-numerique .numerique__px {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-numerique-pixel 8s var(--ap-ease-spring) var(--d, 0s) infinite backwards;
+}
+
+.scene--art-numerique .numerique__px--yellow { fill: var(--ap-yellow); }
+.scene--art-numerique .numerique__px--blue { fill: var(--ap-blue-bright); }
+.scene--art-numerique .numerique__px--white { fill: var(--ap-white); }
+.scene--art-numerique .numerique__px--red { fill: var(--ap-red-bright); }
+.scene--art-numerique .numerique__px--black { fill: var(--ap-steel); }
+
+.scene--art-numerique .numerique__scan {
+    fill: var(--ap-blue-bright);
+    opacity: 0.35;
+    animation: ap-sc-numerique-scan 3.2s linear infinite;
+}
+
+.scene--art-numerique .numerique__layers rect {
+    fill: var(--ap-steel);
+    animation: ap-sc-numerique-layer 3s steps(1, end) var(--d, 0s) infinite;
+}
+
+.scene--art-numerique .numerique__stylus {
+    transform: translate(300px, 300px);
+    animation: ap-sc-numerique-stylus 8s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--art-numerique .numerique__stylus-body { fill: var(--ap-mist); stroke: var(--ap-white); stroke-width: 1; }
+.scene--art-numerique .numerique__stylus-tip { fill: var(--ap-blue-bright); }
+
+/** @anim group=scene demo=scene scene=art-numerique dur=8s ease=var(--ap-ease-spring) fr="Pixels qui s’assemblent" en="Pixels assembling" */
+@keyframes ap-sc-numerique-pixel {
+    0% { transform: scale(0) rotate(45deg); opacity: 0; }
+    6% { transform: scale(1) rotate(0deg); opacity: 1; }
+    80% { transform: scale(1); opacity: 1; }
+    90%,
+    100% { transform: scale(0.4); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=art-numerique dur=3.2s ease=linear fr="Ligne de balayage" en="Sweeping scanline" */
+@keyframes ap-sc-numerique-scan {
+    from { transform: translateY(0); }
+    to { transform: translateY(244px); }
+}
+
+/** @anim group=scene demo=scene scene=art-numerique dur=3s ease=steps(1,end) fr="Calques qui s’activent" en="Layers toggling" */
+@keyframes ap-sc-numerique-layer {
+    0%,
+    100% { fill: var(--ap-steel); }
+    33% { fill: var(--ap-blue-bright); }
+}
+
+/** @anim group=scene demo=scene scene=art-numerique dur=8s fr="Le stylet dessine sur l’écran" en="The stylus drawing on the screen" */
+@keyframes ap-sc-numerique-stylus {
+    0% { transform: translate(200px, 110px); }
+    20% { transform: translate(150px, 200px); }
+    40% { transform: translate(250px, 230px); }
+    60% { transform: translate(120px, 280px); }
+    75%,
+    100% { transform: translate(300px, 300px); }
+}

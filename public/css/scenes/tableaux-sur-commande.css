@@ -1,0 +1,118 @@
+/* Scene · tableaux-sur-commande — strokes painted on an easel canvas (9 s loop). */
+
+.scene--tableaux-sur-commande .tableau__bg { fill: var(--ap-black); }
+.scene--tableaux-sur-commande .tableau__spot { animation: ap-sc-tableau-spot 9s ease-in-out infinite; }
+
+.scene--tableaux-sur-commande .tableau__easel path {
+    fill: none;
+    stroke: var(--ap-amber);
+    stroke-width: 7;
+    stroke-linecap: round;
+    opacity: 0.85;
+}
+
+.scene--tableaux-sur-commande .tableau__canvas-edge { fill: var(--ap-mist); }
+.scene--tableaux-sur-commande .tableau__canvas { fill: var(--ap-ink); }
+
+.scene--tableaux-sur-commande .tableau__stroke {
+    fill: none;
+    stroke-width: 26;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: ap-sc-tableau-stroke 9s var(--ap-ease-in-out) var(--d, 0s) infinite backwards;
+}
+
+.scene--tableaux-sur-commande .tableau__stroke--blue { stroke: var(--ap-blue); }
+.scene--tableaux-sur-commande .tableau__stroke--yellow { stroke: var(--ap-yellow); }
+.scene--tableaux-sur-commande .tableau__stroke--red { stroke: var(--ap-red); }
+.scene--tableaux-sur-commande .tableau__stroke--white { stroke: var(--ap-white); stroke-width: 14; }
+.scene--tableaux-sur-commande .tableau__stroke--ink { stroke: var(--ap-black); stroke-width: 20; }
+
+.scene--tableaux-sur-commande .tableau__outline {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 3;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    animation: ap-sc-tableau-stroke 9s var(--ap-ease-in-out) var(--d, 0s) infinite backwards;
+}
+
+.scene--tableaux-sur-commande .tableau__sign {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    animation: ap-sc-tableau-sign 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--tableaux-sur-commande .tableau__palette path { fill: var(--ap-graphite); stroke: var(--ap-steel); stroke-width: 2; }
+
+.scene--tableaux-sur-commande .tableau__dot {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-tableau-dot 2.4s var(--ap-ease-in-out) var(--d, 0s) infinite backwards;
+}
+
+.scene--tableaux-sur-commande .tableau__dot--blue { fill: var(--ap-blue); }
+.scene--tableaux-sur-commande .tableau__dot--yellow { fill: var(--ap-yellow); }
+.scene--tableaux-sur-commande .tableau__dot--red { fill: var(--ap-red); }
+.scene--tableaux-sur-commande .tableau__dot--white { fill: var(--ap-white); }
+
+.scene--tableaux-sur-commande .tableau__brush {
+    transform: translate(300px, 320px);
+    animation: ap-sc-tableau-brush 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--tableaux-sur-commande .tableau__brush-handle { fill: none; stroke: var(--ap-red-bright); stroke-width: 6; stroke-linecap: round; }
+.scene--tableaux-sur-commande .tableau__brush-ferrule { fill: var(--ap-mist); }
+.scene--tableaux-sur-commande .tableau__brush-tip { fill: var(--ap-yellow); }
+
+/** @anim group=scene demo=scene scene=tableaux-sur-commande dur=9s fr="Coups de pinceau sur la toile" en="Brushstrokes on the canvas" */
+@keyframes ap-sc-tableau-stroke {
+    0% { stroke-dashoffset: 1; opacity: 1; }
+    12% { stroke-dashoffset: 0; opacity: 1; }
+    78% { stroke-dashoffset: 0; opacity: 1; }
+    88%,
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=tableaux-sur-commande dur=9s fr="Le pinceau parcourt la toile" en="The brush travelling over the canvas" */
+@keyframes ap-sc-tableau-brush {
+    0% { transform: translate(150px, 250px); }
+    8% { transform: translate(168px, 150px); }
+    16% { transform: translate(230px, 120px); }
+    24% { transform: translate(250px, 176px); }
+    32% { transform: translate(272px, 206px); }
+    40% { transform: translate(276px, 262px); }
+    48% { transform: translate(200px, 262px); }
+    58% { transform: translate(262px, 228px); }
+    70%,
+    100% { transform: translate(300px, 320px); }
+}
+
+/** @anim group=scene demo=scene scene=tableaux-sur-commande dur=9s fr="La signature au bas du tableau" en="The signature at the bottom of the painting" */
+@keyframes ap-sc-tableau-sign {
+    0%,
+    52% { stroke-dashoffset: 1; opacity: 1; }
+    64% { stroke-dashoffset: 0; opacity: 1; }
+    80% { stroke-dashoffset: 0; opacity: 1; }
+    88%,
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=tableaux-sur-commande dur=2.4s fr="Touches de peinture qui palpitent" en="Pulsing dabs of paint" */
+@keyframes ap-sc-tableau-dot {
+    0%,
+    100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+}
+
+/** @anim group=scene demo=scene scene=tableaux-sur-commande dur=9s fr="Lumière d’atelier" en="Studio light" */
+@keyframes ap-sc-tableau-spot {
+    0%,
+    100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}

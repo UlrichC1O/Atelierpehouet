@@ -1,0 +1,2 @@
+# The Ateliers Pehouet art engine and tools use the Python standard library only.
+# Nothing to install. Requires Python 3.10+.

@@ -1,0 +1,321 @@
+/* ==========================================================================
+   Ateliers Pehouet — Atelier numérique (generator). Keyframes: ap-pg-generator-*
+   ========================================================================== */
+
+.generator__layout {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+}
+
+@media (min-width: 64em) {
+    .generator__layout {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    }
+}
+
+.generator__form {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: linear-gradient(160deg, var(--ap-coal), var(--ap-black));
+    border: 1px solid var(--ap-white-08);
+    border-top: 4px solid var(--ap-yellow);
+}
+
+.generator__seed {
+    font-family: var(--ap-font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+}
+
+.generator__styles {
+    border: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.generator__style-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.6rem;
+}
+
+.style-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.style-card input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+.style-card__inner {
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.4rem;
+    border: 1px solid var(--ap-white-16);
+    background: var(--ap-black);
+    transition: border-color var(--ap-dur-fast) ease, transform var(--ap-dur) var(--ap-ease-spring);
+}
+
+.style-card__img {
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.style-card__name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--ap-text-soft);
+}
+
+.style-card:hover .style-card__inner {
+    border-color: var(--ap-yellow);
+    transform: translateY(-3px);
+}
+
+.style-card input:checked + .style-card__inner {
+    border-color: var(--ap-yellow);
+    box-shadow: 0 0 0 2px var(--ap-yellow), 0 10px 30px -12px var(--ap-yellow-glow);
+    animation: ap-pg-generator-pick 0.45s var(--ap-ease-spring);
+}
+
+.style-card input:checked + .style-card__inner .style-card__name {
+    color: var(--ap-yellow);
+}
+
+.style-card input:focus-visible + .style-card__inner {
+    outline: 2px solid var(--ap-focus);
+    outline-offset: 3px;
+}
+
+.generator__row {
+    display: grid;
+    gap: 1rem;
+    align-items: end;
+}
+
+@media (min-width: 40em) {
+    .generator__row {
+        grid-template-columns: 1fr 1.2fr;
+    }
+}
+
+/* The easel-like frame of the preview */
+.generator__preview {
+    position: sticky;
+    top: calc(var(--ap-header-h) + 1rem);
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.generator__easel {
+    position: relative;
+    padding: clamp(0.6rem, 1.5vw, 1rem);
+    background: var(--ap-white);
+    box-shadow:
+        0 0 0 1px var(--ap-white-16),
+        0 50px 100px -40px var(--ap-red-glow),
+        0 30px 60px -30px var(--ap-blue-glow);
+}
+
+.generator__img {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--ap-black);
+    transition: opacity var(--ap-dur) ease, filter var(--ap-dur) ease;
+}
+
+.generator__loading {
+    position: absolute;
+    inset: clamp(0.6rem, 1.5vw, 1rem);
+    display: grid;
+    place-items: center;
+    background: linear-gradient(110deg, var(--ap-black-70) 30%, rgb(248 212 73 / 0.18) 50%, var(--ap-black-70) 70%);
+    background-size: 250% 100%;
+    color: var(--ap-white);
+    font-family: var(--ap-font-tagline);
+    letter-spacing: 0.1em;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--ap-dur) ease;
+}
+
+.generator__easel.is-loading .generator__loading {
+    opacity: 1;
+    visibility: visible;
+    animation: ap-pg-generator-shimmer 1.4s linear infinite;
+}
+
+.generator__easel.is-loading .generator__img {
+    filter: blur(4px) saturate(0.6);
+}
+
+.generator__easel.is-fresh .generator__img {
+    animation: ap-pg-generator-reveal 0.9s var(--ap-ease-out);
+}
+
+.generator__actions {
+    justify-content: center;
+}
+
+.generator__history {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.generator__history-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.generator__history-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+}
+
+.generator__history-item button {
+    display: grid;
+    gap: 0.3rem;
+    width: 100%;
+    padding: 0.3rem;
+    border: 1px solid var(--ap-white-16);
+    background: var(--ap-black);
+    color: var(--ap-text-soft);
+    font-size: 0.72rem;
+    text-align: left;
+    transition: border-color var(--ap-dur-fast) ease;
+}
+
+.generator__history-item button:hover {
+    border-color: var(--ap-yellow);
+}
+
+.generator__history-item img {
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.generator__history-item span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.generator-styles__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.generator-style {
+    display: grid;
+    gap: 0.5rem;
+    color: var(--ap-text);
+}
+
+.generator-style img {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 4px solid var(--ap-white);
+    transition: transform var(--ap-dur-slow) var(--ap-ease-out);
+}
+
+.generator-style:hover img {
+    transform: rotate(-2deg) scale(1.03);
+}
+
+.generator-style__name {
+    font-family: var(--ap-font-display);
+    text-transform: uppercase;
+}
+
+.generator-style__desc {
+    font-size: 0.88rem;
+    color: var(--ap-text-soft);
+}
+
+.generator-how__points {
+    display: grid;
+    gap: 0.6rem;
+    list-style: none;
+    padding: 0;
+}
+
+.generator-how__points li {
+    display: flex;
+    gap: 0.6em;
+    align-items: baseline;
+}
+
+.generator-how__points li::before {
+    content: "";
+    flex: none;
+    width: 0.7em;
+    height: 0.6em;
+    background: var(--ap-yellow);
+    clip-path: var(--ap-clip-tri);
+}
+
+.generator-how__visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 18rem;
+}
+
+.generator-how__code {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 1.4rem 1.6rem;
+    background: var(--ap-ink);
+    border: 1px solid var(--ap-white-16);
+    border-left: 4px solid var(--ap-blue-bright);
+    color: var(--ap-mist);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.generator-how__orbit {
+    position: absolute;
+    right: 4%;
+    top: -6%;
+    opacity: 0.7;
+}
+
+.tok-k { color: var(--ap-red-bright); }
+.tok-s { color: var(--ap-yellow); }
+.tok-c { color: var(--ap-smoke); }
+
+/** @anim group=page demo=panel dur=1.4s ease=linear fr="Miroitement de chargement" en="Loading shimmer" */
+@keyframes ap-pg-generator-shimmer {
+    from { background-position: 100% 0; }
+    to { background-position: -100% 0; }
+}
+
+/** @anim group=page demo=shape dur=0.9s ease=var(--ap-ease-out) dir=alternate fr="Nouvelle œuvre révélée" en="New artwork revealed" */
+@keyframes ap-pg-generator-reveal {
+    from { clip-path: polygon(50% 100%, 50% 100%, 50% 100%); }
+    to { clip-path: polygon(50% -100%, 200% 100%, -100% 100%); }
+}
+
+/** @anim group=page demo=ring dur=0.45s ease=var(--ap-ease-spring) fr="Style choisi" en="Style picked" */
+@keyframes ap-pg-generator-pick {
+    0% { transform: scale(0.94); }
+    60% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}

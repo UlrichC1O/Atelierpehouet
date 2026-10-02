@@ -1,0 +1,52 @@
+/* Scene · enseignes-signaletique — swinging sign and neon word (8 s loop). */
+
+.scene--enseignes-signaletique .enseigne__bg { fill: var(--ap-black); }
+.scene--enseignes-signaletique .enseigne__facade { fill: var(--ap-graphite); }
+.scene--enseignes-signaletique .enseigne__arm { fill: none; stroke: var(--ap-mist); stroke-width: 5; stroke-linecap: round; }
+.scene--enseignes-signaletique .enseigne__chain { fill: none; stroke: var(--ap-smoke); stroke-width: 3; stroke-dasharray: 5 3; }
+
+.scene--enseignes-signaletique .enseigne__sign {
+    transform-box: view-box;
+    transform-origin: 147px 54px;
+    animation: ap-sc-enseigne-swing 4.5s var(--ap-ease-in-out) infinite;
+}
+
+.scene--enseignes-signaletique .enseigne__letter {
+    font-size: 54px;
+    fill: var(--ap-red-bright);
+    animation: ap-sc-enseigne-neon 8s steps(1, end) calc(var(--i) * 0.28s) infinite backwards;
+}
+
+.scene--enseignes-signaletique .enseigne__tube { fill: none; stroke: var(--ap-red-deep); stroke-width: 3; stroke-linecap: round; }
+
+.scene--enseignes-signaletique .enseigne__arrow {
+    fill: var(--ap-yellow);
+    animation: ap-sc-enseigne-arrow 3s var(--ap-ease-in-out) var(--d, 0s) infinite;
+}
+
+.scene--enseignes-signaletique .enseigne__arrow--alt { fill: var(--ap-blue-bright); }
+
+/** @anim group=scene demo=scene scene=enseignes-signaletique dur=4.5s fr="Enseigne qui se balance" en="Swinging shop sign" */
+@keyframes ap-sc-enseigne-swing {
+    0%,
+    100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+/** @anim group=scene demo=scene scene=enseignes-signaletique dur=8s ease=steps(1,end) fr="Néon qui s’allume lettre par lettre" en="Neon lighting up letter by letter" */
+@keyframes ap-sc-enseigne-neon {
+    0% { opacity: 0.12; }
+    3% { opacity: 1; }
+    5% { opacity: 0.55; }
+    8% { opacity: 1; }
+    82% { opacity: 1; }
+    90%,
+    100% { opacity: 0.12; }
+}
+
+/** @anim group=scene demo=scene scene=enseignes-signaletique dur=3s fr="Flèches de signalétique" en="Wayfinding arrows nudging" */
+@keyframes ap-sc-enseigne-arrow {
+    0%,
+    100% { transform: translateX(0); }
+    50% { transform: translateX(12px); }
+}

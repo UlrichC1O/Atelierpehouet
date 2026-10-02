@@ -1,0 +1,877 @@
+/* ==========================================================================
+   Ateliers Pehouet — 07 · UI motion
+   Reveal-on-scroll system, split text, typewriter, glitch, burst, and every
+   component micro-interaction. Driven by public/js/effects.js.
+   Keyframes: ap-rv-* (reveals) · ap-tx-* (text) · ap-ui-* (interface)
+   ========================================================================== */
+
+/* --- Reveal system ------------------------------------------------------------
+   Hidden only when JS runs and only until revealed. If effects.js never starts
+   (html lacks .reveal-ready), a fail-safe shows everything after 3 s.        */
+
+.js [data-reveal]:not(.is-revealed) {
+    opacity: 0;
+}
+
+.js:not(.reveal-ready) [data-reveal]:not(.is-revealed),
+.js:not(.reveal-ready) [data-split] {
+    animation: ap-rv-failsafe 0.01s linear 3s forwards;
+}
+
+[data-reveal].is-revealed {
+    animation-duration: var(--reveal-dur, 0.95s);
+    animation-timing-function: var(--ap-ease-out);
+    animation-delay: var(--reveal-delay, 0ms);
+    animation-fill-mode: backwards;
+}
+
+[data-reveal="fade-up"].is-revealed { animation-name: ap-rv-fade-up; }
+[data-reveal="fade-down"].is-revealed { animation-name: ap-rv-fade-down; }
+[data-reveal="fade-left"].is-revealed { animation-name: ap-rv-fade-left; }
+[data-reveal="fade-right"].is-revealed { animation-name: ap-rv-fade-right; }
+[data-reveal="zoom-in"].is-revealed { animation-name: ap-rv-zoom-in; }
+[data-reveal="zoom-out"].is-revealed { animation-name: ap-rv-zoom-out; }
+[data-reveal="flip-x"].is-revealed { animation-name: ap-rv-flip-x; }
+[data-reveal="flip-y"].is-revealed { animation-name: ap-rv-flip-y; }
+[data-reveal="tri"].is-revealed { animation-name: ap-rv-tri; --reveal-dur: 1.2s; }
+[data-reveal="diagonal"].is-revealed { animation-name: ap-rv-diagonal; --reveal-dur: 1.1s; }
+[data-reveal="curtain"].is-revealed { animation-name: ap-rv-curtain; --reveal-dur: 1.15s; }
+[data-reveal="rotate"].is-revealed { animation-name: ap-rv-rotate; }
+[data-reveal="blur"].is-revealed { animation-name: ap-rv-blur; }
+[data-reveal="skew"].is-revealed { animation-name: ap-rv-skew; }
+[data-reveal="mondrian"].is-revealed { animation-name: ap-rv-mondrian; --reveal-dur: 1.25s; }
+[data-reveal="rise"].is-revealed { animation-name: ap-rv-rise; --reveal-dur: 1.1s; }
+[data-reveal="drop"].is-revealed { animation-name: ap-rv-drop; --reveal-dur: 1s; }
+
+/* --- Split text ------------------------------------------------------------------ */
+
+.js [data-split] {
+    opacity: 0;
+}
+
+.reveal-ready [data-split] {
+    opacity: 1;
+}
+
+.split__word {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.split__unit {
+    display: inline-block;
+    will-change: transform;
+}
+
+.reveal-ready [data-split]:not(.is-split-in) .split__unit {
+    opacity: 0;
+}
+
+[data-split].is-split-in .split__unit {
+    animation: var(--split-anim, ap-tx-rise) var(--split-dur, 0.85s) var(--ap-ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * var(--split-stagger, 55ms) + var(--split-delay, 0ms));
+}
+
+[data-split="chars"] {
+    --split-stagger: 28ms;
+}
+
+[data-split-anim="flip"] { --split-anim: ap-tx-flip; }
+[data-split-anim="glow"] { --split-anim: ap-tx-glow; --split-dur: 1.2s; }
+[data-split-anim="wave"] { --split-anim: ap-tx-wave; }
+[data-split-anim="drop"] { --split-anim: ap-tx-drop; --split-dur: 0.9s; }
+[data-split-anim="neon"] { --split-anim: ap-tx-neon; --split-dur: 1.3s; }
+
+/* --- Typewriter -------------------------------------------------------------------- */
+
+[data-typewriter] {
+    white-space: nowrap;
+}
+
+[data-typewriter]::after {
+    content: "";
+    display: inline-block;
+    width: 0.08em;
+    height: 0.95em;
+    margin-left: 0.08em;
+    vertical-align: -0.1em;
+    background: var(--ap-yellow);
+    animation: ap-tx-caret 0.9s steps(1, end) infinite;
+}
+
+/* --- Highlight & underline helpers ------------------------------------------------ */
+
+.text-highlight {
+    background: linear-gradient(transparent 58%, rgb(248 212 73 / 0.45) 58% 90%, transparent 90%);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    color: var(--ap-white);
+}
+
+.is-revealed .text-highlight,
+.text-highlight.is-revealed {
+    animation: ap-tx-highlight 1.1s var(--ap-ease-out) 0.4s forwards;
+}
+
+.text-underline {
+    position: relative;
+    display: inline-block;
+}
+
+.text-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.08em;
+    height: 0.09em;
+    background: var(--ap-gradient-teliers);
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+.is-revealed .text-underline::after,
+.text-underline.is-revealed::after {
+    animation: ap-tx-underline 1s var(--ap-ease-out) 0.3s forwards;
+}
+
+.text-sweep {
+    background: linear-gradient(90deg, var(--ap-white) 0 40%, var(--ap-yellow) 50%, var(--ap-white) 60% 100%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: ap-tx-sweep 5s var(--ap-ease-in-out) infinite;
+}
+
+/* --- Glitch (hover) ----------------------------------------------------------------- */
+
+[data-glitch] {
+    position: relative;
+    display: inline-block;
+}
+
+[data-glitch]::before,
+[data-glitch]::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+}
+
+[data-glitch]::before {
+    color: var(--ap-blue-bright);
+}
+
+[data-glitch]::after {
+    color: var(--ap-red-bright);
+}
+
+[data-glitch]:hover::before {
+    opacity: 0.85;
+    animation: ap-tx-glitch-blue 0.6s steps(2, end) infinite;
+}
+
+[data-glitch]:hover::after {
+    opacity: 0.85;
+    animation: ap-tx-glitch-red 0.6s steps(2, end) infinite;
+}
+
+/* --- Burst particles (data-burst) ------------------------------------------------- */
+
+.burst-particle {
+    position: fixed;
+    z-index: var(--ap-z-cursor);
+    width: var(--s, 10px);
+    height: calc(var(--s, 10px) * 0.87);
+    margin: calc(var(--s, 10px) * -0.43) 0 0 calc(var(--s, 10px) * -0.5);
+    background: var(--c, var(--ap-yellow));
+    clip-path: var(--ap-clip-tri);
+    pointer-events: none;
+    animation: ap-ui-burst 0.9s var(--ap-ease-out) forwards;
+}
+
+/* --- Tooltip ------------------------------------------------------------------------- */
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.6rem);
+    z-index: var(--ap-z-raised);
+    padding: 0.35em 0.7em;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--ap-yellow);
+    color: var(--ap-black);
+    border-radius: var(--ap-radius-xs);
+    transform: translateX(-50%);
+    animation: ap-ui-tooltip 0.3s var(--ap-ease-out) both;
+}
+
+/* ==========================================================================
+   Keyframes — reveals
+   ========================================================================== */
+
+/** @anim group=reveal demo=panel dur=0.01s iter=1 fr="Filet de sécurité (affichage garanti)" en="Fail-safe (content always shows)" */
+@keyframes ap-rv-failsafe {
+    to {
+        opacity: 1;
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1s ease=var(--ap-ease-out) dir=alternate fr="Apparition vers le haut" en="Fade up" */
+@keyframes ap-rv-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(var(--rv-dist, 44px));
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1s ease=var(--ap-ease-out) dir=alternate fr="Apparition vers le bas" en="Fade down" */
+@keyframes ap-rv-fade-down {
+    from {
+        opacity: 0;
+        transform: translateY(calc(-1 * var(--rv-dist, 44px)));
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1s ease=var(--ap-ease-out) dir=alternate fr="Glissement depuis la droite" en="Slide in from the right" */
+@keyframes ap-rv-fade-left {
+    from {
+        opacity: 0;
+        transform: translateX(var(--rv-dist, 56px));
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1s ease=var(--ap-ease-out) dir=alternate fr="Glissement depuis la gauche" en="Slide in from the left" */
+@keyframes ap-rv-fade-right {
+    from {
+        opacity: 0;
+        transform: translateX(calc(-1 * var(--rv-dist, 56px)));
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=reveal demo=shape dur=1s ease=var(--ap-ease-out) dir=alternate fr="Zoom avant" en="Zoom in" */
+@keyframes ap-rv-zoom-in {
+    from {
+        opacity: 0;
+        transform: scale(0.82);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=reveal demo=shape dur=1s ease=var(--ap-ease-out) dir=alternate fr="Zoom arrière" en="Zoom out" */
+@keyframes ap-rv-zoom-out {
+    from {
+        opacity: 0;
+        transform: scale(1.18);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1.1s ease=var(--ap-ease-out) dir=alternate fr="Bascule horizontale" en="Horizontal flip" */
+@keyframes ap-rv-flip-x {
+    from {
+        opacity: 0;
+        transform: perspective(900px) rotateX(-70deg);
+        transform-origin: top;
+    }
+    to {
+        opacity: 1;
+        transform: perspective(900px) rotateX(0);
+        transform-origin: top;
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1.1s ease=var(--ap-ease-out) dir=alternate fr="Bascule verticale" en="Vertical flip" */
+@keyframes ap-rv-flip-y {
+    from {
+        opacity: 0;
+        transform: perspective(900px) rotateY(70deg);
+        transform-origin: left;
+    }
+    to {
+        opacity: 1;
+        transform: perspective(900px) rotateY(0);
+        transform-origin: left;
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1.2s ease=var(--ap-ease-out) dir=alternate fr="Révélation en triangle" en="Triangle reveal" */
+@keyframes ap-rv-tri {
+    from {
+        opacity: 1;
+        clip-path: polygon(50% 100%, 50% 100%, 50% 100%);
+    }
+    to {
+        opacity: 1;
+        clip-path: polygon(50% -110%, 220% 100%, -120% 100%);
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1.1s ease=var(--ap-ease-out) dir=alternate fr="Balayage diagonal" en="Diagonal wipe" */
+@keyframes ap-rv-diagonal {
+    from {
+        opacity: 1;
+        clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+    }
+    to {
+        opacity: 1;
+        clip-path: polygon(0 0, 200% 0, 0 200%, 0 0);
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1.1s ease=var(--ap-ease-out) dir=alternate fr="Lever de rideau" en="Curtain rising" */
+@keyframes ap-rv-curtain {
+    from {
+        opacity: 1;
+        clip-path: inset(100% 0 0 0);
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+        transform: none;
+    }
+}
+
+/** @anim group=reveal demo=shape dur=1s ease=var(--ap-ease-out) dir=alternate fr="Rotation d’entrée" en="Rotate in" */
+@keyframes ap-rv-rotate {
+    from {
+        opacity: 0;
+        transform: rotate(-9deg) translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=reveal demo=text dur=1s dir=alternate fr="Mise au point (flou)" en="Focus pull (blur)" */
+@keyframes ap-rv-blur {
+    from {
+        opacity: 0;
+        filter: blur(14px);
+    }
+    to {
+        opacity: 1;
+        filter: none;
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1s ease=var(--ap-ease-out) dir=alternate fr="Entrée inclinée" en="Skewed entrance" */
+@keyframes ap-rv-skew {
+    from {
+        opacity: 0;
+        transform: skewY(7deg) translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1.3s ease=var(--ap-ease-out) dir=alternate fr="Découpe Mondrian" en="Mondrian cut-out" */
+@keyframes ap-rv-mondrian {
+    0% {
+        opacity: 1;
+        clip-path: polygon(0 0, 0 0, 0 38%, 0 38%, 0 38%, 0 100%, 0 100%, 0 0);
+    }
+    45% {
+        clip-path: polygon(0 0, 62% 0, 62% 38%, 62% 38%, 62% 38%, 62% 100%, 0 100%, 0 0);
+    }
+    100% {
+        opacity: 1;
+        clip-path: polygon(0 0, 100% 0, 100% 38%, 100% 38%, 100% 100%, 62% 100%, 0 100%, 0 0);
+    }
+}
+
+/** @anim group=reveal demo=panel dur=1.1s ease=var(--ap-ease-out) dir=alternate fr="Élévation" en="Rise" */
+@keyframes ap-rv-rise {
+    from {
+        opacity: 0;
+        transform: translateY(90px) scale(0.96);
+    }
+    60% {
+        opacity: 1;
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=reveal demo=shape dur=1s ease=var(--ap-ease-spring) dir=alternate fr="Chute rebondissante" en="Bouncy drop" */
+@keyframes ap-rv-drop {
+    from {
+        opacity: 0;
+        transform: translateY(-70px) rotate(4deg);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ==========================================================================
+   Keyframes — text
+   ========================================================================== */
+
+/** @anim group=text demo=letters dur=0.9s ease=var(--ap-ease-out) dir=alternate fr="Mots qui s’élèvent" en="Rising words" */
+@keyframes ap-tx-rise {
+    from {
+        opacity: 0;
+        transform: translateY(0.7em) rotate(4deg);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=text demo=letters dur=1s ease=var(--ap-ease-out) dir=alternate fr="Lettres qui basculent" en="Flipping letters" */
+@keyframes ap-tx-flip {
+    from {
+        opacity: 0;
+        transform: perspective(500px) rotateX(-90deg);
+    }
+    to {
+        opacity: 1;
+        transform: perspective(500px) rotateX(0);
+    }
+}
+
+/** @anim group=text demo=letters dur=1.2s dir=alternate fr="Lettres qui s’illuminent" en="Letters lighting up" */
+@keyframes ap-tx-glow {
+    from {
+        opacity: 0;
+        text-shadow: 0 0 0 transparent;
+        color: var(--ap-yellow);
+    }
+    50% {
+        opacity: 1;
+        text-shadow: 0 0 0.4em var(--ap-yellow-glow);
+    }
+    to {
+        opacity: 1;
+        text-shadow: none;
+    }
+}
+
+/** @anim group=text demo=letters dur=1.2s fr="Vague de lettres" en="Letter wave" */
+@keyframes ap-tx-wave {
+    0% {
+        opacity: 0;
+        transform: translateY(0.4em);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-0.18em);
+    }
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=text demo=letters dur=1s ease=var(--ap-ease-spring) dir=alternate fr="Lettres qui tombent" en="Dropping letters" */
+@keyframes ap-tx-drop {
+    from {
+        opacity: 0;
+        transform: translateY(-1.1em) rotate(-10deg);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=text demo=letters dur=1.4s fr="Allumage néon des lettres" en="Neon letters switching on" */
+@keyframes ap-tx-neon {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+        text-shadow: var(--ap-neon-red);
+    }
+    28% {
+        opacity: 0.55;
+    }
+    40%,
+    100% {
+        opacity: 1;
+        text-shadow: none;
+    }
+}
+
+/** @anim group=text demo=bar dur=0.9s fr="Curseur de machine à écrire" en="Typewriter caret" */
+@keyframes ap-tx-caret {
+    0%,
+    100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/** @anim group=text demo=text dur=0.6s fr="Glitch bleu" en="Blue glitch" */
+@keyframes ap-tx-glitch-blue {
+    0% { transform: translate(-2px, 1px); clip-path: inset(0 0 60% 0); }
+    50% { transform: translate(2px, -1px); clip-path: inset(40% 0 20% 0); }
+    100% { transform: translate(-1px, 0); clip-path: inset(70% 0 0 0); }
+}
+
+/** @anim group=text demo=text dur=0.6s fr="Glitch rouge" en="Red glitch" */
+@keyframes ap-tx-glitch-red {
+    0% { transform: translate(2px, -1px); clip-path: inset(55% 0 0 0); }
+    50% { transform: translate(-2px, 1px); clip-path: inset(10% 0 55% 0); }
+    100% { transform: translate(1px, 0); clip-path: inset(0 0 75% 0); }
+}
+
+/** @anim group=text demo=bar dur=1.2s ease=var(--ap-ease-out) dir=alternate fr="Surlignage jaune" en="Yellow highlighter" */
+@keyframes ap-tx-highlight {
+    to {
+        background-size: 100% 100%;
+    }
+}
+
+/** @anim group=text demo=bar dur=1s ease=var(--ap-ease-out) dir=alternate fr="Soulignement dégradé" en="Gradient underline" */
+@keyframes ap-tx-underline {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/** @anim group=text demo=text dur=5s fr="Lumière qui traverse le texte" en="Light running through text" */
+@keyframes ap-tx-sweep {
+    0%,
+    20% {
+        background-position: 100% 0;
+    }
+    80%,
+    100% {
+        background-position: 0 0;
+    }
+}
+
+/* ==========================================================================
+   Keyframes — interface
+   ========================================================================== */
+
+/** @anim group=ui demo=bar dur=0.9s ease=var(--ap-ease-out) fr="Reflet sur le bouton" en="Button shine" */
+@keyframes ap-ui-btn-shine {
+    from {
+        transform: translateX(-120%);
+    }
+    to {
+        transform: translateX(120%);
+    }
+}
+
+/** @anim group=ui demo=shape dur=0.9s fr="Flèche qui avance" en="Arrow nudge" */
+@keyframes ap-ui-arrow-nudge {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+}
+
+/** @anim group=ui demo=shape dur=0.8s ease=var(--ap-ease-out) fr="Onde triangulaire au clic" en="Triangle ripple on click" */
+@keyframes ap-ui-ripple {
+    from {
+        opacity: 0.8;
+        transform: scale(0.4);
+    }
+    to {
+        opacity: 0;
+        transform: scale(var(--ripple-scale, 28));
+    }
+}
+
+/** @anim group=ui demo=ring dur=0.5s ease=var(--ap-ease-spring) fr="Pastille qui s’active" en="Chip popping on" */
+@keyframes ap-ui-chip-pop {
+    0% {
+        transform: scale(0.9);
+    }
+    60% {
+        transform: scale(1.08);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/** @anim group=ui demo=blocks dur=0.6s ease=var(--ap-ease-out) dir=alternate fr="Retour des éléments filtrés" en="Filtered items coming back" */
+@keyframes ap-ui-filter-in {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=ui demo=ring dur=3s ease=linear fr="Bordure conique tournante" en="Spinning conic border" */
+@keyframes ap-ui-border-spin {
+    to {
+        --ap-angle: 360deg;
+    }
+}
+
+/** @anim group=ui demo=shape dur=1.2s fr="Icône qui flotte" en="Floating icon" */
+@keyframes ap-ui-icon-bob {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+    50% {
+        transform: translateY(-3px) rotate(-6deg);
+    }
+}
+
+/** @anim group=ui demo=shape dur=0.6s ease=var(--ap-ease-spring) fr="Coin triangle qui se déplie" en="Corner triangle unfolding" */
+@keyframes ap-ui-corner-unfold {
+    from {
+        transform: scale(0.35) rotate(-20deg);
+    }
+    to {
+        transform: scale(1) rotate(0);
+    }
+}
+
+/** @anim group=ui demo=blocks dur=9s fr="Champs Mondrian du bandeau" en="Hero Mondrian fields" */
+@keyframes ap-ui-hero-field {
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+    33% {
+        transform: translate(-6px, 8px);
+    }
+    66% {
+        transform: translate(5px, -5px);
+    }
+}
+
+/** @anim group=ui demo=shape dur=14s fr="Grand triangle à la dérive" en="Great drifting triangle" */
+@keyframes ap-ui-hero-tri {
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate(-3%, -4%) rotate(-6deg);
+    }
+}
+
+/** @anim group=ui demo=bar dur=6s fr="Trait de signature qui scintille" en="Shimmering signature stroke" */
+@keyframes ap-ui-hero-slash {
+    0%,
+    100% {
+        transform: scaleX(0.15);
+        opacity: 0;
+    }
+    35%,
+    65% {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+/** @anim group=ui demo=panel dur=0.6s ease=var(--ap-ease-out) dir=alternate fr="Ouverture d’accordéon" en="Accordion opening" */
+@keyframes ap-ui-accordion {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+        clip-path: inset(0 0 100% 0);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/** @anim group=ui demo=text dur=0.5s dir=alternate fr="Pulsation du compteur" en="Counter pulse" */
+@keyframes ap-ui-count-pulse {
+    from {
+        filter: brightness(1);
+    }
+    to {
+        filter: brightness(1.4);
+    }
+}
+
+/** @anim group=ui demo=bar dur=12s ease=linear fr="Défilement infini" en="Infinite scroll ribbon" */
+@keyframes ap-ui-marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/** @anim group=ui demo=bar dur=12s ease=linear fr="Défilement inversé" en="Reverse ribbon" */
+@keyframes ap-ui-marquee-reverse {
+    from {
+        transform: translateX(-50%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/** @anim group=ui demo=path dur=3.5s ease=var(--ap-ease-in-out) dir=alternate fr="Ligne en dents de scie tracée" en="Zigzag line drawing" */
+@keyframes ap-ui-divider-draw {
+    from {
+        stroke-dashoffset: 1;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/** @anim group=ui demo=dots dur=2.2s fr="Petits triangles qui sautillent" en="Hopping little triangles" */
+@keyframes ap-ui-dot-hop {
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-7px);
+    }
+}
+
+/** @anim group=ui demo=blocks dur=8s fr="Champs de couleur qui respirent" en="Breathing colour fields" */
+@keyframes ap-ui-cta-field {
+    0%,
+    100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(0.7);
+    }
+}
+
+/** @anim group=ui demo=panel dur=0.5s ease=var(--ap-ease-out) fr="Champ en erreur qui tremble" en="Shaking invalid field" */
+@keyframes ap-ui-field-shake {
+    0%,
+    100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+}
+
+/** @anim group=ui demo=panel dur=0.7s ease=var(--ap-ease-out) dir=alternate fr="Message qui glisse" en="Message sliding in" */
+@keyframes ap-ui-alert-in {
+    from {
+        opacity: 0;
+        transform: translateY(-14px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=ui demo=path dur=0.8s ease=var(--ap-ease-out) dir=alternate fr="Coche de validation tracée" en="Check mark drawing" */
+@keyframes ap-ui-check-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/** @anim group=ui demo=panel dur=0.5s ease=var(--ap-ease-out) dir=alternate fr="Ouverture de la visionneuse" en="Lightbox opening" */
+@keyframes ap-ui-lightbox-in {
+    from {
+        opacity: 0;
+        clip-path: circle(0% at 50% 50%);
+    }
+    to {
+        opacity: 1;
+        clip-path: circle(150% at 50% 50%);
+    }
+}
+
+/** @anim group=ui demo=panel dur=0.35s dir=alternate fr="Fermeture de la visionneuse" en="Lightbox closing" */
+@keyframes ap-ui-lightbox-out {
+    to {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+}
+
+/** @anim group=ui demo=shape dur=0.7s ease=var(--ap-ease-out) dir=alternate fr="Œuvre qui s’avance" en="Artwork stepping forward" */
+@keyframes ap-ui-image-zoom {
+    from {
+        opacity: 0;
+        transform: scale(0.88) rotate(-1.5deg);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=ui demo=shape dur=0.9s ease=var(--ap-ease-out) fr="Confettis triangulaires" en="Triangle confetti burst" */
+@keyframes ap-ui-burst {
+    from {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(var(--dx, 40px), var(--dy, -40px)) rotate(var(--rot, 220deg)) scale(0.3);
+    }
+}
+
+/** @anim group=ui demo=panel dur=0.35s ease=var(--ap-ease-out) dir=alternate fr="Info-bulle" en="Tooltip" */
+@keyframes ap-ui-tooltip {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 6px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}

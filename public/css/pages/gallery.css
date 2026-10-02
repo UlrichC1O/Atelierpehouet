@@ -1,0 +1,100 @@
+/* ==========================================================================
+   Ateliers Pehouet — Gallery page. Keyframes: ap-pg-gallery-*
+   ========================================================================== */
+
+.gallery-hero-stack {
+    position: relative;
+    min-height: clamp(16rem, 34vw, 26rem);
+}
+
+.gallery-hero-stack__img {
+    position: absolute;
+    width: min(62%, 17rem);
+    aspect-ratio: 1;
+    border: 6px solid var(--ap-white);
+    box-shadow: var(--ap-shadow-deep);
+    animation: ap-pg-gallery-deal 1.2s var(--ap-ease-spring) backwards, ap-pg-gallery-hover 8s var(--ap-ease-in-out) 1.4s infinite;
+    animation-delay: calc(var(--i) * 0.18s + 0.3s), calc(1.4s + var(--i) * -2s);
+}
+
+.gallery-hero-stack__img:nth-child(1) { left: 4%; top: 10%; rotate: -10deg; }
+.gallery-hero-stack__img:nth-child(2) { left: 30%; top: 0; rotate: 4deg; z-index: 1; }
+.gallery-hero-stack__img:nth-child(3) { left: 46%; top: 22%; rotate: 12deg; }
+
+.gallery__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.gallery__grid {
+    columns: 4 16rem;
+    column-gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.gallery__item {
+    break-inside: avoid;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.gallery__item--tall .art-frame__img {
+    aspect-ratio: 4 / 5;
+}
+
+.gallery__grid.is-shuffling .gallery__item {
+    animation: ap-pg-gallery-shuffle 0.7s var(--ap-ease-out) both;
+    animation-delay: calc(var(--i, 0) * 25ms);
+}
+
+.gallery__note {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+}
+
+.gallery-engine__visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 20rem;
+}
+
+.gallery-engine__code {
+    position: absolute;
+    bottom: 0;
+    padding: 0.6em 1em;
+    font-family: var(--ap-font-mono);
+    font-size: 0.85rem;
+    background: var(--ap-black-70);
+    border: 1px solid var(--ap-white-16);
+    color: var(--ap-yellow);
+    animation: ap-pg-gallery-code 3s steps(1, end) infinite;
+}
+
+/** @anim group=page demo=shape dur=1.2s ease=var(--ap-ease-spring) dir=alternate fr="Œuvres distribuées comme des cartes" en="Artworks dealt like cards" */
+@keyframes ap-pg-gallery-deal {
+    from { opacity: 0; transform: translate(-40%, 30%) rotate(-30deg) scale(0.6); }
+    to { opacity: 1; transform: none; }
+}
+
+/** @anim group=page demo=shape dur=8s fr="Œuvres en lévitation" en="Levitating artworks" */
+@keyframes ap-pg-gallery-hover {
+    0%,
+    100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/** @anim group=page demo=blocks dur=0.7s ease=var(--ap-ease-out) dir=alternate fr="Galerie mélangée" en="Gallery shuffled" */
+@keyframes ap-pg-gallery-shuffle {
+    from { opacity: 0; transform: scale(0.85) rotate(-4deg); }
+    to { opacity: 1; transform: none; }
+}
+
+/** @anim group=page demo=text dur=3s ease=steps(1,end) fr="Code qui clignote" en="Blinking code" */
+@keyframes ap-pg-gallery-code {
+    0%,
+    100% { border-color: var(--ap-white-16, rgb(250 252 253 / 0.16)); }
+    50% { border-color: var(--ap-yellow, #f8d449); }
+}

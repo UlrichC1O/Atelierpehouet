@@ -1,0 +1,104 @@
+/* Scene · decoration-vehicules — the painted van on the road (8 s loop). */
+
+.scene--decoration-vehicules .vehicule__bg { fill: var(--ap-black); }
+.scene--decoration-vehicules .vehicule__horizon polygon { fill: var(--ap-graphite); stroke: var(--ap-steel); stroke-width: 1.5; }
+.scene--decoration-vehicules .vehicule__horizon { animation: ap-sc-vehicule-horizon 12s linear infinite; }
+.scene--decoration-vehicules .vehicule__road { fill: var(--ap-ink); }
+
+.scene--decoration-vehicules .vehicule__lane {
+    fill: none;
+    stroke: var(--ap-yellow);
+    stroke-width: 4;
+    stroke-dasharray: 34 26;
+    animation: ap-sc-vehicule-road 0.9s linear infinite;
+}
+
+.scene--decoration-vehicules .vehicule__speed path {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    animation: ap-sc-vehicule-speed 1.2s var(--ap-ease-out) infinite;
+}
+
+.scene--decoration-vehicules .vehicule__van {
+    animation: ap-sc-vehicule-bounce 0.6s ease-in-out infinite;
+}
+
+.scene--decoration-vehicules .vehicule__shell { fill: var(--ap-white); stroke: var(--ap-black); stroke-width: 3; }
+
+.scene--decoration-vehicules .vehicule__stripe {
+    animation: ap-sc-vehicule-stripe 8s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--decoration-vehicules .vehicule__stripe--1 { fill: var(--ap-orange); }
+.scene--decoration-vehicules .vehicule__stripe--2 { fill: var(--ap-yellow); animation-delay: 0.5s; }
+.scene--decoration-vehicules .vehicule__stripe--3 { fill: var(--ap-blue); animation-delay: 1s; }
+
+.scene--decoration-vehicules .vehicule__tri {
+    fill: var(--ap-red);
+    stroke: var(--ap-black);
+    stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: ap-sc-vehicule-tri 8s var(--ap-ease-spring) 1.6s infinite backwards;
+}
+
+.scene--decoration-vehicules .vehicule__window { fill: var(--ap-blue-deep); stroke: var(--ap-black); stroke-width: 2; }
+.scene--decoration-vehicules .vehicule__name { font-size: 17px; fill: var(--ap-black); letter-spacing: 1px; }
+
+.scene--decoration-vehicules .vehicule__wheel {
+    transform-box: view-box;
+    animation: ap-sc-vehicule-wheel 0.7s linear infinite;
+}
+
+.scene--decoration-vehicules .vehicule__wheel circle { fill: var(--ap-graphite); stroke: var(--ap-black); stroke-width: 6; }
+.scene--decoration-vehicules .vehicule__wheel path { stroke: var(--ap-smoke); stroke-width: 3; }
+
+/** @anim group=scene demo=scene scene=decoration-vehicules dur=0.9s ease=linear fr="Marquage de route qui défile" en="Road markings rushing by" */
+@keyframes ap-sc-vehicule-road {
+    to { stroke-dashoffset: 60; }
+}
+
+/** @anim group=scene demo=scene scene=decoration-vehicules dur=0.7s ease=linear fr="Roues qui tournent" en="Spinning wheels" */
+@keyframes ap-sc-vehicule-wheel {
+    to { transform: rotate(-360deg); }
+}
+
+/** @anim group=scene demo=scene scene=decoration-vehicules dur=0.6s fr="Suspension de la camionnette" en="Van suspension bounce" */
+@keyframes ap-sc-vehicule-bounce {
+    0%,
+    100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+/** @anim group=scene demo=scene scene=decoration-vehicules dur=8s fr="Bandes peintes sur la carrosserie" en="Stripes painted on the bodywork" */
+@keyframes ap-sc-vehicule-stripe {
+    0%,
+    4% { clip-path: inset(0 100% 0 0); opacity: 1; }
+    24% { clip-path: inset(0 0 0 0); opacity: 1; }
+    86% { clip-path: inset(0 0 0 0); opacity: 1; }
+    94%,
+    100% { clip-path: inset(0 0 0 0); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=decoration-vehicules dur=8s ease=var(--ap-ease-spring) fr="Triangle du logo sur la portière" en="Logo triangle on the door" */
+@keyframes ap-sc-vehicule-tri {
+    0% { transform: scale(0); }
+    8% { transform: scale(1); }
+    84% { transform: scale(1); opacity: 1; }
+    92%,
+    100% { transform: scale(1); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=decoration-vehicules dur=1.2s fr="Traits de vitesse" en="Speed lines" */
+@keyframes ap-sc-vehicule-speed {
+    0% { stroke-dashoffset: 1; opacity: 1; transform: translateX(0); }
+    100% { stroke-dashoffset: 0; opacity: 0; transform: translateX(-30px); }
+}
+
+/** @anim group=scene demo=scene scene=decoration-vehicules dur=12s ease=linear fr="Horizon de triangles qui défile" en="Horizon of triangles scrolling" */
+@keyframes ap-sc-vehicule-horizon {
+    to { transform: translateX(-390px); }
+}

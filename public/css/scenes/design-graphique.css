@@ -1,0 +1,107 @@
+/* Scene · design-graphique — Bézier drawing on an artboard (9 s loop). */
+
+.scene--design-graphique .design__bg { fill: var(--ap-black); }
+.scene--design-graphique .design__artboard { fill: none; stroke: var(--ap-steel); stroke-width: 1.5; }
+.scene--design-graphique .design__rulers { fill: none; stroke: var(--ap-smoke); stroke-width: 1; stroke-dasharray: 2 8; }
+
+.scene--design-graphique .design__field {
+    stroke: var(--ap-white);
+    stroke-width: 0.6;
+    animation: ap-sc-design-fill 9s var(--ap-ease-out) calc(3.2s + var(--d, 0s)) infinite backwards;
+}
+
+.scene--design-graphique .design__field--yellow { fill: var(--ap-yellow); }
+.scene--design-graphique .design__field--blue { fill: var(--ap-blue); }
+.scene--design-graphique .design__field--red { fill: var(--ap-red); }
+.scene--design-graphique .design__field--white { fill: var(--ap-white); }
+
+.scene--design-graphique .design__path {
+    fill: none;
+    stroke: var(--ap-yellow);
+    stroke-width: 2.5;
+    stroke-dasharray: 1;
+    animation: ap-sc-design-draw 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--design-graphique .design__handles path { fill: none; stroke: var(--ap-blue-bright); stroke-width: 1.2; }
+.scene--design-graphique .design__handles circle { fill: var(--ap-black); stroke: var(--ap-blue-bright); stroke-width: 1.5; }
+.scene--design-graphique .design__handles { animation: ap-sc-design-node 9s ease-out 0.4s infinite backwards; }
+
+.scene--design-graphique .design__nodes rect {
+    fill: var(--ap-black);
+    stroke: var(--ap-yellow);
+    stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-design-node 9s var(--ap-ease-spring) var(--d, 0s) infinite backwards;
+}
+
+.scene--design-graphique .design__select {
+    fill: none;
+    stroke: var(--ap-blue-bright);
+    stroke-width: 1.2;
+    stroke-dasharray: 0.02 0.015;
+    animation: ap-sc-design-select 1.2s linear infinite;
+}
+
+.scene--design-graphique .design__swatch { stroke: var(--ap-white); stroke-width: 1.5; }
+.scene--design-graphique .design__swatch--blue { fill: var(--ap-blue); }
+.scene--design-graphique .design__swatch--yellow { fill: var(--ap-yellow); }
+.scene--design-graphique .design__swatch--red { fill: var(--ap-red); }
+.scene--design-graphique .design__swatch--white { fill: var(--ap-white); }
+
+.scene--design-graphique .design__pen {
+    transform: translate(330px, 250px);
+    animation: ap-sc-design-pen 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--design-graphique .design__pen-nib { fill: var(--ap-white); }
+.scene--design-graphique .design__pen-body { fill: var(--ap-yellow); }
+.scene--design-graphique .design__pen-hole { fill: var(--ap-black); }
+
+/** @anim group=scene demo=scene scene=design-graphique dur=9s fr="Tracé de Bézier du triangle" en="Bézier path of the triangle" */
+@keyframes ap-sc-design-draw {
+    0%,
+    4% { stroke-dashoffset: 1; opacity: 1; }
+    34% { stroke-dashoffset: 0; opacity: 1; }
+    88% { stroke-dashoffset: 0; opacity: 1; }
+    96%,
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=design-graphique dur=9s ease=var(--ap-ease-spring) fr="Points d’ancrage qui apparaissent" en="Anchor points popping in" */
+@keyframes ap-sc-design-node {
+    0% { transform: scale(0); opacity: 0; }
+    5% { transform: scale(1); opacity: 1; }
+    88% { transform: scale(1); opacity: 1; }
+    96%,
+    100% { transform: scale(1); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=design-graphique dur=9s fr="Champs colorés par le nuancier" en="Fields coloured from the swatches" */
+@keyframes ap-sc-design-fill {
+    0% { opacity: 0; transform: scale(0.9); }
+    6% { opacity: 1; transform: scale(1); }
+    64% { opacity: 1; }
+    72%,
+    100% { opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=design-graphique dur=9s fr="La plume suit les sommets" en="The pen following the vertices" */
+@keyframes ap-sc-design-pen {
+    0% { transform: translate(200px, 108px); }
+    12% { transform: translate(250px, 195px); }
+    22% { transform: translate(300px, 281px); }
+    30% { transform: translate(100px, 281px); }
+    38% { transform: translate(200px, 108px); }
+    48% { transform: translate(67px, 337px); }
+    54% { transform: translate(95px, 337px); }
+    60% { transform: translate(123px, 337px); }
+    70%,
+    100% { transform: translate(330px, 250px); }
+}
+
+/** @anim group=scene demo=scene scene=design-graphique dur=1.2s ease=linear fr="Cadre de sélection en pointillés" en="Marching selection box" */
+@keyframes ap-sc-design-select {
+    to { stroke-dashoffset: -0.035; }
+}

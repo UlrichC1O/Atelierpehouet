@@ -1,0 +1,132 @@
+/* Scene · graffiti-street-art — the can tags the wall (8 s loop). */
+
+.scene--graffiti-street-art .graffiti__floor { fill: var(--ap-ink); }
+
+.scene--graffiti-street-art .graffiti__tag text {
+    font-size: 62px;
+    letter-spacing: -2px;
+    font-weight: 400;
+}
+
+.scene--graffiti-street-art .graffiti__letters {
+    fill: url(#graffiti-fill);
+    animation: ap-sc-graffiti-tag 8s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--graffiti-street-art .graffiti__outline {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    paint-order: stroke;
+    animation: ap-sc-graffiti-tag 8s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--graffiti-street-art .graffiti__glitch {
+    opacity: 0.7;
+    animation: ap-sc-graffiti-glitch 2.6s steps(2, end) 3s infinite backwards;
+}
+
+.scene--graffiti-street-art .graffiti__glitch--red { fill: var(--ap-red-bright); }
+.scene--graffiti-street-art .graffiti__glitch--blue { fill: var(--ap-yellow); animation-direction: reverse; }
+
+.scene--graffiti-street-art .graffiti__drips rect {
+    fill: var(--ap-blue-bright);
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+    animation: ap-sc-graffiti-drip 8s var(--ap-ease-out) calc(2.4s + var(--d, 0s)) infinite backwards;
+}
+
+.scene--graffiti-street-art .graffiti__slashes path {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    opacity: 0.7;
+    animation: ap-sc-graffiti-slash 8s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--graffiti-street-art .graffiti__can {
+    transform: translate(352px, 300px) rotate(-18deg);
+    animation: ap-sc-graffiti-move 8s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--graffiti-street-art .graffiti__can-body {
+    transform-box: fill-box;
+    transform-origin: 50% 70%;
+    animation: ap-sc-graffiti-shake 0.32s linear infinite;
+}
+
+.scene--graffiti-street-art .graffiti__can-shell { fill: var(--ap-blue); stroke: var(--ap-white); stroke-width: 2; }
+.scene--graffiti-street-art .graffiti__can-band { fill: var(--ap-yellow); }
+.scene--graffiti-street-art .graffiti__can-cap { fill: var(--ap-mist); }
+.scene--graffiti-street-art .graffiti__can-nozzle { fill: var(--ap-red-bright); }
+
+.scene--graffiti-street-art .graffiti__mist circle {
+    fill: var(--ap-blue-bright);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-graffiti-mist 0.9s var(--ap-ease-out) var(--d, 0s) infinite backwards;
+}
+
+/** @anim group=scene demo=scene scene=graffiti-street-art dur=8s fr="Le tag apparaît lettre après lettre" en="The tag appearing letter by letter" */
+@keyframes ap-sc-graffiti-tag {
+    0%,
+    6% { clip-path: inset(0 100% 0 0); opacity: 1; }
+    34% { clip-path: inset(0 0 0 0); opacity: 1; }
+    88% { clip-path: inset(0 0 0 0); opacity: 1; }
+    96%,
+    100% { clip-path: inset(0 0 0 0); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=graffiti-street-art dur=8s fr="La bombe longe le mur" en="The can travelling along the wall" */
+@keyframes ap-sc-graffiti-move {
+    0% { transform: translate(40px, 250px) rotate(-30deg); }
+    6% { transform: translate(70px, 240px) rotate(-30deg); }
+    34% { transform: translate(340px, 236px) rotate(-26deg); }
+    44%,
+    100% { transform: translate(352px, 300px) rotate(-18deg); }
+}
+
+/** @anim group=scene demo=scene scene=graffiti-street-art dur=0.32s ease=linear fr="Bombe qu’on secoue" en="Shaking the spray can" */
+@keyframes ap-sc-graffiti-shake {
+    0%,
+    100% { transform: rotate(0deg); }
+    25% { transform: rotate(-6deg) translateY(-2px); }
+    75% { transform: rotate(6deg) translateY(2px); }
+}
+
+/** @anim group=scene demo=scene scene=graffiti-street-art dur=0.9s fr="Nuage de peinture" en="Cloud of spray paint" */
+@keyframes ap-sc-graffiti-mist {
+    from { opacity: 0.9; transform: translate(0, 0) scale(0.4); }
+    to { opacity: 0; transform: translate(-16px, -14px) scale(1.6); }
+}
+
+/** @anim group=scene demo=scene scene=graffiti-street-art dur=8s fr="Coulures sous les lettres" en="Drips under the letters" */
+@keyframes ap-sc-graffiti-drip {
+    0% { transform: scaleY(0); opacity: 1; }
+    30% { transform: scaleY(1); opacity: 1; }
+    70% { transform: scaleY(1); opacity: 1; }
+    80%,
+    100% { transform: scaleY(1); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=graffiti-street-art dur=2.6s ease=steps(2,end) fr="Glitch rouge et jaune" en="Red and yellow glitch" */
+@keyframes ap-sc-graffiti-glitch {
+    0% { transform: translate(-3px, 2px); }
+    25% { transform: translate(3px, -1px); }
+    50% { transform: translate(-2px, -2px); }
+    75% { transform: translate(2px, 1px); }
+    100% { transform: translate(-3px, 2px); }
+}
+
+/** @anim group=scene demo=scene scene=graffiti-street-art dur=8s fr="Traits de signature au pied du mur" en="Signature slashes at the foot of the wall" */
+@keyframes ap-sc-graffiti-slash {
+    0%,
+    36% { stroke-dashoffset: 1; }
+    48% { stroke-dashoffset: 0; }
+    88% { stroke-dashoffset: 0; opacity: 0.7; }
+    96%,
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}

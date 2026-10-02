@@ -1,0 +1,66 @@
+/* Scene · serigraphie-impression — three passes, three colours (9 s loop). */
+
+.scene--serigraphie-impression .serig__bg { fill: var(--ap-black); }
+.scene--serigraphie-impression .serig__shirt { fill: var(--ap-white); stroke: var(--ap-mist); stroke-width: 3; stroke-linejoin: round; }
+
+.scene--serigraphie-impression .serig__layer {
+    stroke: none;
+    animation: ap-sc-serig-layer 9s steps(1, end) infinite backwards;
+}
+
+.scene--serigraphie-impression .serig__layer--blue { fill: var(--ap-blue); }
+.scene--serigraphie-impression .serig__layer--yellow { fill: var(--ap-yellow); animation-delay: 1.5s; }
+.scene--serigraphie-impression .serig__layer--red { fill: var(--ap-red); animation-delay: 3s; }
+.scene--serigraphie-impression .serig__key { fill: none; stroke: var(--ap-black); stroke-width: 1.4; }
+
+.scene--serigraphie-impression .serig__marks path {
+    fill: none;
+    stroke: var(--ap-red-bright);
+    stroke-width: 1.6;
+    animation: ap-sc-serig-mark 1.8s steps(2, end) infinite;
+}
+
+.scene--serigraphie-impression .serig__frame { fill: none; stroke: var(--ap-amber); stroke-width: 10; }
+.scene--serigraphie-impression .serig__mesh { fill: var(--ap-white); opacity: 0.08; }
+
+.scene--serigraphie-impression .serig__squeegee {
+    transform: translateY(110px);
+    animation: ap-sc-serig-squeegee 3s var(--ap-ease-in-out) infinite;
+}
+
+.scene--serigraphie-impression .serig__blade { fill: var(--ap-steel); }
+.scene--serigraphie-impression .serig__handle { fill: var(--ap-orange); }
+.scene--serigraphie-impression .serig__print { animation: ap-sc-serig-shine 9s ease-in-out infinite; }
+
+/** @anim group=scene demo=scene scene=serigraphie-impression dur=3s fr="Passage de la racle" en="Squeegee pass" */
+@keyframes ap-sc-serig-squeegee {
+    0% { transform: translateY(116px); }
+    45% { transform: translateY(300px); }
+    55% { transform: translateY(300px); opacity: 1; }
+    60% { opacity: 0; }
+    95% { transform: translateY(116px); opacity: 0; }
+    100% { transform: translateY(116px); opacity: 1; }
+}
+
+/** @anim group=scene demo=scene scene=serigraphie-impression dur=9s ease=steps(1,end) fr="Couches de couleur imprimées" en="Colour layers printed" */
+@keyframes ap-sc-serig-layer {
+    0% { opacity: 0; }
+    15% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=serigraphie-impression dur=1.8s ease=steps(2,end) fr="Repères de calage" en="Registration marks blinking" */
+@keyframes ap-sc-serig-mark {
+    0%,
+    100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+/** @anim group=scene demo=scene scene=serigraphie-impression dur=9s fr="Encre qui sèche et brille" en="Ink drying with a sheen" */
+@keyframes ap-sc-serig-shine {
+    0%,
+    60% { filter: brightness(1); }
+    75% { filter: brightness(1.25); }
+    100% { filter: brightness(1); }
+}

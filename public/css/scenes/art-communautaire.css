@@ -1,0 +1,99 @@
+/* Scene · art-communautaire — the circle of the community (8 s loop). */
+
+.scene--art-communautaire .commu__bg { fill: var(--ap-black); }
+
+.scene--art-communautaire .commu__ring {
+    fill: none;
+    stroke: var(--ap-orange);
+    stroke-width: 2;
+    stroke-dasharray: 0.01 0.02;
+    animation: ap-sc-commu-ring 12s linear infinite;
+}
+
+.scene--art-communautaire .commu__links path {
+    fill: none;
+    stroke: var(--ap-amber);
+    stroke-width: 1.6;
+    stroke-dasharray: 1;
+    opacity: 0.6;
+    animation: ap-sc-commu-link 8s var(--ap-ease-in-out) var(--d, 0s) infinite backwards;
+}
+
+.scene--art-communautaire .commu__center {
+    transform-box: fill-box;
+    transform-origin: 50% 75%;
+    animation: ap-sc-commu-grow 8s var(--ap-ease-out) infinite backwards;
+}
+
+.scene--art-communautaire .commu__tri { stroke: var(--ap-white); stroke-width: 1.5; }
+.scene--art-communautaire .commu__tri--yellow { fill: var(--ap-yellow); }
+.scene--art-communautaire .commu__tri--blue { fill: var(--ap-blue); }
+.scene--art-communautaire .commu__tri--red { fill: var(--ap-red); }
+.scene--art-communautaire .commu__tri-outline { fill: none; stroke: var(--ap-white); stroke-width: 3; filter: drop-shadow(0 0 6px rgb(232 67 59 / 0.8)); }
+
+.scene--art-communautaire .commu__head { fill: var(--ap-mist); }
+.scene--art-communautaire .commu__body { fill: var(--ap-steel); }
+
+.scene--art-communautaire .commu__person {
+    animation: ap-sc-commu-wave 2.4s var(--ap-ease-in-out) var(--d, 0s) infinite;
+}
+
+.scene--art-communautaire .commu__person .commu__body {
+    animation: ap-sc-commu-color 8s ease-in-out var(--d, 0s) infinite backwards;
+}
+
+.scene--art-communautaire .commu__person--blue { --c: var(--ap-blue); }
+.scene--art-communautaire .commu__person--yellow { --c: var(--ap-yellow); }
+.scene--art-communautaire .commu__person--red { --c: var(--ap-red); }
+.scene--art-communautaire .commu__person--white { --c: var(--ap-white); }
+.scene--art-communautaire .commu__person--amber { --c: var(--ap-amber); }
+.scene--art-communautaire .commu__person--orange { --c: var(--ap-orange); }
+.scene--art-communautaire .commu__person--blue-bright { --c: var(--ap-blue-bright); }
+.scene--art-communautaire .commu__person--red-bright { --c: var(--ap-red-bright); }
+.scene--art-communautaire .commu__person .commu__body { fill: var(--c, var(--ap-orange)); }
+
+.scene--art-communautaire .commu__rising polygon {
+    fill: var(--ap-yellow);
+    animation: ap-sc-commu-rise 3.6s var(--ap-ease-out) var(--d, 0s) infinite backwards;
+}
+
+/** @anim group=scene demo=scene scene=art-communautaire dur=8s ease=var(--ap-ease-out) fr="Le triangle commun grandit" en="The shared triangle growing" */
+@keyframes ap-sc-commu-grow {
+    0% { transform: scale(0.15); }
+    40% { transform: scale(1.08); }
+    48% { transform: scale(1); }
+    100% { transform: scale(1); }
+}
+
+/** @anim group=scene demo=scene scene=art-communautaire dur=8s fr="La couleur passe de l’un à l’autre" en="Colour passing from one to the next" */
+@keyframes ap-sc-commu-color {
+    0% { fill: var(--ap-steel); }
+    10% { fill: var(--c, var(--ap-orange)); }
+    100% { fill: var(--c, var(--ap-orange)); }
+}
+
+/** @anim group=scene demo=scene scene=art-communautaire dur=8s fr="Liens qui relient les personnes" en="Links connecting people" */
+@keyframes ap-sc-commu-link {
+    0% { stroke-dashoffset: 1; }
+    12% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 0; }
+}
+
+/** @anim group=scene demo=scene scene=art-communautaire dur=2.4s fr="Salut de la ronde" en="The circle waving" */
+@keyframes ap-sc-commu-wave {
+    0%,
+    100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-5px) scale(1.04); }
+}
+
+/** @anim group=scene demo=scene scene=art-communautaire dur=3.6s fr="Petits triangles qui s’envolent" en="Little triangles rising" */
+@keyframes ap-sc-commu-rise {
+    0% { transform: translateY(0); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-60px); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=art-communautaire dur=12s ease=linear fr="La ronde qui tourne" en="The circle turning" */
+@keyframes ap-sc-commu-ring {
+    to { stroke-dashoffset: -1; }
+}

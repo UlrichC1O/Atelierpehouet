@@ -1,0 +1,94 @@
+/* Scene · restauration-encadrement — cleaning and framing (9 s loop). */
+
+.scene--restauration-encadrement .restau__bg { fill: var(--ap-black); }
+.scene--restauration-encadrement .restau__p { stroke: var(--ap-white); stroke-width: 2; }
+.scene--restauration-encadrement .restau__p--black { fill: var(--ap-black); }
+.scene--restauration-encadrement .restau__p--blue { fill: var(--ap-blue); }
+.scene--restauration-encadrement .restau__p--yellow { fill: var(--ap-yellow); }
+.scene--restauration-encadrement .restau__p--white { fill: var(--ap-white); }
+.scene--restauration-encadrement .restau__p--red { fill: var(--ap-red); }
+.scene--restauration-encadrement .restau__p--ink { fill: var(--ap-ink); }
+.scene--restauration-encadrement .restau__p--tri { fill: var(--ap-amber); stroke-width: 2.5; }
+
+.scene--restauration-encadrement .restau__painting { animation: ap-sc-restau-revive 9s ease-in-out infinite backwards; }
+
+.scene--restauration-encadrement .restau__veil {
+    clip-path: inset(0 0 0 100%);
+    animation: ap-sc-restau-clean 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--restauration-encadrement .restau__dust { fill: var(--ap-smoke); opacity: 0.9; }
+.scene--restauration-encadrement .restau__cracks { fill: none; stroke: var(--ap-graphite); stroke-width: 1.6; }
+
+.scene--restauration-encadrement .restau__swab {
+    transform: translate(332px, 352px);
+    animation: ap-sc-restau-swab 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--restauration-encadrement .restau__swab-stick { stroke: var(--ap-amber); stroke-width: 4; stroke-linecap: round; }
+.scene--restauration-encadrement .restau__swab-cotton { fill: var(--ap-white); }
+
+.scene--restauration-encadrement .restau__frame { fill: none; stroke: var(--ap-amber); stroke-width: 7; }
+
+.scene--restauration-encadrement .restau__glint {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 0.07 0.93;
+    filter: drop-shadow(0 0 4px rgb(248 212 73 / 0.9));
+    animation: ap-sc-restau-glint 3.6s linear infinite;
+}
+
+.scene--restauration-encadrement .restau__corner {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 6;
+    stroke-linecap: square;
+    animation: ap-sc-restau-corner 9s var(--ap-ease-spring) infinite backwards;
+}
+
+/** @anim group=scene demo=scene scene=restauration-encadrement dur=9s fr="Le voile de poussière s’efface" en="The veil of dust wiped away" */
+@keyframes ap-sc-restau-clean {
+    0%,
+    8% { clip-path: inset(0 0 0 0); }
+    50% { clip-path: inset(0 0 0 100%); }
+    100% { clip-path: inset(0 0 0 100%); }
+}
+
+/** @anim group=scene demo=scene scene=restauration-encadrement dur=9s fr="Coton de nettoyage en va-et-vient" en="Cleaning swab moving to and fro" */
+@keyframes ap-sc-restau-swab {
+    0% { transform: translate(110px, 150px); }
+    8% { transform: translate(110px, 120px); }
+    15% { transform: translate(150px, 280px); }
+    22% { transform: translate(180px, 120px); }
+    29% { transform: translate(210px, 280px); }
+    36% { transform: translate(240px, 120px); }
+    43% { transform: translate(270px, 280px); }
+    50% { transform: translate(296px, 200px); }
+    60%,
+    100% { transform: translate(332px, 352px); }
+}
+
+/** @anim group=scene demo=scene scene=restauration-encadrement dur=9s fr="Couleurs ravivées" en="Colours revived" */
+@keyframes ap-sc-restau-revive {
+    0%,
+    10% { filter: saturate(0.3) brightness(0.7); }
+    55% { filter: saturate(1.25) brightness(1.1); }
+    70%,
+    100% { filter: none; }
+}
+
+/** @anim group=scene demo=scene scene=restauration-encadrement dur=9s ease=var(--ap-ease-spring) fr="Coins du cadre qui s’assemblent" en="Frame corners locking together" */
+@keyframes ap-sc-restau-corner {
+    0%,
+    52% { transform: translate(var(--fx, -40px), var(--fy, -40px)); opacity: 0; }
+    64% { transform: translate(0, 0); opacity: 1; }
+    100% { transform: translate(0, 0); opacity: 1; }
+}
+
+/** @anim group=scene demo=scene scene=restauration-encadrement dur=3.6s ease=linear fr="Reflet ambré le long du cadre" en="Amber glint along the frame" */
+@keyframes ap-sc-restau-glint {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+}

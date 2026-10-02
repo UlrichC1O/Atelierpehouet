@@ -1,0 +1,186 @@
+/* ==========================================================================
+   Ateliers Pehouet — Contact page. Keyframes: ap-pg-contact-*
+   ========================================================================== */
+
+.contact__layout {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+}
+
+@media (min-width: 64em) {
+    .contact__layout {
+        grid-template-columns: minmax(0, 1.7fr) minmax(16rem, 1fr);
+    }
+}
+
+.contact__main {
+    display: grid;
+    gap: 1.25rem;
+    scroll-margin-top: calc(var(--ap-header-h) + 1rem);
+}
+
+.contact__main:focus {
+    outline: none;
+}
+
+.contact__form {
+    position: relative;
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    background: linear-gradient(165deg, var(--ap-coal), var(--ap-black) 80%);
+    border: 1px solid var(--ap-white-08);
+    border-top: 4px solid var(--ap-red);
+}
+
+.contact__form::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 4.5rem;
+    height: 4.5rem;
+    background: linear-gradient(135deg, var(--ap-yellow), var(--ap-red));
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    opacity: 0.85;
+    animation: ap-pg-contact-corner 6s var(--ap-ease-in-out) infinite;
+}
+
+.contact__form-title {
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+}
+
+.contact__form-intro {
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+}
+
+.contact__req {
+    display: inline-block;
+    width: 0.62em;
+    height: 0.54em;
+    background: var(--ap-red-bright);
+    clip-path: var(--ap-clip-tri);
+}
+
+.contact__hint-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: none;
+}
+
+.contact__counter {
+    flex: none;
+    font-variant-numeric: tabular-nums;
+}
+
+.contact__counter.is-near {
+    color: var(--ap-yellow);
+}
+
+.contact__honeypot {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.contact__success {
+    border-left-color: var(--ap-yellow);
+}
+
+.contact__success-title {
+    font-family: var(--ap-font-display);
+    text-transform: uppercase;
+    color: var(--ap-yellow);
+}
+
+.contact__error-list {
+    margin: 0.4rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--ap-text-soft);
+}
+
+[data-contact-submit].is-sending {
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+[data-contact-submit].is-sending .btn__icon {
+    animation: ap-pg-contact-send 0.8s var(--ap-ease-in-out) infinite;
+}
+
+.contact-card {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    gap: 1.2rem;
+    padding: 1.75rem;
+    background: var(--ap-ink);
+    border: 1px solid var(--ap-white-08);
+    border-left: 4px solid var(--ap-yellow);
+}
+
+.contact-card__title {
+    font-family: var(--ap-font-display);
+    font-size: var(--ap-step-1);
+    text-transform: uppercase;
+}
+
+.contact-card__list {
+    display: grid;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+}
+
+.contact-card__list li {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+}
+
+.contact-card__list .icon {
+    color: var(--ap-yellow);
+    margin-top: 0.2rem;
+}
+
+.contact-card__list span {
+    display: grid;
+    gap: 0.1rem;
+    overflow-wrap: anywhere;
+}
+
+.contact-card__list small {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.contact-card__note {
+    font-size: 0.88rem;
+    color: var(--ap-text-soft);
+}
+
+.contact-card__art {
+    width: 9rem;
+    justify-self: end;
+    rotate: 8deg;
+}
+
+/** @anim group=page demo=shape dur=6s fr="Coin du formulaire qui respire" en="Breathing form corner" */
+@keyframes ap-pg-contact-corner {
+    0%,
+    100% { transform: scale(1); }
+    50% { transform: scale(0.82); }
+}
+
+/** @anim group=page demo=shape dur=0.8s fr="Message qui s’envole" en="Message taking off" */
+@keyframes ap-pg-contact-send {
+    0%,
+    100% { transform: translateX(0); }
+    50% { transform: translateX(6px) translateY(-3px); }
+}

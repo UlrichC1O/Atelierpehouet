@@ -1,0 +1,98 @@
+/* Scene · cours-ateliers — a drawing lesson (9 s loop). */
+
+.scene--cours-ateliers .cours__bg { fill: var(--ap-black); }
+.scene--cours-ateliers .cours__board { fill: var(--ap-coal); stroke: var(--ap-amber); stroke-width: 8; }
+.scene--cours-ateliers .cours__tray { stroke: var(--ap-amber); stroke-width: 8; stroke-linecap: round; }
+.scene--cours-ateliers .cours__dots circle { fill: var(--ap-white); }
+
+.scene--cours-ateliers .cours__line {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    animation: ap-sc-cours-draw 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--cours-ateliers .cours__line--2 { animation-delay: 0.9s; }
+.scene--cours-ateliers .cours__line--3 { animation-delay: 1.8s; }
+
+.scene--cours-ateliers .cours__fill {
+    fill: var(--ap-amber);
+    opacity: 0.85;
+    animation: ap-sc-cours-fill 9s ease-out infinite backwards;
+}
+
+.scene--cours-ateliers .cours__stars path {
+    fill: var(--ap-yellow);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-cours-star 2.1s ease-in-out var(--d, 0s) infinite;
+}
+
+.scene--cours-ateliers .cours__head { fill: var(--ap-mist); }
+.scene--cours-ateliers .cours__pupil--blue .cours__body { fill: var(--ap-blue); }
+.scene--cours-ateliers .cours__pupil--yellow .cours__body { fill: var(--ap-yellow); }
+.scene--cours-ateliers .cours__pupil--red .cours__body { fill: var(--ap-red); }
+.scene--cours-ateliers .cours__pupil--white .cours__body { fill: var(--ap-white); }
+
+.scene--cours-ateliers .cours__arm {
+    stroke: var(--ap-mist);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transform-box: fill-box;
+    transform-origin: 0% 100%;
+    animation: ap-sc-cours-hand 3.6s var(--ap-ease-in-out) var(--d, 0s) infinite;
+}
+
+.scene--cours-ateliers .cours__pencil {
+    transform: translate(330px, 210px);
+    animation: ap-sc-cours-pencil 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--cours-ateliers .cours__pencil-tip { fill: var(--ap-black); stroke: var(--ap-white); stroke-width: 1; }
+.scene--cours-ateliers .cours__pencil-body { fill: var(--ap-yellow); stroke: var(--ap-black); stroke-width: 1.5; }
+
+/** @anim group=scene demo=scene scene=cours-ateliers dur=9s fr="Triangle tracé pas à pas" en="Triangle drawn step by step" */
+@keyframes ap-sc-cours-draw {
+    0% { stroke-dashoffset: 1; opacity: 1; }
+    10% { stroke-dashoffset: 0; opacity: 1; }
+    86% { stroke-dashoffset: 0; opacity: 1; }
+    94%,
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=cours-ateliers dur=9s fr="Le crayon de l’enseignant" en="The teacher's pencil" */
+@keyframes ap-sc-cours-pencil {
+    0% { transform: translate(200px, 66px); }
+    10% { transform: translate(292px, 206px); }
+    20% { transform: translate(108px, 206px); }
+    30% { transform: translate(200px, 66px); }
+    40%,
+    100% { transform: translate(330px, 210px); }
+}
+
+/** @anim group=scene demo=scene scene=cours-ateliers dur=3.6s fr="Élèves qui lèvent la main" en="Pupils raising their hands" */
+@keyframes ap-sc-cours-hand {
+    0%,
+    100% { transform: rotate(0deg); }
+    40%,
+    60% { transform: rotate(-30deg) translateY(-6px); }
+}
+
+/** @anim group=scene demo=scene scene=cours-ateliers dur=9s fr="Triangle colorié" en="Triangle coloured in" */
+@keyframes ap-sc-cours-fill {
+    0%,
+    30% { opacity: 0; }
+    40% { opacity: 0.85; }
+    86% { opacity: 0.85; }
+    94%,
+    100% { opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=cours-ateliers dur=2.1s fr="Étoiles d’encouragement" en="Stars of encouragement" */
+@keyframes ap-sc-cours-star {
+    0%,
+    100% { transform: scale(0.5) rotate(0deg); opacity: 0.4; }
+    50% { transform: scale(1.2) rotate(30deg); opacity: 1; }
+}

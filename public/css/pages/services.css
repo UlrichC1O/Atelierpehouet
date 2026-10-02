@@ -1,0 +1,569 @@
+/* ==========================================================================
+   Ateliers Pehouet — Services index & service page template
+   Keyframes: ap-pg-services-* / ap-pg-service-*
+   ========================================================================== */
+
+/* --- Index: hero collage ------------------------------------------------- */
+
+.services-collage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: clamp(18rem, 40vw, 28rem);
+}
+
+.services-collage__mondrian {
+    width: min(78%, 22rem);
+    rotate: -6deg;
+    animation: ap-pg-services-float 9s var(--ap-ease-in-out) infinite;
+}
+
+.services-collage__kaleido {
+    position: absolute;
+    right: -2%;
+    top: -4%;
+}
+
+.services-collage__orbit {
+    position: absolute;
+    left: 0;
+    bottom: -2%;
+}
+
+.services-collage__count {
+    position: absolute;
+    right: 6%;
+    bottom: 4%;
+    font-family: var(--ap-font-display);
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--ap-yellow);
+    text-shadow: var(--ap-neon-yellow);
+    animation: ap-pg-services-count 4s ease-in-out infinite;
+}
+
+/* --- Index: catalogue ------------------------------------------------------ */
+
+.services-toolbar {
+    display: grid;
+    gap: 1.5rem;
+    align-items: end;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+@media (min-width: 64em) {
+    .services-toolbar {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    }
+
+    .services-toolbar .section-heading {
+        margin-bottom: 0;
+    }
+
+    .services-toolbar .filters {
+        justify-content: flex-end;
+    }
+}
+
+.services-grid {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    grid-auto-flow: dense;
+}
+
+@media (min-width: 64em) {
+    .services-grid__wide {
+        grid-column: span 2;
+    }
+}
+
+.services-bridge__art {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    transform: rotate(-4deg);
+}
+
+.services-bridge__art img {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 4px solid var(--ap-white);
+    box-shadow: var(--ap-shadow-deep);
+}
+
+.services-bridge__art img:nth-child(2) {
+    translate: 0 1.5rem;
+    animation: ap-pg-services-float 7s var(--ap-ease-in-out) infinite;
+}
+
+.services-bridge__art img:nth-child(3) {
+    animation: ap-pg-services-float 8s var(--ap-ease-in-out) -3s infinite;
+}
+
+/* --- Service page: hero ------------------------------------------------------ */
+
+.service-hero {
+    position: relative;
+    overflow: hidden;
+    margin-top: calc(-1 * var(--ap-header-h));
+    padding: calc(var(--ap-header-h) + clamp(2.5rem, 6vw, 5rem)) 0 clamp(3rem, 7vw, 6rem);
+    background:
+        radial-gradient(50rem 30rem at 80% 30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+        radial-gradient(40rem 30rem at 0% 100%, rgb(38 95 165 / 0.18), transparent 70%),
+        var(--ap-black);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3vw), 0 100%);
+}
+
+.service-hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+}
+
+@media (min-width: 64em) {
+    .service-hero__inner {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+}
+
+.service-hero__text {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+}
+
+.service-hero__title {
+    position: relative;
+    font-size: clamp(2.1rem, 1rem + 3.3vw, 4.4rem);
+    line-height: 1;
+    text-transform: uppercase;
+    max-width: 16ch;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+.service-hero__title::after {
+    content: "";
+    display: block;
+    width: 5.5rem;
+    height: 6px;
+    margin-top: 1.1rem;
+    background: linear-gradient(90deg, var(--ap-blue) 0 33%, var(--ap-yellow) 33% 66%, var(--ap-red) 66%);
+    transform-origin: left;
+    animation: ap-pg-service-title-bar 1.2s var(--ap-ease-out) 0.6s backwards;
+}
+
+.service-hero__tagline {
+    font-family: var(--ap-font-tagline);
+    font-size: var(--ap-step-1);
+    color: var(--accent-bright);
+    max-width: 40ch;
+}
+
+.service-hero__figure {
+    position: relative;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+}
+
+.service-hero__caption {
+    max-width: 36rem;
+    font-size: 0.85rem;
+    color: var(--ap-text-muted);
+    text-align: center;
+}
+
+.service-hero__num {
+    font-family: var(--ap-font-display);
+    color: var(--accent-bright);
+    margin-right: 0.4em;
+}
+
+/* --- The scene stage --------------------------------------------------------- */
+
+.scene-stage {
+    position: relative;
+    width: min(100%, 36rem);
+    aspect-ratio: 1;
+    container-type: inline-size;
+    overflow: hidden;
+    background: var(--ap-black);
+    border: var(--ap-seam) solid var(--ap-white);
+    box-shadow:
+        0 0 0 6px var(--ap-black),
+        0 0 0 7px color-mix(in srgb, var(--accent) 70%, transparent),
+        0 40px 90px -30px var(--accent-glow);
+    transform-style: preserve-3d;
+    transition: transform var(--ap-dur-slow) var(--ap-ease-out);
+    animation: ap-pg-service-stage-glow 6s ease-in-out infinite;
+}
+
+.scene-stage__corner {
+    position: absolute;
+    z-index: 2;
+    width: 2.6rem;
+    height: 2.6rem;
+    background: var(--accent);
+    pointer-events: none;
+    animation: ap-pg-service-corner 4s var(--ap-ease-in-out) infinite;
+}
+
+.scene-stage__corner--tl {
+    top: 0;
+    left: 0;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.scene-stage__corner--br {
+    right: 0;
+    bottom: 0;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    animation-delay: -2s;
+}
+
+.scene--fallback {
+    display: grid;
+    place-items: center;
+}
+
+.scene--fallback .logo-mark {
+    width: 60%;
+}
+
+/* --- Service page: intro & aside ---------------------------------------------- */
+
+.service-intro__grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+}
+
+@media (min-width: 64em) {
+    .service-intro__grid {
+        grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 1fr);
+        align-items: start;
+    }
+}
+
+.service-intro__lead {
+    font-size: var(--ap-step-1);
+    line-height: 1.55;
+    color: var(--ap-white);
+}
+
+.service-intro__lead::first-letter {
+    float: left;
+    margin: 0.06em 0.12em 0 0;
+    font-family: var(--ap-font-display);
+    font-size: 3.4em;
+    line-height: 0.8;
+    color: var(--accent-bright);
+}
+
+.service-card-facts,
+.service-ideal {
+    padding: 1.5rem;
+    background: linear-gradient(160deg, var(--ap-coal), var(--ap-black));
+    border: 1px solid var(--ap-white-08);
+    border-left: 4px solid var(--accent);
+}
+
+.service-card-facts__title,
+.service-ideal__title {
+    margin-bottom: 0.9rem;
+    font-family: var(--ap-font-tagline);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    text-transform: uppercase;
+    color: var(--accent-bright);
+}
+
+.service-card-facts dl {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.service-card-facts dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px dashed var(--ap-white-16);
+}
+
+.service-card-facts dt {
+    color: var(--ap-text-muted);
+    font-size: 0.85rem;
+}
+
+.service-card-facts dd {
+    margin: 0;
+    color: var(--ap-white);
+    font-weight: 600;
+    text-align: right;
+}
+
+.service-card-facts__note {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--ap-yellow);
+}
+
+.service-ideal__list {
+    display: grid;
+    gap: 0.6rem;
+    list-style: none;
+    padding: 0;
+}
+
+.service-ideal__list li {
+    display: flex;
+    gap: 0.6em;
+    align-items: baseline;
+    color: var(--ap-text-soft);
+}
+
+.service-ideal__list li::before {
+    content: "";
+    flex: none;
+    width: 0.7em;
+    height: 0.6em;
+    background: var(--accent);
+    clip-path: var(--ap-clip-tri);
+}
+
+/* --- Features: a Mondrian-like grid --------------------------------------------- */
+
+.service-features__grid {
+    display: grid;
+    gap: var(--ap-seam);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    background: var(--ap-white-16);
+    border: var(--ap-seam) solid var(--ap-white-16);
+}
+
+@media (min-width: 64em) {
+    .service-features__grid {
+        grid-template-columns: 1.4fr 1fr 1fr;
+    }
+
+    .service-features__grid > :first-child {
+        grid-row: span 2;
+        background:
+            radial-gradient(20rem 20rem at 20% 0%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 70%),
+            linear-gradient(170deg, var(--ap-coal), var(--ap-black));
+    }
+
+    .service-features__grid > :first-child .feature__title {
+        font-size: var(--ap-step-3);
+    }
+}
+
+.service-features__grid .feature {
+    border: 0;
+    border-top: 3px solid transparent;
+}
+
+.service-features__grid .feature:hover {
+    border-top-color: var(--accent);
+}
+
+/* --- Inspirations ------------------------------------------------------------------ */
+
+.service-inspirations__grid {
+    display: grid;
+    gap: clamp(1rem, 3vw, 2rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.service-inspirations__grid .art-frame:nth-child(2) {
+    translate: 0 1.5rem;
+}
+
+.service-inspirations__more {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    max-width: none;
+    text-align: center;
+}
+
+/* --- FAQ ---------------------------------------------------------------------------- */
+
+.service-faq__list .accordion[open] .accordion__question {
+    color: var(--accent-bright);
+}
+
+/* --- Prev / next ---------------------------------------------------------------- */
+
+.service-nav {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    align-items: stretch;
+}
+
+@media (min-width: 48em) {
+    .service-nav {
+        grid-template-columns: 1fr auto 1fr;
+    }
+}
+
+.service-nav__link {
+    position: relative;
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.4rem 1.6rem;
+    border: 1px solid var(--ap-white-16);
+    color: var(--ap-white);
+    overflow: hidden;
+    transition: border-color var(--ap-dur) ease, background-color var(--ap-dur) ease;
+}
+
+.service-nav__link--next {
+    text-align: right;
+    justify-items: end;
+}
+
+.service-nav__link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    clip-path: polygon(0 100%, 0 100%, 0 100%);
+    transition: clip-path var(--ap-dur-slow) var(--ap-ease-out);
+    z-index: -1;
+    opacity: 0.18;
+}
+
+.service-nav__link:hover::before,
+.service-nav__link:focus-visible::before {
+    clip-path: polygon(0 100%, 0 -100%, 200% 100%);
+}
+
+.service-nav__link:hover {
+    border-color: var(--accent);
+}
+
+.service-nav__arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-ink);
+}
+
+.service-nav__link--prev:hover .service-nav__arrow { animation: ap-pg-service-arrow-left 0.9s var(--ap-ease-in-out) infinite; }
+.service-nav__link--next:hover .service-nav__arrow { animation: ap-pg-service-arrow-right 0.9s var(--ap-ease-in-out) infinite; }
+
+.service-nav__label {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.service-nav__title {
+    font-family: var(--ap-font-display);
+    font-size: var(--ap-step-1);
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.service-nav__num {
+    color: var(--accent-bright);
+}
+
+.service-nav__all {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 1rem 1.4rem;
+    border: 1px dashed var(--ap-white-16);
+    color: var(--ap-text-soft);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.service-nav__all:hover {
+    color: var(--ap-yellow);
+    border-color: var(--ap-yellow);
+}
+
+.service-nav__hint {
+    margin-top: 1rem;
+    max-width: none;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+@media (hover: none) {
+    .service-nav__hint {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+
+/** @anim group=page demo=shape dur=9s fr="Collage qui flotte" en="Floating collage" */
+@keyframes ap-pg-services-float {
+    0%,
+    100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(1.5deg); }
+}
+
+/** @anim group=page demo=text dur=4s fr="Chiffre néon des services" en="Neon number of services" */
+@keyframes ap-pg-services-count {
+    0%,
+    100% { opacity: 0.85; text-shadow: var(--ap-neon-yellow, 0 0 8px #f8d449); }
+    50% { opacity: 1; text-shadow: 0 0 0.12em var(--ap-yellow, #f8d449), 0 0 0.6em rgb(248 212 73 / 0.6); }
+}
+
+/** @anim group=page demo=ring dur=6s fr="Lueur du cadre de la scène" en="Scene frame glow" */
+@keyframes ap-pg-service-stage-glow {
+    0%,
+    100% { box-shadow: 0 0 0 6px var(--ap-black), 0 0 0 7px color-mix(in srgb, var(--accent, #f8d449) 70%, transparent), 0 40px 90px -30px var(--accent-glow, rgb(248 212 73 / 0.45)); }
+    50% { box-shadow: 0 0 0 6px var(--ap-black), 0 0 0 8px var(--accent, #f8d449), 0 40px 110px -24px var(--accent-glow, rgb(248 212 73 / 0.45)); }
+}
+
+/** @anim group=page demo=shape dur=4s fr="Coins triangulaires qui respirent" en="Breathing corner triangles" */
+@keyframes ap-pg-service-corner {
+    0%,
+    100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.7); opacity: 0.7; }
+}
+
+/** @anim group=page demo=bar dur=1.2s ease=var(--ap-ease-out) dir=alternate fr="Barre tricolore sous le titre" en="Tri-colour bar under the title" */
+@keyframes ap-pg-service-title-bar {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+/** @anim group=page demo=shape dur=0.9s fr="Flèche vers le service précédent" en="Arrow to the previous service" */
+@keyframes ap-pg-service-arrow-left {
+    0%,
+    100% { transform: translateX(0); }
+    50% { transform: translateX(-5px); }
+}
+
+/** @anim group=page demo=shape dur=0.9s fr="Flèche vers le service suivant" en="Arrow to the next service" */
+@keyframes ap-pg-service-arrow-right {
+    0%,
+    100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+}

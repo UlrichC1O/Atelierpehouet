@@ -1,0 +1,358 @@
+{
+  "version": 1,
+  "generated_with": "art_engine 1.0.0",
+  "items": [
+    {
+      "file": "gallery/pehouet-1.svg",
+      "style": "pehouet",
+      "seed": "atelier-pehouet-1",
+      "title": {
+        "fr": "Mosaïque du dimanche",
+        "en": "Sunday Mosaic"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/pehouet-2.svg",
+      "style": "pehouet",
+      "seed": "communaute-pehouet-2",
+      "title": {
+        "fr": "Danse de l’atelier",
+        "en": "Studio Dance"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/pehouet-3.svg",
+      "style": "pehouet",
+      "seed": "lumiere-pehouet-3",
+      "title": {
+        "fr": "Constellation du quartier",
+        "en": "Neighbourhood Constellation"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/pehouet-4.svg",
+      "style": "pehouet",
+      "seed": "quartier-pehouet-4",
+      "title": {
+        "fr": "Danse du quartier",
+        "en": "Neighbourhood Dance"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/mondrian-1.svg",
+      "style": "mondrian",
+      "seed": "atelier-mondrian-1",
+      "title": {
+        "fr": "Triangle des rues",
+        "en": "Street Triangle"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/mondrian-2.svg",
+      "style": "mondrian",
+      "seed": "communaute-mondrian-2",
+      "title": {
+        "fr": "Constellation de pluie",
+        "en": "Rain Constellation"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/mondrian-3.svg",
+      "style": "mondrian",
+      "seed": "lumiere-mondrian-3",
+      "title": {
+        "fr": "Éclat du matin",
+        "en": "Morning Shard"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/mondrian-4.svg",
+      "style": "mondrian",
+      "seed": "quartier-mondrian-4",
+      "title": {
+        "fr": "Prisme des rues",
+        "en": "Street Prism"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/prisme-1.svg",
+      "style": "prisme",
+      "seed": "atelier-prisme-1",
+      "title": {
+        "fr": "Vitrail du fleuve",
+        "en": "River Window"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/prisme-2.svg",
+      "style": "prisme",
+      "seed": "communaute-prisme-2",
+      "title": {
+        "fr": "Passage du dimanche",
+        "en": "Sunday Passage"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/prisme-3.svg",
+      "style": "prisme",
+      "seed": "lumiere-prisme-3",
+      "title": {
+        "fr": "Mémoire de l’atelier",
+        "en": "Studio Memory"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/prisme-4.svg",
+      "style": "prisme",
+      "seed": "quartier-prisme-4",
+      "title": {
+        "fr": "Signature du fleuve",
+        "en": "River Signature"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/mosaique-1.svg",
+      "style": "mosaique",
+      "seed": "atelier-mosaique-1",
+      "title": {
+        "fr": "Prisme de minuit",
+        "en": "Midnight Prism"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/mosaique-2.svg",
+      "style": "mosaique",
+      "seed": "communaute-mosaique-2",
+      "title": {
+        "fr": "Constellation de minuit",
+        "en": "Midnight Constellation"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/mosaique-3.svg",
+      "style": "mosaique",
+      "seed": "lumiere-mosaique-3",
+      "title": {
+        "fr": "Passage des voisins",
+        "en": "Neighbours' Passage"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/mosaique-4.svg",
+      "style": "mosaique",
+      "seed": "quartier-mosaique-4",
+      "title": {
+        "fr": "Lumière des enfants",
+        "en": "Children's Light"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/vitrail-1.svg",
+      "style": "vitrail",
+      "seed": "atelier-vitrail-1",
+      "title": {
+        "fr": "Tissage de minuit",
+        "en": "Midnight Weave"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/vitrail-2.svg",
+      "style": "vitrail",
+      "seed": "communaute-vitrail-2",
+      "title": {
+        "fr": "Lumière du soir",
+        "en": "Evening Light"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/vitrail-3.svg",
+      "style": "vitrail",
+      "seed": "lumiere-vitrail-3",
+      "title": {
+        "fr": "Prisme du dimanche",
+        "en": "Sunday Prism"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/vitrail-4.svg",
+      "style": "vitrail",
+      "seed": "quartier-vitrail-4",
+      "title": {
+        "fr": "Triangle des enfants",
+        "en": "Children's Triangle"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/eclats-1.svg",
+      "style": "eclats",
+      "seed": "atelier-eclats-1",
+      "title": {
+        "fr": "Tissage du dimanche",
+        "en": "Sunday Weave"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/eclats-2.svg",
+      "style": "eclats",
+      "seed": "communaute-eclats-2",
+      "title": {
+        "fr": "Mosaïque de fête",
+        "en": "Festival Mosaic"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/eclats-3.svg",
+      "style": "eclats",
+      "seed": "lumiere-eclats-3",
+      "title": {
+        "fr": "Passage de pluie",
+        "en": "Rain Passage"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/eclats-4.svg",
+      "style": "eclats",
+      "seed": "quartier-eclats-4",
+      "title": {
+        "fr": "Tissage du dimanche",
+        "en": "Sunday Weave"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/soleil-1.svg",
+      "style": "soleil",
+      "seed": "atelier-soleil-1",
+      "title": {
+        "fr": "Rythme du soir",
+        "en": "Evening Rhythm"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/soleil-2.svg",
+      "style": "soleil",
+      "seed": "communaute-soleil-2",
+      "title": {
+        "fr": "Mosaïque du matin",
+        "en": "Morning Mosaic"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/soleil-3.svg",
+      "style": "soleil",
+      "seed": "lumiere-soleil-3",
+      "title": {
+        "fr": "Éclat de la place",
+        "en": "Square Shard"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/soleil-4.svg",
+      "style": "soleil",
+      "seed": "quartier-soleil-4",
+      "title": {
+        "fr": "Aube du soir",
+        "en": "Evening Dawn"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/tissage-1.svg",
+      "style": "tissage",
+      "seed": "atelier-tissage-1",
+      "title": {
+        "fr": "Soleil du fleuve",
+        "en": "River Sun"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/tissage-2.svg",
+      "style": "tissage",
+      "seed": "communaute-tissage-2",
+      "title": {
+        "fr": "Prisme de la place",
+        "en": "Square Prism"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/tissage-3.svg",
+      "style": "tissage",
+      "seed": "lumiere-tissage-3",
+      "title": {
+        "fr": "Soleil de pluie",
+        "en": "Rain Sun"
+      },
+      "width": 800,
+      "height": 800
+    },
+    {
+      "file": "gallery/tissage-4.svg",
+      "style": "tissage",
+      "seed": "quartier-tissage-4",
+      "title": {
+        "fr": "Mémoire de la place",
+        "en": "Square Memory"
+      },
+      "width": 800,
+      "height": 800
+    }
+  ]
+}

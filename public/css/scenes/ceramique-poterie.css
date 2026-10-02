@@ -1,0 +1,91 @@
+/* Scene · ceramique-poterie — the vase rising on the wheel (9 s loop). */
+
+.scene--ceramique-poterie .ceram__bg { fill: var(--ap-black); }
+.scene--ceramique-poterie .ceram__kiln { animation: ap-sc-ceram-glow 5s ease-in-out infinite; }
+.scene--ceramique-poterie .ceram__wheel { fill: var(--ap-graphite); stroke: var(--ap-steel); stroke-width: 3; }
+
+.scene--ceramique-poterie .ceram__wheel-marks {
+    fill: none;
+    stroke: var(--ap-smoke);
+    stroke-width: 3;
+    stroke-dasharray: 0.06 0.1;
+    animation: ap-sc-ceram-spin 1.4s linear infinite;
+}
+
+.scene--ceramique-poterie .ceram__stand { fill: var(--ap-steel); }
+
+.scene--ceramique-poterie .ceram__vase {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: ap-sc-ceram-rise 9s var(--ap-ease-out) infinite backwards;
+}
+
+.scene--ceramique-poterie .ceram__band {
+    animation: ap-sc-ceram-glaze 9s steps(1, end) infinite;
+}
+
+.scene--ceramique-poterie .ceram__band--1 { fill: var(--ap-orange); }
+.scene--ceramique-poterie .ceram__band--2 { fill: var(--ap-blue); animation-delay: -2.25s; }
+.scene--ceramique-poterie .ceram__band--3 { fill: var(--ap-yellow); animation-delay: -4.5s; }
+.scene--ceramique-poterie .ceram__band--4 { fill: var(--ap-red); animation-delay: -6.75s; }
+
+.scene--ceramique-poterie .ceram__turn path {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 2;
+    opacity: 0.18;
+}
+
+.scene--ceramique-poterie .ceram__turn { animation: ap-sc-ceram-turn 1.4s linear infinite; }
+
+.scene--ceramique-poterie .ceram__outline { fill: none; stroke: var(--ap-white); stroke-width: 3; }
+.scene--ceramique-poterie .ceram__mouth { fill: var(--ap-black); stroke: var(--ap-white); stroke-width: 2; }
+
+.scene--ceramique-poterie .ceram__specks circle {
+    fill: var(--ap-amber);
+    animation: ap-sc-ceram-speck 2s var(--ap-ease-out) var(--d, 0s) infinite backwards;
+}
+
+/** @anim group=scene demo=scene scene=ceramique-poterie dur=9s ease=var(--ap-ease-out) fr="Vase qui s’élève sur le tour" en="Vase rising on the wheel" */
+@keyframes ap-sc-ceram-rise {
+    0% { transform: scale(0.6, 0.1); opacity: 0; }
+    6% { opacity: 1; }
+    30% { transform: scale(1.12, 0.85); }
+    44% { transform: scale(0.96, 1.04); }
+    52% { transform: scale(1, 1); }
+    88% { transform: scale(1, 1); opacity: 1; }
+    96%,
+    100% { transform: scale(1, 1); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=ceramique-poterie dur=9s ease=steps(1,end) fr="Émaux qui changent de couleur" en="Glazes changing colour" */
+@keyframes ap-sc-ceram-glaze {
+    0% { fill: var(--ap-orange); }
+    25% { fill: var(--ap-blue); }
+    50% { fill: var(--ap-yellow); }
+    75% { fill: var(--ap-red); }
+}
+
+/** @anim group=scene demo=scene scene=ceramique-poterie dur=1.4s ease=linear fr="Tour de potier qui tourne" en="Spinning potter's wheel" */
+@keyframes ap-sc-ceram-spin {
+    to { stroke-dashoffset: -0.16; }
+}
+
+/** @anim group=scene demo=scene scene=ceramique-poterie dur=1.4s ease=linear fr="Rotation de la terre" en="Clay turning" */
+@keyframes ap-sc-ceram-turn {
+    to { transform: translateX(30px); }
+}
+
+/** @anim group=scene demo=scene scene=ceramique-poterie dur=5s fr="Lueur du four" en="Kiln glow" */
+@keyframes ap-sc-ceram-glow {
+    0%,
+    100% { opacity: 0.65; }
+    50% { opacity: 1; }
+}
+
+/** @anim group=scene demo=scene scene=ceramique-poterie dur=2s fr="Éclaboussures d’argile" en="Clay specks flying" */
+@keyframes ap-sc-ceram-speck {
+    0% { opacity: 0; transform: translate(0, 0); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translate(var(--dx, 30px), -30px); }
+}

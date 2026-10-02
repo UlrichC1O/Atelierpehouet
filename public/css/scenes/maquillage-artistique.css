@@ -1,0 +1,77 @@
+/* Scene · maquillage-artistique — painted triangles on a face (8 s loop). */
+
+.scene--maquillage-artistique .maquillage__bg { fill: var(--ap-black); }
+
+.scene--maquillage-artistique .maquillage__rays polygon { fill: var(--ap-yellow); opacity: 0.16; }
+.scene--maquillage-artistique .maquillage__rays polygon:nth-child(3n + 2) { fill: var(--ap-red-bright); }
+.scene--maquillage-artistique .maquillage__rays polygon:nth-child(3n) { fill: var(--ap-blue-bright); }
+.scene--maquillage-artistique .maquillage__rays {
+    transform-box: view-box;
+    transform-origin: 226px 168px;
+    animation: ap-sc-maquillage-rays 24s linear infinite;
+}
+
+.scene--maquillage-artistique .maquillage__face { fill: var(--ap-graphite); stroke: var(--ap-white); stroke-width: 3; stroke-linejoin: round; }
+.scene--maquillage-artistique .maquillage__hair { fill: var(--ap-black); stroke: var(--ap-steel); stroke-width: 2; }
+.scene--maquillage-artistique .maquillage__eye { fill: var(--ap-white); }
+
+.scene--maquillage-artistique .maquillage__tri {
+    stroke: var(--ap-white);
+    stroke-width: 1.5;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-maquillage-paint 8s var(--ap-ease-spring) var(--d, 0s) infinite backwards;
+}
+
+.scene--maquillage-artistique .maquillage__tri--yellow { fill: var(--ap-yellow); }
+.scene--maquillage-artistique .maquillage__tri--red { fill: var(--ap-red-bright); }
+.scene--maquillage-artistique .maquillage__tri--blue { fill: var(--ap-blue-bright); }
+.scene--maquillage-artistique .maquillage__tri--white { fill: var(--ap-white); }
+.scene--maquillage-artistique .maquillage__tri--amber { fill: var(--ap-amber); }
+
+.scene--maquillage-artistique .maquillage__sparkles path {
+    fill: var(--ap-yellow);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-maquillage-sparkle 2.4s ease-in-out var(--d, 0s) infinite;
+}
+
+.scene--maquillage-artistique .maquillage__brush {
+    transform: translate(320px, 330px);
+    animation: ap-sc-maquillage-brush 8s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--maquillage-artistique .maquillage__brush-handle { stroke: var(--ap-amber); stroke-width: 6; stroke-linecap: round; }
+.scene--maquillage-artistique .maquillage__brush-tip { fill: var(--ap-red-bright); }
+
+/** @anim group=scene demo=scene scene=maquillage-artistique dur=8s ease=var(--ap-ease-spring) fr="Triangles peints sur la joue" en="Triangles painted on the cheek" */
+@keyframes ap-sc-maquillage-paint {
+    0% { transform: scale(0) rotate(-40deg); opacity: 0; }
+    8% { transform: scale(1) rotate(0deg); opacity: 1; }
+    84% { transform: scale(1); opacity: 1; }
+    94%,
+    100% { transform: scale(0.6); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=maquillage-artistique dur=24s ease=linear fr="Rayons solaires autour de l’œil" en="Sun rays around the eye" */
+@keyframes ap-sc-maquillage-rays {
+    to { transform: rotate(360deg); }
+}
+
+/** @anim group=scene demo=scene scene=maquillage-artistique dur=8s fr="Le pinceau de maquillage" en="The face-painting brush" */
+@keyframes ap-sc-maquillage-brush {
+    0% { transform: translate(258px, 158px); }
+    9% { transform: translate(260px, 200px); }
+    18% { transform: translate(222px, 170px); }
+    27% { transform: translate(276px, 220px); }
+    36% { transform: translate(218px, 208px); }
+    50%,
+    100% { transform: translate(320px, 330px); }
+}
+
+/** @anim group=scene demo=scene scene=maquillage-artistique dur=2.4s fr="Paillettes qui scintillent" en="Twinkling glitter" */
+@keyframes ap-sc-maquillage-sparkle {
+    0%,
+    100% { transform: scale(0.4) rotate(0deg); opacity: 0.3; }
+    50% { transform: scale(1.1) rotate(45deg); opacity: 1; }
+}

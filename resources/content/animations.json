@@ -1,0 +1,3809 @@
+{
+  "version": 1,
+  "total": 237,
+  "groups": [
+    "brand",
+    "text",
+    "reveal",
+    "ui",
+    "ambient",
+    "loader",
+    "transition",
+    "page",
+    "scene"
+  ],
+  "animations": [
+    {
+      "n": 1,
+      "name": "ap-logo-fly",
+      "group": "brand",
+      "demo": "shape",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Envol des pièces du triangle",
+        "en": "Triangle pieces flying in"
+      },
+      "dur": "1.2s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 2,
+      "name": "ap-logo-outline",
+      "group": "brand",
+      "demo": "path",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Contour du triangle tracé",
+        "en": "Triangle outline drawing"
+      },
+      "dur": "1.4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 3,
+      "name": "ap-logo-breathe",
+      "group": "brand",
+      "demo": "blocks",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Respiration des champs de couleur",
+        "en": "Colour fields breathing"
+      },
+      "dur": "5.5s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 4,
+      "name": "ap-logo-glow",
+      "group": "brand",
+      "demo": "shape",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Halo rouge du logo",
+        "en": "Logo red halo"
+      },
+      "dur": "5.5s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 5,
+      "name": "ap-brand-letter-rise",
+      "group": "brand",
+      "demo": "letters",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Lettres TELIERS qui se lèvent",
+        "en": "TELIERS letters rising"
+      },
+      "dur": "1.1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 6,
+      "name": "ap-brand-shine",
+      "group": "brand",
+      "demo": "letters",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Éclat de lumière sur les lettres",
+        "en": "Light sweeping across the letters"
+      },
+      "dur": "4.8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 7,
+      "name": "ap-brand-neon-pulse",
+      "group": "brand",
+      "demo": "text",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Pulsation du néon rouge",
+        "en": "Red neon pulse"
+      },
+      "dur": "4.2s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 8,
+      "name": "ap-brand-flicker",
+      "group": "brand",
+      "demo": "text",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Néon qui s’allume (vacillement)",
+        "en": "Neon switching on (flicker)"
+      },
+      "dur": "0.9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 9,
+      "name": "ap-sig-draw",
+      "group": "brand",
+      "demo": "path",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Signature qui s’écrit",
+        "en": "Signature writing itself"
+      },
+      "dur": "1.2s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 10,
+      "name": "ap-sig-glint",
+      "group": "brand",
+      "demo": "path",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Étincelle le long de la signature",
+        "en": "Spark along the signature"
+      },
+      "dur": "6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 11,
+      "name": "ap-brand-tagline-type",
+      "group": "text",
+      "demo": "text",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Slogan tapé à la machine",
+        "en": "Typewriter tagline"
+      },
+      "dur": "1.6s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 12,
+      "name": "ap-brand-caret",
+      "group": "text",
+      "demo": "bar",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Curseur clignotant",
+        "en": "Blinking caret"
+      },
+      "dur": "0.8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 13,
+      "name": "ap-tx-rise",
+      "group": "text",
+      "demo": "letters",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Mots qui s’élèvent",
+        "en": "Rising words"
+      },
+      "dur": "0.9s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 14,
+      "name": "ap-tx-flip",
+      "group": "text",
+      "demo": "letters",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Lettres qui basculent",
+        "en": "Flipping letters"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 15,
+      "name": "ap-tx-glow",
+      "group": "text",
+      "demo": "letters",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Lettres qui s’illuminent",
+        "en": "Letters lighting up"
+      },
+      "dur": "1.2s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 16,
+      "name": "ap-tx-wave",
+      "group": "text",
+      "demo": "letters",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Vague de lettres",
+        "en": "Letter wave"
+      },
+      "dur": "1.2s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 17,
+      "name": "ap-tx-drop",
+      "group": "text",
+      "demo": "letters",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Lettres qui tombent",
+        "en": "Dropping letters"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 18,
+      "name": "ap-tx-neon",
+      "group": "text",
+      "demo": "letters",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Allumage néon des lettres",
+        "en": "Neon letters switching on"
+      },
+      "dur": "1.4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 19,
+      "name": "ap-tx-caret",
+      "group": "text",
+      "demo": "bar",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Curseur de machine à écrire",
+        "en": "Typewriter caret"
+      },
+      "dur": "0.9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 20,
+      "name": "ap-tx-glitch-blue",
+      "group": "text",
+      "demo": "text",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Glitch bleu",
+        "en": "Blue glitch"
+      },
+      "dur": "0.6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 21,
+      "name": "ap-tx-glitch-red",
+      "group": "text",
+      "demo": "text",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Glitch rouge",
+        "en": "Red glitch"
+      },
+      "dur": "0.6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 22,
+      "name": "ap-tx-highlight",
+      "group": "text",
+      "demo": "bar",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Surlignage jaune",
+        "en": "Yellow highlighter"
+      },
+      "dur": "1.2s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 23,
+      "name": "ap-tx-underline",
+      "group": "text",
+      "demo": "bar",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Soulignement dégradé",
+        "en": "Gradient underline"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 24,
+      "name": "ap-tx-sweep",
+      "group": "text",
+      "demo": "text",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Lumière qui traverse le texte",
+        "en": "Light running through text"
+      },
+      "dur": "5s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 25,
+      "name": "ap-rv-failsafe",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Filet de sécurité (affichage garanti)",
+        "en": "Fail-safe (content always shows)"
+      },
+      "dur": "0.01s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "1"
+    },
+    {
+      "n": 26,
+      "name": "ap-rv-fade-up",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Apparition vers le haut",
+        "en": "Fade up"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 27,
+      "name": "ap-rv-fade-down",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Apparition vers le bas",
+        "en": "Fade down"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 28,
+      "name": "ap-rv-fade-left",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Glissement depuis la droite",
+        "en": "Slide in from the right"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 29,
+      "name": "ap-rv-fade-right",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Glissement depuis la gauche",
+        "en": "Slide in from the left"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 30,
+      "name": "ap-rv-zoom-in",
+      "group": "reveal",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Zoom avant",
+        "en": "Zoom in"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 31,
+      "name": "ap-rv-zoom-out",
+      "group": "reveal",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Zoom arrière",
+        "en": "Zoom out"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 32,
+      "name": "ap-rv-flip-x",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Bascule horizontale",
+        "en": "Horizontal flip"
+      },
+      "dur": "1.1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 33,
+      "name": "ap-rv-flip-y",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Bascule verticale",
+        "en": "Vertical flip"
+      },
+      "dur": "1.1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 34,
+      "name": "ap-rv-tri",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Révélation en triangle",
+        "en": "Triangle reveal"
+      },
+      "dur": "1.2s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 35,
+      "name": "ap-rv-diagonal",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Balayage diagonal",
+        "en": "Diagonal wipe"
+      },
+      "dur": "1.1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 36,
+      "name": "ap-rv-curtain",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Lever de rideau",
+        "en": "Curtain rising"
+      },
+      "dur": "1.1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 37,
+      "name": "ap-rv-rotate",
+      "group": "reveal",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Rotation d’entrée",
+        "en": "Rotate in"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 38,
+      "name": "ap-rv-blur",
+      "group": "reveal",
+      "demo": "text",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Mise au point (flou)",
+        "en": "Focus pull (blur)"
+      },
+      "dur": "1s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 39,
+      "name": "ap-rv-skew",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Entrée inclinée",
+        "en": "Skewed entrance"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 40,
+      "name": "ap-rv-mondrian",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Découpe Mondrian",
+        "en": "Mondrian cut-out"
+      },
+      "dur": "1.3s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 41,
+      "name": "ap-rv-rise",
+      "group": "reveal",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Élévation",
+        "en": "Rise"
+      },
+      "dur": "1.1s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 42,
+      "name": "ap-rv-drop",
+      "group": "reveal",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Chute rebondissante",
+        "en": "Bouncy drop"
+      },
+      "dur": "1s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 43,
+      "name": "ap-nav-current",
+      "group": "ui",
+      "demo": "bar",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Soulignement tricolore actif",
+        "en": "Active tri-colour underline"
+      },
+      "dur": "3.6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 44,
+      "name": "ap-nav-mega-group",
+      "group": "ui",
+      "demo": "blocks",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Colonnes du méga-menu",
+        "en": "Mega-menu columns unfolding"
+      },
+      "dur": "0.9s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 45,
+      "name": "ap-nav-slice-in",
+      "group": "ui",
+      "demo": "blocks",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Tranches de couleur du menu",
+        "en": "Menu colour slices"
+      },
+      "dur": "0.8s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 46,
+      "name": "ap-nav-veil",
+      "group": "ui",
+      "demo": "panel",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Voile noir du menu",
+        "en": "Menu black veil"
+      },
+      "dur": "1s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 47,
+      "name": "ap-nav-item-in",
+      "group": "ui",
+      "demo": "text",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Liens du menu en cascade",
+        "en": "Menu links cascading in"
+      },
+      "dur": "0.8s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 48,
+      "name": "ap-fx-toggle-dance",
+      "group": "ui",
+      "demo": "dots",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Danse des triangles (interrupteur)",
+        "en": "Dancing triangles (toggle)"
+      },
+      "dur": "1.6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 49,
+      "name": "ap-fx-mondrian-strip",
+      "group": "ui",
+      "demo": "blocks",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Bande Mondrian du pied de page",
+        "en": "Footer Mondrian strip"
+      },
+      "dur": "7s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 50,
+      "name": "ap-fx-progress-glow",
+      "group": "ui",
+      "demo": "bar",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Lueur de la barre de défilement",
+        "en": "Scroll bar glow"
+      },
+      "dur": "3s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 51,
+      "name": "ap-fx-cursor-spin",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Curseur triangle qui tourne",
+        "en": "Spinning triangle cursor"
+      },
+      "dur": "6s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 52,
+      "name": "ap-fx-trail",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Traînée de triangles",
+        "en": "Triangle trail"
+      },
+      "dur": "0.9s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 53,
+      "name": "ap-fx-top-bob",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Flèche qui rebondit",
+        "en": "Bobbing arrow"
+      },
+      "dur": "0.9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 54,
+      "name": "ap-fx-top-launch",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Décollage vers le haut",
+        "en": "Launch to the top"
+      },
+      "dur": "0.7s",
+      "ease": "var(--ap-ease-in)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 55,
+      "name": "ap-ui-btn-shine",
+      "group": "ui",
+      "demo": "bar",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Reflet sur le bouton",
+        "en": "Button shine"
+      },
+      "dur": "0.9s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 56,
+      "name": "ap-ui-arrow-nudge",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Flèche qui avance",
+        "en": "Arrow nudge"
+      },
+      "dur": "0.9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 57,
+      "name": "ap-ui-ripple",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Onde triangulaire au clic",
+        "en": "Triangle ripple on click"
+      },
+      "dur": "0.8s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 58,
+      "name": "ap-ui-chip-pop",
+      "group": "ui",
+      "demo": "ring",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Pastille qui s’active",
+        "en": "Chip popping on"
+      },
+      "dur": "0.5s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 59,
+      "name": "ap-ui-filter-in",
+      "group": "ui",
+      "demo": "blocks",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Retour des éléments filtrés",
+        "en": "Filtered items coming back"
+      },
+      "dur": "0.6s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 60,
+      "name": "ap-ui-border-spin",
+      "group": "ui",
+      "demo": "ring",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Bordure conique tournante",
+        "en": "Spinning conic border"
+      },
+      "dur": "3s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 61,
+      "name": "ap-ui-icon-bob",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Icône qui flotte",
+        "en": "Floating icon"
+      },
+      "dur": "1.2s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 62,
+      "name": "ap-ui-corner-unfold",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Coin triangle qui se déplie",
+        "en": "Corner triangle unfolding"
+      },
+      "dur": "0.6s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 63,
+      "name": "ap-ui-hero-field",
+      "group": "ui",
+      "demo": "blocks",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Champs Mondrian du bandeau",
+        "en": "Hero Mondrian fields"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 64,
+      "name": "ap-ui-hero-tri",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Grand triangle à la dérive",
+        "en": "Great drifting triangle"
+      },
+      "dur": "14s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 65,
+      "name": "ap-ui-hero-slash",
+      "group": "ui",
+      "demo": "bar",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Trait de signature qui scintille",
+        "en": "Shimmering signature stroke"
+      },
+      "dur": "6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 66,
+      "name": "ap-ui-accordion",
+      "group": "ui",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Ouverture d’accordéon",
+        "en": "Accordion opening"
+      },
+      "dur": "0.6s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 67,
+      "name": "ap-ui-count-pulse",
+      "group": "ui",
+      "demo": "text",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Pulsation du compteur",
+        "en": "Counter pulse"
+      },
+      "dur": "0.5s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 68,
+      "name": "ap-ui-marquee",
+      "group": "ui",
+      "demo": "bar",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Défilement infini",
+        "en": "Infinite scroll ribbon"
+      },
+      "dur": "12s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 69,
+      "name": "ap-ui-marquee-reverse",
+      "group": "ui",
+      "demo": "bar",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Défilement inversé",
+        "en": "Reverse ribbon"
+      },
+      "dur": "12s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 70,
+      "name": "ap-ui-divider-draw",
+      "group": "ui",
+      "demo": "path",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Ligne en dents de scie tracée",
+        "en": "Zigzag line drawing"
+      },
+      "dur": "3.5s",
+      "ease": "var(--ap-ease-in-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 71,
+      "name": "ap-ui-dot-hop",
+      "group": "ui",
+      "demo": "dots",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Petits triangles qui sautillent",
+        "en": "Hopping little triangles"
+      },
+      "dur": "2.2s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 72,
+      "name": "ap-ui-cta-field",
+      "group": "ui",
+      "demo": "blocks",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Champs de couleur qui respirent",
+        "en": "Breathing colour fields"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 73,
+      "name": "ap-ui-field-shake",
+      "group": "ui",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Champ en erreur qui tremble",
+        "en": "Shaking invalid field"
+      },
+      "dur": "0.5s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 74,
+      "name": "ap-ui-alert-in",
+      "group": "ui",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Message qui glisse",
+        "en": "Message sliding in"
+      },
+      "dur": "0.7s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 75,
+      "name": "ap-ui-check-draw",
+      "group": "ui",
+      "demo": "path",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Coche de validation tracée",
+        "en": "Check mark drawing"
+      },
+      "dur": "0.8s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 76,
+      "name": "ap-ui-lightbox-in",
+      "group": "ui",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Ouverture de la visionneuse",
+        "en": "Lightbox opening"
+      },
+      "dur": "0.5s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 77,
+      "name": "ap-ui-lightbox-out",
+      "group": "ui",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Fermeture de la visionneuse",
+        "en": "Lightbox closing"
+      },
+      "dur": "0.35s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 78,
+      "name": "ap-ui-image-zoom",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Œuvre qui s’avance",
+        "en": "Artwork stepping forward"
+      },
+      "dur": "0.7s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 79,
+      "name": "ap-ui-burst",
+      "group": "ui",
+      "demo": "shape",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Confettis triangulaires",
+        "en": "Triangle confetti burst"
+      },
+      "dur": "0.9s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 80,
+      "name": "ap-ui-tooltip",
+      "group": "ui",
+      "demo": "panel",
+      "file": "css/07-anim-ui.css",
+      "scene": null,
+      "label": {
+        "fr": "Info-bulle",
+        "en": "Tooltip"
+      },
+      "dur": "0.35s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 81,
+      "name": "ap-amb-drift-1",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Dérive d’un triangle (1)",
+        "en": "Drifting triangle (1)"
+      },
+      "dur": "18s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 82,
+      "name": "ap-amb-drift-2",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Dérive d’un triangle (2)",
+        "en": "Drifting triangle (2)"
+      },
+      "dur": "20s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 83,
+      "name": "ap-amb-drift-3",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Dérive d’un triangle (3)",
+        "en": "Drifting triangle (3)"
+      },
+      "dur": "24s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 84,
+      "name": "ap-amb-spin",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Rotation lente",
+        "en": "Slow spin"
+      },
+      "dur": "30s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 85,
+      "name": "ap-amb-spin-reverse",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Rotation inverse",
+        "en": "Reverse spin"
+      },
+      "dur": "40s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 86,
+      "name": "ap-amb-orbit",
+      "group": "ambient",
+      "demo": "ring",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Orbite",
+        "en": "Orbit"
+      },
+      "dur": "14s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 87,
+      "name": "ap-amb-orbit-pulse",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Cœur d’orbite qui pulse",
+        "en": "Pulsing orbit core"
+      },
+      "dur": "3.2s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 88,
+      "name": "ap-amb-pendulum",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Balancier",
+        "en": "Pendulum swing"
+      },
+      "dur": "4.5s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 89,
+      "name": "ap-amb-aurora-1",
+      "group": "ambient",
+      "demo": "ring",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Aurore bleue",
+        "en": "Blue aurora"
+      },
+      "dur": "22s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 90,
+      "name": "ap-amb-aurora-2",
+      "group": "ambient",
+      "demo": "ring",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Aurore jaune",
+        "en": "Yellow aurora"
+      },
+      "dur": "26s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 91,
+      "name": "ap-amb-aurora-3",
+      "group": "ambient",
+      "demo": "ring",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Aurore rouge",
+        "en": "Red aurora"
+      },
+      "dur": "24s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 92,
+      "name": "ap-amb-twinkle",
+      "group": "ambient",
+      "demo": "dots",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Scintillement",
+        "en": "Twinkle"
+      },
+      "dur": "3s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 93,
+      "name": "ap-amb-mondrian-grid",
+      "group": "ambient",
+      "demo": "panel",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Grille Mondrian qui se recompose",
+        "en": "Mondrian grid recomposing"
+      },
+      "dur": "12s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 94,
+      "name": "ap-amb-mondrian-swap",
+      "group": "ambient",
+      "demo": "blocks",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Champs qui changent de couleur",
+        "en": "Fields swapping colour"
+      },
+      "dur": "9s",
+      "ease": "steps(1,end)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 95,
+      "name": "ap-amb-mondrian-pulse",
+      "group": "ambient",
+      "demo": "blocks",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Champs de couleur qui pulsent",
+        "en": "Pulsing colour fields"
+      },
+      "dur": "6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 96,
+      "name": "ap-amb-seam-draw",
+      "group": "ambient",
+      "demo": "bar",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Joint blanc tracé",
+        "en": "White seam drawing"
+      },
+      "dur": "1.8s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 97,
+      "name": "ap-amb-slash-draw",
+      "group": "ambient",
+      "demo": "bar",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Trait de signature qui se trace",
+        "en": "Signature slash drawing"
+      },
+      "dur": "1.6s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 98,
+      "name": "ap-amb-slash-shimmer",
+      "group": "ambient",
+      "demo": "bar",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Trait de signature qui scintille",
+        "en": "Signature slash shimmer"
+      },
+      "dur": "7s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 99,
+      "name": "ap-amb-kaleido-spin",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Rosace kaléidoscope",
+        "en": "Kaleidoscope rosette"
+      },
+      "dur": "40s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 100,
+      "name": "ap-amb-kaleido-pulse",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Pétales qui respirent",
+        "en": "Breathing petals"
+      },
+      "dur": "6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 101,
+      "name": "ap-amb-prism-sweep",
+      "group": "ambient",
+      "demo": "panel",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Faisceau prismatique",
+        "en": "Prismatic light beam"
+      },
+      "dur": "7s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 102,
+      "name": "ap-amb-scanlines",
+      "group": "ambient",
+      "demo": "panel",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Lignes de balayage",
+        "en": "Scanlines"
+      },
+      "dur": "6s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 103,
+      "name": "ap-amb-breathe",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Respiration lumineuse",
+        "en": "Breathing light"
+      },
+      "dur": "5s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 104,
+      "name": "ap-amb-ribbon",
+      "group": "ambient",
+      "demo": "bar",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Ruban tricolore",
+        "en": "Tri-colour ribbon"
+      },
+      "dur": "9s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 105,
+      "name": "ap-amb-bob",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Flottement",
+        "en": "Bobbing"
+      },
+      "dur": "4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 106,
+      "name": "ap-amb-morph",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Triangle qui devient carré",
+        "en": "Triangle morphing into a square"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 107,
+      "name": "ap-amb-color-cycle",
+      "group": "ambient",
+      "demo": "shape",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Cycle des couleurs du logo",
+        "en": "Logo colour cycle"
+      },
+      "dur": "12s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 108,
+      "name": "ap-amb-grid-draw",
+      "group": "ambient",
+      "demo": "panel",
+      "file": "css/06-anim-ambient.css",
+      "scene": null,
+      "label": {
+        "fr": "Grille de lignes qui apparaît",
+        "en": "Line grid appearing"
+      },
+      "dur": "2.4s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 109,
+      "name": "ap-load-piece",
+      "group": "loader",
+      "demo": "shape",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Assemblage du chargement",
+        "en": "Loader assembly"
+      },
+      "dur": "1.2s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 110,
+      "name": "ap-load-outline",
+      "group": "loader",
+      "demo": "path",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Contour de chargement",
+        "en": "Loader outline"
+      },
+      "dur": "1.2s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 111,
+      "name": "ap-load-progress",
+      "group": "loader",
+      "demo": "bar",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Barre de progression TELIERS",
+        "en": "TELIERS progress bar"
+      },
+      "dur": "1.8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 112,
+      "name": "ap-load-blink",
+      "group": "loader",
+      "demo": "text",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Texte de chargement qui respire",
+        "en": "Breathing loader text"
+      },
+      "dur": "1.4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 113,
+      "name": "ap-load-panel",
+      "group": "loader",
+      "demo": "blocks",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Panneaux bleu, jaune, rouge",
+        "en": "Blue, yellow, red panels"
+      },
+      "dur": "0.8s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 114,
+      "name": "ap-load-exit",
+      "group": "loader",
+      "demo": "panel",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Sortie du rideau de chargement",
+        "en": "Loader curtain exit"
+      },
+      "dur": "0.8s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 115,
+      "name": "ap-vt-in",
+      "group": "transition",
+      "demo": "panel",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Triangle de lumière (page suivante)",
+        "en": "Triangle of light (next page)"
+      },
+      "dur": "0.8s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 116,
+      "name": "ap-vt-out",
+      "group": "transition",
+      "demo": "panel",
+      "file": "css/05-anim-brand.css",
+      "scene": null,
+      "label": {
+        "fr": "Page qui s’efface",
+        "en": "Page fading away"
+      },
+      "dur": "0.5s",
+      "ease": "ease-in-out",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 117,
+      "name": "ap-pg-contact-corner",
+      "group": "page",
+      "demo": "shape",
+      "file": "css/pages/contact.css",
+      "scene": null,
+      "label": {
+        "fr": "Coin du formulaire qui respire",
+        "en": "Breathing form corner"
+      },
+      "dur": "6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 118,
+      "name": "ap-pg-contact-send",
+      "group": "page",
+      "demo": "shape",
+      "file": "css/pages/contact.css",
+      "scene": null,
+      "label": {
+        "fr": "Message qui s’envole",
+        "en": "Message taking off"
+      },
+      "dur": "0.8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 119,
+      "name": "ap-pg-gallery-deal",
+      "group": "page",
+      "demo": "shape",
+      "file": "css/pages/gallery.css",
+      "scene": null,
+      "label": {
+        "fr": "Œuvres distribuées comme des cartes",
+        "en": "Artworks dealt like cards"
+      },
+      "dur": "1.2s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 120,
+      "name": "ap-pg-gallery-hover",
+      "group": "page",
+      "demo": "shape",
+      "file": "css/pages/gallery.css",
+      "scene": null,
+      "label": {
+        "fr": "Œuvres en lévitation",
+        "en": "Levitating artworks"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 121,
+      "name": "ap-pg-gallery-shuffle",
+      "group": "page",
+      "demo": "blocks",
+      "file": "css/pages/gallery.css",
+      "scene": null,
+      "label": {
+        "fr": "Galerie mélangée",
+        "en": "Gallery shuffled"
+      },
+      "dur": "0.7s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 122,
+      "name": "ap-pg-gallery-code",
+      "group": "page",
+      "demo": "text",
+      "file": "css/pages/gallery.css",
+      "scene": null,
+      "label": {
+        "fr": "Code qui clignote",
+        "en": "Blinking code"
+      },
+      "dur": "3s",
+      "ease": "steps(1,end)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 123,
+      "name": "ap-pg-generator-shimmer",
+      "group": "page",
+      "demo": "panel",
+      "file": "css/pages/generator.css",
+      "scene": null,
+      "label": {
+        "fr": "Miroitement de chargement",
+        "en": "Loading shimmer"
+      },
+      "dur": "1.4s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 124,
+      "name": "ap-pg-generator-reveal",
+      "group": "page",
+      "demo": "shape",
+      "file": "css/pages/generator.css",
+      "scene": null,
+      "label": {
+        "fr": "Nouvelle œuvre révélée",
+        "en": "New artwork revealed"
+      },
+      "dur": "0.9s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 125,
+      "name": "ap-pg-generator-pick",
+      "group": "page",
+      "demo": "ring",
+      "file": "css/pages/generator.css",
+      "scene": null,
+      "label": {
+        "fr": "Style choisi",
+        "en": "Style picked"
+      },
+      "dur": "0.45s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 126,
+      "name": "ap-pg-services-float",
+      "group": "page",
+      "demo": "shape",
+      "file": "css/pages/services.css",
+      "scene": null,
+      "label": {
+        "fr": "Collage qui flotte",
+        "en": "Floating collage"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 127,
+      "name": "ap-pg-services-count",
+      "group": "page",
+      "demo": "text",
+      "file": "css/pages/services.css",
+      "scene": null,
+      "label": {
+        "fr": "Chiffre néon des services",
+        "en": "Neon number of services"
+      },
+      "dur": "4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 128,
+      "name": "ap-pg-service-stage-glow",
+      "group": "page",
+      "demo": "ring",
+      "file": "css/pages/services.css",
+      "scene": null,
+      "label": {
+        "fr": "Lueur du cadre de la scène",
+        "en": "Scene frame glow"
+      },
+      "dur": "6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 129,
+      "name": "ap-pg-service-corner",
+      "group": "page",
+      "demo": "shape",
+      "file": "css/pages/services.css",
+      "scene": null,
+      "label": {
+        "fr": "Coins triangulaires qui respirent",
+        "en": "Breathing corner triangles"
+      },
+      "dur": "4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 130,
+      "name": "ap-pg-service-title-bar",
+      "group": "page",
+      "demo": "bar",
+      "file": "css/pages/services.css",
+      "scene": null,
+      "label": {
+        "fr": "Barre tricolore sous le titre",
+        "en": "Tri-colour bar under the title"
+      },
+      "dur": "1.2s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "alternate",
+      "iter": "infinite"
+    },
+    {
+      "n": 131,
+      "name": "ap-pg-service-arrow-left",
+      "group": "page",
+      "demo": "shape",
+      "file": "css/pages/services.css",
+      "scene": null,
+      "label": {
+        "fr": "Flèche vers le service précédent",
+        "en": "Arrow to the previous service"
+      },
+      "dur": "0.9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 132,
+      "name": "ap-pg-service-arrow-right",
+      "group": "page",
+      "demo": "shape",
+      "file": "css/pages/services.css",
+      "scene": null,
+      "label": {
+        "fr": "Flèche vers le service suivant",
+        "en": "Arrow to the next service"
+      },
+      "dur": "0.9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 133,
+      "name": "ap-sc-commu-grow",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-communautaire.css",
+      "scene": "art-communautaire",
+      "label": {
+        "fr": "Le triangle commun grandit",
+        "en": "The shared triangle growing"
+      },
+      "dur": "8s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 134,
+      "name": "ap-sc-commu-color",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-communautaire.css",
+      "scene": "art-communautaire",
+      "label": {
+        "fr": "La couleur passe de l’un à l’autre",
+        "en": "Colour passing from one to the next"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 135,
+      "name": "ap-sc-commu-link",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-communautaire.css",
+      "scene": "art-communautaire",
+      "label": {
+        "fr": "Liens qui relient les personnes",
+        "en": "Links connecting people"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 136,
+      "name": "ap-sc-commu-wave",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-communautaire.css",
+      "scene": "art-communautaire",
+      "label": {
+        "fr": "Salut de la ronde",
+        "en": "The circle waving"
+      },
+      "dur": "2.4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 137,
+      "name": "ap-sc-commu-rise",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-communautaire.css",
+      "scene": "art-communautaire",
+      "label": {
+        "fr": "Petits triangles qui s’envolent",
+        "en": "Little triangles rising"
+      },
+      "dur": "3.6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 138,
+      "name": "ap-sc-commu-ring",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-communautaire.css",
+      "scene": "art-communautaire",
+      "label": {
+        "fr": "La ronde qui tourne",
+        "en": "The circle turning"
+      },
+      "dur": "12s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 139,
+      "name": "ap-sc-numerique-pixel",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-numerique.css",
+      "scene": "art-numerique",
+      "label": {
+        "fr": "Pixels qui s’assemblent",
+        "en": "Pixels assembling"
+      },
+      "dur": "8s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 140,
+      "name": "ap-sc-numerique-scan",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-numerique.css",
+      "scene": "art-numerique",
+      "label": {
+        "fr": "Ligne de balayage",
+        "en": "Sweeping scanline"
+      },
+      "dur": "3.2s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 141,
+      "name": "ap-sc-numerique-layer",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-numerique.css",
+      "scene": "art-numerique",
+      "label": {
+        "fr": "Calques qui s’activent",
+        "en": "Layers toggling"
+      },
+      "dur": "3s",
+      "ease": "steps(1,end)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 142,
+      "name": "ap-sc-numerique-stylus",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-numerique.css",
+      "scene": "art-numerique",
+      "label": {
+        "fr": "Le stylet dessine sur l’écran",
+        "en": "The stylus drawing on the screen"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 143,
+      "name": "ap-sc-textile-wave",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-textile.css",
+      "scene": "art-textile",
+      "label": {
+        "fr": "Bannière qui ondule au vent",
+        "en": "Banner rippling in the wind"
+      },
+      "dur": "3.2s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 144,
+      "name": "ap-sc-textile-paint",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-textile.css",
+      "scene": "art-textile",
+      "label": {
+        "fr": "Bandes peintes sur le tissu",
+        "en": "Bands painted onto the fabric"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 145,
+      "name": "ap-sc-textile-stitch",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-textile.css",
+      "scene": "art-textile",
+      "label": {
+        "fr": "Points de couture qui avancent",
+        "en": "Running stitches"
+      },
+      "dur": "3s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 146,
+      "name": "ap-sc-textile-needle",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-textile.css",
+      "scene": "art-textile",
+      "label": {
+        "fr": "Aiguille qui coud",
+        "en": "Needle sewing"
+      },
+      "dur": "3s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 147,
+      "name": "ap-sc-textile-fold",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/art-textile.css",
+      "scene": "art-textile",
+      "label": {
+        "fr": "Plis du tissu",
+        "en": "Folds in the cloth"
+      },
+      "dur": "3.2s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 148,
+      "name": "ap-sc-calli-write",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/calligraphie-lettrage.css",
+      "scene": "calligraphie-lettrage",
+      "label": {
+        "fr": "Mot calligraphié qui s’écrit",
+        "en": "Calligraphed word writing itself"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 149,
+      "name": "ap-sc-calli-gild",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/calligraphie-lettrage.css",
+      "scene": "calligraphie-lettrage",
+      "label": {
+        "fr": "Majuscule dorée",
+        "en": "Gilded capital"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 150,
+      "name": "ap-sc-calli-ink",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/calligraphie-lettrage.css",
+      "scene": "calligraphie-lettrage",
+      "label": {
+        "fr": "Gouttes d’encre qui fleurissent",
+        "en": "Ink drops blooming"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 151,
+      "name": "ap-sc-calli-nib",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/calligraphie-lettrage.css",
+      "scene": "calligraphie-lettrage",
+      "label": {
+        "fr": "La plume trace les lettres",
+        "en": "The nib tracing the letters"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 152,
+      "name": "ap-sc-ceram-rise",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/ceramique-poterie.css",
+      "scene": "ceramique-poterie",
+      "label": {
+        "fr": "Vase qui s’élève sur le tour",
+        "en": "Vase rising on the wheel"
+      },
+      "dur": "9s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 153,
+      "name": "ap-sc-ceram-glaze",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/ceramique-poterie.css",
+      "scene": "ceramique-poterie",
+      "label": {
+        "fr": "Émaux qui changent de couleur",
+        "en": "Glazes changing colour"
+      },
+      "dur": "9s",
+      "ease": "steps(1,end)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 154,
+      "name": "ap-sc-ceram-spin",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/ceramique-poterie.css",
+      "scene": "ceramique-poterie",
+      "label": {
+        "fr": "Tour de potier qui tourne",
+        "en": "Spinning potter's wheel"
+      },
+      "dur": "1.4s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 155,
+      "name": "ap-sc-ceram-turn",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/ceramique-poterie.css",
+      "scene": "ceramique-poterie",
+      "label": {
+        "fr": "Rotation de la terre",
+        "en": "Clay turning"
+      },
+      "dur": "1.4s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 156,
+      "name": "ap-sc-ceram-glow",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/ceramique-poterie.css",
+      "scene": "ceramique-poterie",
+      "label": {
+        "fr": "Lueur du four",
+        "en": "Kiln glow"
+      },
+      "dur": "5s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 157,
+      "name": "ap-sc-ceram-speck",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/ceramique-poterie.css",
+      "scene": "ceramique-poterie",
+      "label": {
+        "fr": "Éclaboussures d’argile",
+        "en": "Clay specks flying"
+      },
+      "dur": "2s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 158,
+      "name": "ap-sc-cours-draw",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/cours-ateliers.css",
+      "scene": "cours-ateliers",
+      "label": {
+        "fr": "Triangle tracé pas à pas",
+        "en": "Triangle drawn step by step"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 159,
+      "name": "ap-sc-cours-pencil",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/cours-ateliers.css",
+      "scene": "cours-ateliers",
+      "label": {
+        "fr": "Le crayon de l’enseignant",
+        "en": "The teacher's pencil"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 160,
+      "name": "ap-sc-cours-hand",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/cours-ateliers.css",
+      "scene": "cours-ateliers",
+      "label": {
+        "fr": "Élèves qui lèvent la main",
+        "en": "Pupils raising their hands"
+      },
+      "dur": "3.6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 161,
+      "name": "ap-sc-cours-fill",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/cours-ateliers.css",
+      "scene": "cours-ateliers",
+      "label": {
+        "fr": "Triangle colorié",
+        "en": "Triangle coloured in"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 162,
+      "name": "ap-sc-cours-star",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/cours-ateliers.css",
+      "scene": "cours-ateliers",
+      "label": {
+        "fr": "Étoiles d’encouragement",
+        "en": "Stars of encouragement"
+      },
+      "dur": "2.1s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 163,
+      "name": "ap-sc-deco-wall",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-interieure.css",
+      "scene": "decoration-interieure",
+      "label": {
+        "fr": "Le mur change de couleur",
+        "en": "The wall changing colour"
+      },
+      "dur": "10s",
+      "ease": "steps(1,end)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 164,
+      "name": "ap-sc-deco-frame",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-interieure.css",
+      "scene": "decoration-interieure",
+      "label": {
+        "fr": "Cadres qui glissent au mur",
+        "en": "Frames sliding onto the wall"
+      },
+      "dur": "10s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 165,
+      "name": "ap-sc-deco-lamp",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-interieure.css",
+      "scene": "decoration-interieure",
+      "label": {
+        "fr": "La lampe s’allume",
+        "en": "The lamp switching on"
+      },
+      "dur": "10s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 166,
+      "name": "ap-sc-deco-rug",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-interieure.css",
+      "scene": "decoration-interieure",
+      "label": {
+        "fr": "Le tapis se déroule",
+        "en": "The rug unrolling"
+      },
+      "dur": "10s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 167,
+      "name": "ap-sc-deco-plant",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-interieure.css",
+      "scene": "decoration-interieure",
+      "label": {
+        "fr": "Plante qui se balance",
+        "en": "Swaying plant"
+      },
+      "dur": "4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 168,
+      "name": "ap-sc-vehicule-road",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-vehicules.css",
+      "scene": "decoration-vehicules",
+      "label": {
+        "fr": "Marquage de route qui défile",
+        "en": "Road markings rushing by"
+      },
+      "dur": "0.9s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 169,
+      "name": "ap-sc-vehicule-wheel",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-vehicules.css",
+      "scene": "decoration-vehicules",
+      "label": {
+        "fr": "Roues qui tournent",
+        "en": "Spinning wheels"
+      },
+      "dur": "0.7s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 170,
+      "name": "ap-sc-vehicule-bounce",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-vehicules.css",
+      "scene": "decoration-vehicules",
+      "label": {
+        "fr": "Suspension de la camionnette",
+        "en": "Van suspension bounce"
+      },
+      "dur": "0.6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 171,
+      "name": "ap-sc-vehicule-stripe",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-vehicules.css",
+      "scene": "decoration-vehicules",
+      "label": {
+        "fr": "Bandes peintes sur la carrosserie",
+        "en": "Stripes painted on the bodywork"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 172,
+      "name": "ap-sc-vehicule-tri",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-vehicules.css",
+      "scene": "decoration-vehicules",
+      "label": {
+        "fr": "Triangle du logo sur la portière",
+        "en": "Logo triangle on the door"
+      },
+      "dur": "8s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 173,
+      "name": "ap-sc-vehicule-speed",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-vehicules.css",
+      "scene": "decoration-vehicules",
+      "label": {
+        "fr": "Traits de vitesse",
+        "en": "Speed lines"
+      },
+      "dur": "1.2s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 174,
+      "name": "ap-sc-vehicule-horizon",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decoration-vehicules.css",
+      "scene": "decoration-vehicules",
+      "label": {
+        "fr": "Horizon de triangles qui défile",
+        "en": "Horizon of triangles scrolling"
+      },
+      "dur": "12s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 175,
+      "name": "ap-sc-event-curtain",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decors-evenements.css",
+      "scene": "decors-evenements",
+      "label": {
+        "fr": "Ouverture des rideaux",
+        "en": "Curtains opening"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 176,
+      "name": "ap-sc-event-spot",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decors-evenements.css",
+      "scene": "decors-evenements",
+      "label": {
+        "fr": "Projecteurs qui balaient la scène",
+        "en": "Spotlights sweeping the stage"
+      },
+      "dur": "5s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 177,
+      "name": "ap-sc-event-confetti",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decors-evenements.css",
+      "scene": "decors-evenements",
+      "label": {
+        "fr": "Pluie de confettis triangulaires",
+        "en": "Shower of triangle confetti"
+      },
+      "dur": "4s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 178,
+      "name": "ap-sc-event-glow",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decors-evenements.css",
+      "scene": "decors-evenements",
+      "label": {
+        "fr": "Toile de fond qui rayonne",
+        "en": "Glowing backdrop"
+      },
+      "dur": "3s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 179,
+      "name": "ap-sc-event-crowd",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/decors-evenements.css",
+      "scene": "decors-evenements",
+      "label": {
+        "fr": "Public qui applaudit",
+        "en": "Audience cheering"
+      },
+      "dur": "1.6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 180,
+      "name": "ap-sc-design-draw",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/design-graphique.css",
+      "scene": "design-graphique",
+      "label": {
+        "fr": "Tracé de Bézier du triangle",
+        "en": "Bézier path of the triangle"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 181,
+      "name": "ap-sc-design-node",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/design-graphique.css",
+      "scene": "design-graphique",
+      "label": {
+        "fr": "Points d’ancrage qui apparaissent",
+        "en": "Anchor points popping in"
+      },
+      "dur": "9s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 182,
+      "name": "ap-sc-design-fill",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/design-graphique.css",
+      "scene": "design-graphique",
+      "label": {
+        "fr": "Champs colorés par le nuancier",
+        "en": "Fields coloured from the swatches"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 183,
+      "name": "ap-sc-design-pen",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/design-graphique.css",
+      "scene": "design-graphique",
+      "label": {
+        "fr": "La plume suit les sommets",
+        "en": "The pen following the vertices"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 184,
+      "name": "ap-sc-design-select",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/design-graphique.css",
+      "scene": "design-graphique",
+      "label": {
+        "fr": "Cadre de sélection en pointillés",
+        "en": "Marching selection box"
+      },
+      "dur": "1.2s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 185,
+      "name": "ap-sc-enseigne-swing",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/enseignes-signaletique.css",
+      "scene": "enseignes-signaletique",
+      "label": {
+        "fr": "Enseigne qui se balance",
+        "en": "Swinging shop sign"
+      },
+      "dur": "4.5s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 186,
+      "name": "ap-sc-enseigne-neon",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/enseignes-signaletique.css",
+      "scene": "enseignes-signaletique",
+      "label": {
+        "fr": "Néon qui s’allume lettre par lettre",
+        "en": "Neon lighting up letter by letter"
+      },
+      "dur": "8s",
+      "ease": "steps(1,end)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 187,
+      "name": "ap-sc-enseigne-arrow",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/enseignes-signaletique.css",
+      "scene": "enseignes-signaletique",
+      "label": {
+        "fr": "Flèches de signalétique",
+        "en": "Wayfinding arrows nudging"
+      },
+      "dur": "3s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 188,
+      "name": "ap-sc-graffiti-tag",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/graffiti-street-art.css",
+      "scene": "graffiti-street-art",
+      "label": {
+        "fr": "Le tag apparaît lettre après lettre",
+        "en": "The tag appearing letter by letter"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 189,
+      "name": "ap-sc-graffiti-move",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/graffiti-street-art.css",
+      "scene": "graffiti-street-art",
+      "label": {
+        "fr": "La bombe longe le mur",
+        "en": "The can travelling along the wall"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 190,
+      "name": "ap-sc-graffiti-shake",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/graffiti-street-art.css",
+      "scene": "graffiti-street-art",
+      "label": {
+        "fr": "Bombe qu’on secoue",
+        "en": "Shaking the spray can"
+      },
+      "dur": "0.32s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 191,
+      "name": "ap-sc-graffiti-mist",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/graffiti-street-art.css",
+      "scene": "graffiti-street-art",
+      "label": {
+        "fr": "Nuage de peinture",
+        "en": "Cloud of spray paint"
+      },
+      "dur": "0.9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 192,
+      "name": "ap-sc-graffiti-drip",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/graffiti-street-art.css",
+      "scene": "graffiti-street-art",
+      "label": {
+        "fr": "Coulures sous les lettres",
+        "en": "Drips under the letters"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 193,
+      "name": "ap-sc-graffiti-glitch",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/graffiti-street-art.css",
+      "scene": "graffiti-street-art",
+      "label": {
+        "fr": "Glitch rouge et jaune",
+        "en": "Red and yellow glitch"
+      },
+      "dur": "2.6s",
+      "ease": "steps(2,end)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 194,
+      "name": "ap-sc-graffiti-slash",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/graffiti-street-art.css",
+      "scene": "graffiti-street-art",
+      "label": {
+        "fr": "Traits de signature au pied du mur",
+        "en": "Signature slashes at the foot of the wall"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 195,
+      "name": "ap-sc-bd-panel",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/illustration-bande-dessinee.css",
+      "scene": "illustration-bande-dessinee",
+      "label": {
+        "fr": "Cases de BD qui apparaissent",
+        "en": "Comic panels popping in"
+      },
+      "dur": "9s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 196,
+      "name": "ap-sc-bd-ink",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/illustration-bande-dessinee.css",
+      "scene": "illustration-bande-dessinee",
+      "label": {
+        "fr": "Encrage du dessin",
+        "en": "Inking the drawing"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 197,
+      "name": "ap-sc-bd-bubble",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/illustration-bande-dessinee.css",
+      "scene": "illustration-bande-dessinee",
+      "label": {
+        "fr": "Bulle qui s’ouvre",
+        "en": "Speech bubble popping open"
+      },
+      "dur": "9s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 198,
+      "name": "ap-sc-bd-pencil",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/illustration-bande-dessinee.css",
+      "scene": "illustration-bande-dessinee",
+      "label": {
+        "fr": "Le crayon dessine les cases",
+        "en": "The pencil drawing the panels"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 199,
+      "name": "ap-sc-maquillage-paint",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/maquillage-artistique.css",
+      "scene": "maquillage-artistique",
+      "label": {
+        "fr": "Triangles peints sur la joue",
+        "en": "Triangles painted on the cheek"
+      },
+      "dur": "8s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 200,
+      "name": "ap-sc-maquillage-rays",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/maquillage-artistique.css",
+      "scene": "maquillage-artistique",
+      "label": {
+        "fr": "Rayons solaires autour de l’œil",
+        "en": "Sun rays around the eye"
+      },
+      "dur": "24s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 201,
+      "name": "ap-sc-maquillage-brush",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/maquillage-artistique.css",
+      "scene": "maquillage-artistique",
+      "label": {
+        "fr": "Le pinceau de maquillage",
+        "en": "The face-painting brush"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 202,
+      "name": "ap-sc-maquillage-sparkle",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/maquillage-artistique.css",
+      "scene": "maquillage-artistique",
+      "label": {
+        "fr": "Paillettes qui scintillent",
+        "en": "Twinkling glitter"
+      },
+      "dur": "2.4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 203,
+      "name": "ap-sc-mosaic-pane",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/mosaique-vitrail.css",
+      "scene": "mosaique-vitrail",
+      "label": {
+        "fr": "Vitres qui s’illuminent",
+        "en": "Window panes lighting up"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 204,
+      "name": "ap-sc-mosaic-sun",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/mosaique-vitrail.css",
+      "scene": "mosaique-vitrail",
+      "label": {
+        "fr": "Soleil qui traverse le ciel",
+        "en": "Sun crossing the sky"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 205,
+      "name": "ap-sc-mosaic-ray",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/mosaique-vitrail.css",
+      "scene": "mosaique-vitrail",
+      "label": {
+        "fr": "Rayons de lumière colorée",
+        "en": "Rays of coloured light"
+      },
+      "dur": "4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 206,
+      "name": "ap-sc-mosaic-flip",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/mosaique-vitrail.css",
+      "scene": "mosaique-vitrail",
+      "label": {
+        "fr": "Tesselles qui se retournent",
+        "en": "Tesserae flipping over"
+      },
+      "dur": "4.4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 207,
+      "name": "ap-sc-mural-paint",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/peinture-murale.css",
+      "scene": "peinture-murale",
+      "label": {
+        "fr": "La fresque se peint de gauche à droite",
+        "en": "The mural painted from left to right"
+      },
+      "dur": "10s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 208,
+      "name": "ap-sc-mural-roll",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/peinture-murale.css",
+      "scene": "peinture-murale",
+      "label": {
+        "fr": "Rouleau en zigzag sur le mur",
+        "en": "Roller zigzagging up the wall"
+      },
+      "dur": "10s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 209,
+      "name": "ap-sc-mural-seam",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/peinture-murale.css",
+      "scene": "peinture-murale",
+      "label": {
+        "fr": "Les joints blancs se tracent",
+        "en": "White seams drawing in"
+      },
+      "dur": "10s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 210,
+      "name": "ap-sc-mural-drip",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/peinture-murale.css",
+      "scene": "peinture-murale",
+      "label": {
+        "fr": "Coulures de peinture fraîche",
+        "en": "Fresh paint drips"
+      },
+      "dur": "10s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 211,
+      "name": "ap-sc-photo-iris",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/photographie.css",
+      "scene": "photographie",
+      "label": {
+        "fr": "Diaphragme à six lames",
+        "en": "Six-blade aperture"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 212,
+      "name": "ap-sc-photo-flash",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/photographie.css",
+      "scene": "photographie",
+      "label": {
+        "fr": "Éclair de flash doux",
+        "en": "Soft camera flash"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 213,
+      "name": "ap-sc-photo-print",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/photographie.css",
+      "scene": "photographie",
+      "label": {
+        "fr": "Tirage instantané qui sort",
+        "en": "Instant print sliding out"
+      },
+      "dur": "8s",
+      "ease": "var(--ap-ease-out)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 214,
+      "name": "ap-sc-photo-develop",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/photographie.css",
+      "scene": "photographie",
+      "label": {
+        "fr": "L’image se révèle",
+        "en": "The picture developing"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 215,
+      "name": "ap-sc-portrait-facet",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/portraits.css",
+      "scene": "portraits",
+      "label": {
+        "fr": "Facettes du portrait qui s’allument",
+        "en": "Portrait facets lighting up"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 216,
+      "name": "ap-sc-portrait-blink",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/portraits.css",
+      "scene": "portraits",
+      "label": {
+        "fr": "Clignement d’œil",
+        "en": "Blinking eye"
+      },
+      "dur": "5s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 217,
+      "name": "ap-sc-portrait-frame",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/portraits.css",
+      "scene": "portraits",
+      "label": {
+        "fr": "Cadre blanc qui se trace",
+        "en": "White frame drawing itself"
+      },
+      "dur": "8s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 218,
+      "name": "ap-sc-portrait-glow",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/portraits.css",
+      "scene": "portraits",
+      "label": {
+        "fr": "Halo ambré du modèle",
+        "en": "The sitter's amber halo"
+      },
+      "dur": "6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 219,
+      "name": "ap-sc-restau-clean",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/restauration-encadrement.css",
+      "scene": "restauration-encadrement",
+      "label": {
+        "fr": "Le voile de poussière s’efface",
+        "en": "The veil of dust wiped away"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 220,
+      "name": "ap-sc-restau-swab",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/restauration-encadrement.css",
+      "scene": "restauration-encadrement",
+      "label": {
+        "fr": "Coton de nettoyage en va-et-vient",
+        "en": "Cleaning swab moving to and fro"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 221,
+      "name": "ap-sc-restau-revive",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/restauration-encadrement.css",
+      "scene": "restauration-encadrement",
+      "label": {
+        "fr": "Couleurs ravivées",
+        "en": "Colours revived"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 222,
+      "name": "ap-sc-restau-corner",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/restauration-encadrement.css",
+      "scene": "restauration-encadrement",
+      "label": {
+        "fr": "Coins du cadre qui s’assemblent",
+        "en": "Frame corners locking together"
+      },
+      "dur": "9s",
+      "ease": "var(--ap-ease-spring)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 223,
+      "name": "ap-sc-restau-glint",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/restauration-encadrement.css",
+      "scene": "restauration-encadrement",
+      "label": {
+        "fr": "Reflet ambré le long du cadre",
+        "en": "Amber glint along the frame"
+      },
+      "dur": "3.6s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 224,
+      "name": "ap-sc-sculpt-rotate",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/sculpture.css",
+      "scene": "sculpture",
+      "label": {
+        "fr": "Pyramide 3D qui tourne",
+        "en": "Rotating 3D pyramid"
+      },
+      "dur": "12s",
+      "ease": "linear",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 225,
+      "name": "ap-sc-sculpt-strike",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/sculpture.css",
+      "scene": "sculpture",
+      "label": {
+        "fr": "Coup de maillet",
+        "en": "Mallet strike"
+      },
+      "dur": "2.4s",
+      "ease": "var(--ap-ease-in)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 226,
+      "name": "ap-sc-sculpt-chip",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/sculpture.css",
+      "scene": "sculpture",
+      "label": {
+        "fr": "Éclats qui jaillissent",
+        "en": "Chips flying off"
+      },
+      "dur": "2.4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 227,
+      "name": "ap-sc-sculpt-sheen",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/sculpture.css",
+      "scene": "sculpture",
+      "label": {
+        "fr": "Lumière sur les facettes",
+        "en": "Light across the facets"
+      },
+      "dur": "4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 228,
+      "name": "ap-sc-sculpt-light",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/sculpture.css",
+      "scene": "sculpture",
+      "label": {
+        "fr": "Halo d’atelier",
+        "en": "Studio halo"
+      },
+      "dur": "6s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 229,
+      "name": "ap-sc-serig-squeegee",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/serigraphie-impression.css",
+      "scene": "serigraphie-impression",
+      "label": {
+        "fr": "Passage de la racle",
+        "en": "Squeegee pass"
+      },
+      "dur": "3s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 230,
+      "name": "ap-sc-serig-layer",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/serigraphie-impression.css",
+      "scene": "serigraphie-impression",
+      "label": {
+        "fr": "Couches de couleur imprimées",
+        "en": "Colour layers printed"
+      },
+      "dur": "9s",
+      "ease": "steps(1,end)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 231,
+      "name": "ap-sc-serig-mark",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/serigraphie-impression.css",
+      "scene": "serigraphie-impression",
+      "label": {
+        "fr": "Repères de calage",
+        "en": "Registration marks blinking"
+      },
+      "dur": "1.8s",
+      "ease": "steps(2,end)",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 232,
+      "name": "ap-sc-serig-shine",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/serigraphie-impression.css",
+      "scene": "serigraphie-impression",
+      "label": {
+        "fr": "Encre qui sèche et brille",
+        "en": "Ink drying with a sheen"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 233,
+      "name": "ap-sc-tableau-stroke",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/tableaux-sur-commande.css",
+      "scene": "tableaux-sur-commande",
+      "label": {
+        "fr": "Coups de pinceau sur la toile",
+        "en": "Brushstrokes on the canvas"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 234,
+      "name": "ap-sc-tableau-brush",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/tableaux-sur-commande.css",
+      "scene": "tableaux-sur-commande",
+      "label": {
+        "fr": "Le pinceau parcourt la toile",
+        "en": "The brush travelling over the canvas"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 235,
+      "name": "ap-sc-tableau-sign",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/tableaux-sur-commande.css",
+      "scene": "tableaux-sur-commande",
+      "label": {
+        "fr": "La signature au bas du tableau",
+        "en": "The signature at the bottom of the painting"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 236,
+      "name": "ap-sc-tableau-dot",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/tableaux-sur-commande.css",
+      "scene": "tableaux-sur-commande",
+      "label": {
+        "fr": "Touches de peinture qui palpitent",
+        "en": "Pulsing dabs of paint"
+      },
+      "dur": "2.4s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    },
+    {
+      "n": 237,
+      "name": "ap-sc-tableau-spot",
+      "group": "scene",
+      "demo": "scene",
+      "file": "css/scenes/tableaux-sur-commande.css",
+      "scene": "tableaux-sur-commande",
+      "label": {
+        "fr": "Lumière d’atelier",
+        "en": "Studio light"
+      },
+      "dur": "9s",
+      "ease": "ease-in-out",
+      "dir": "normal",
+      "iter": "infinite"
+    }
+  ]
+}

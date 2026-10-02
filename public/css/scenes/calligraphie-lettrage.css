@@ -1,0 +1,94 @@
+/* Scene · calligraphie-lettrage — the nib writes "Art" (9 s loop). */
+
+.scene--calligraphie-lettrage .calli__bg { fill: var(--ap-ink); }
+.scene--calligraphie-lettrage .calli__guides { fill: none; stroke: var(--ap-steel); stroke-width: 1; }
+.scene--calligraphie-lettrage .calli__slant { fill: none; stroke: var(--ap-graphite); stroke-width: 1; }
+
+.scene--calligraphie-lettrage .calli__capital {
+    fill: none;
+    stroke: var(--ap-yellow);
+    stroke-width: 9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    filter: drop-shadow(0 0 6px rgb(248 212 73 / 0.55));
+    animation: ap-sc-calli-gild 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--calligraphie-lettrage .calli__word,
+.scene--calligraphie-lettrage .calli__flourish {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    animation: ap-sc-calli-write 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--calligraphie-lettrage .calli__flourish {
+    stroke-width: 2.5;
+    animation-delay: 0.9s;
+}
+
+.scene--calligraphie-lettrage .calli__drops circle {
+    fill: var(--ap-white);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-calli-ink 9s var(--ap-ease-out) calc(4.6s + var(--d, 0s)) infinite backwards;
+}
+
+.scene--calligraphie-lettrage .calli__nib {
+    transform: translate(330px, 230px) rotate(28deg);
+    animation: ap-sc-calli-nib 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--calligraphie-lettrage .calli__nib-shape { fill: var(--ap-amber); stroke: var(--ap-white); stroke-width: 1.2; }
+.scene--calligraphie-lettrage .calli__nib-slit { stroke: var(--ap-black); stroke-width: 1.4; }
+.scene--calligraphie-lettrage .calli__nib-hole { fill: var(--ap-black); }
+.scene--calligraphie-lettrage .calli__nib-holder { fill: var(--ap-graphite); stroke: var(--ap-steel); stroke-width: 1.2; }
+
+/** @anim group=scene demo=scene scene=calligraphie-lettrage dur=9s fr="Mot calligraphié qui s’écrit" en="Calligraphed word writing itself" */
+@keyframes ap-sc-calli-write {
+    0%,
+    14% { stroke-dashoffset: 1; opacity: 1; }
+    52% { stroke-dashoffset: 0; opacity: 1; }
+    88% { stroke-dashoffset: 0; opacity: 1; }
+    95%,
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=calligraphie-lettrage dur=9s fr="Majuscule dorée" en="Gilded capital" */
+@keyframes ap-sc-calli-gild {
+    0% { stroke-dashoffset: 1; opacity: 1; }
+    14% { stroke-dashoffset: 0; opacity: 1; filter: drop-shadow(0 0 0 transparent); }
+    60% { filter: drop-shadow(0 0 10px rgb(248 212 73 / 0.85)); }
+    88% { stroke-dashoffset: 0; opacity: 1; }
+    95%,
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=calligraphie-lettrage dur=9s fr="Gouttes d’encre qui fleurissent" en="Ink drops blooming" */
+@keyframes ap-sc-calli-ink {
+    0% { transform: scale(0); opacity: 1; }
+    10% { transform: scale(1.2); opacity: 1; }
+    16% { transform: scale(1); }
+    40% { opacity: 1; }
+    48%,
+    100% { opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=calligraphie-lettrage dur=9s fr="La plume trace les lettres" en="The nib tracing the letters" */
+@keyframes ap-sc-calli-nib {
+    0% { transform: translate(56px, 280px) rotate(28deg); }
+    7% { transform: translate(98px, 128px) rotate(28deg); }
+    14% { transform: translate(140px, 280px) rotate(28deg); }
+    22% { transform: translate(168px, 212px) rotate(28deg); }
+    30% { transform: translate(216px, 214px) rotate(28deg); }
+    38% { transform: translate(262px, 128px) rotate(28deg); }
+    46% { transform: translate(292px, 268px) rotate(28deg); }
+    56% { transform: translate(350px, 270px) rotate(28deg); }
+    64% { transform: translate(120px, 308px) rotate(28deg); }
+    74%,
+    100% { transform: translate(330px, 230px) rotate(28deg); }
+}

@@ -1,0 +1,86 @@
+/* Scene · decoration-interieure — an artful room composing itself (10 s loop). */
+
+.scene--decoration-interieure .deco__bg { fill: var(--ap-black); }
+.scene--decoration-interieure .deco__wall-left { fill: var(--ap-graphite); }
+.scene--decoration-interieure .deco__wall-right {
+    fill: var(--ap-blue-deep);
+    animation: ap-sc-deco-wall 10s steps(1, end) infinite;
+}
+.scene--decoration-interieure .deco__floor { fill: var(--ap-coal); }
+.scene--decoration-interieure .deco__geo { fill: var(--ap-yellow); opacity: 0.85; }
+.scene--decoration-interieure .deco__geo--2 { fill: var(--ap-red); }
+.scene--decoration-interieure .deco__edges { fill: none; stroke: var(--ap-white); stroke-width: 1.5; opacity: 0.5; }
+
+.scene--decoration-interieure .deco__frame {
+    animation: ap-sc-deco-frame 10s var(--ap-ease-spring) var(--d, 0s) infinite backwards;
+}
+
+.scene--decoration-interieure .deco__frame-border { fill: var(--ap-white); }
+.scene--decoration-interieure .deco__frame-art--blue { fill: var(--ap-blue); }
+.scene--decoration-interieure .deco__frame-art--yellow { fill: var(--ap-yellow); }
+.scene--decoration-interieure .deco__frame-art--red { fill: var(--ap-red); }
+
+.scene--decoration-interieure .deco__glow { animation: ap-sc-deco-lamp 10s ease-in-out infinite backwards; }
+.scene--decoration-interieure .deco__lamp-stand { fill: none; stroke: var(--ap-mist); stroke-width: 4; stroke-linecap: round; }
+.scene--decoration-interieure .deco__lamp-shade { fill: var(--ap-amber); }
+
+.scene--decoration-interieure .deco__rug {
+    transform-box: fill-box;
+    transform-origin: 0% 50%;
+    animation: ap-sc-deco-rug 10s var(--ap-ease-out) infinite backwards;
+}
+
+.scene--decoration-interieure .deco__rug-base { fill: var(--ap-red-deep); stroke: var(--ap-white); stroke-width: 1.5; }
+.scene--decoration-interieure .deco__rug-tri { fill: var(--ap-yellow); }
+.scene--decoration-interieure .deco__rug-tri--b { fill: var(--ap-blue-bright); }
+
+.scene--decoration-interieure .deco__pot { fill: var(--ap-orange); }
+.scene--decoration-interieure .deco__leaf {
+    fill: var(--ap-blue-bright);
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: ap-sc-deco-plant 4s var(--ap-ease-in-out) infinite;
+}
+.scene--decoration-interieure .deco__leaf--b { fill: var(--ap-blue); animation-delay: -2s; transform-origin: 0% 100%; }
+
+/** @anim group=scene demo=scene scene=decoration-interieure dur=10s ease=steps(1,end) fr="Le mur change de couleur" en="The wall changing colour" */
+@keyframes ap-sc-deco-wall {
+    0% { fill: var(--ap-blue-deep); }
+    25% { fill: var(--ap-blue); }
+    50% { fill: var(--ap-red-deep); }
+    75% { fill: var(--ap-graphite); }
+}
+
+/** @anim group=scene demo=scene scene=decoration-interieure dur=10s ease=var(--ap-ease-spring) fr="Cadres qui glissent au mur" en="Frames sliding onto the wall" */
+@keyframes ap-sc-deco-frame {
+    0% { transform: translate(-30px, -60px); opacity: 0; }
+    10% { transform: translate(0, 0); opacity: 1; }
+    88% { opacity: 1; }
+    96%,
+    100% { opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=decoration-interieure dur=10s fr="La lampe s’allume" en="The lamp switching on" */
+@keyframes ap-sc-deco-lamp {
+    0%,
+    20% { opacity: 0; }
+    26% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=decoration-interieure dur=10s ease=var(--ap-ease-out) fr="Le tapis se déroule" en="The rug unrolling" */
+@keyframes ap-sc-deco-rug {
+    0%,
+    30% { transform: scaleX(0); }
+    46% { transform: scaleX(1); }
+    90% { transform: scaleX(1); opacity: 1; }
+    100% { transform: scaleX(1); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=decoration-interieure dur=4s fr="Plante qui se balance" en="Swaying plant" */
+@keyframes ap-sc-deco-plant {
+    0%,
+    100% { transform: rotate(-4deg); }
+    50% { transform: rotate(4deg); }
+}

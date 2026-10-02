@@ -1,0 +1,86 @@
+/* Scene · illustration-bande-dessinee — a comic page inking itself (9 s loop). */
+
+.scene--illustration-bande-dessinee .bd__bg { fill: var(--ap-black); }
+.scene--illustration-bande-dessinee .bd__page { fill: var(--ap-white); }
+.scene--illustration-bande-dessinee .bd__frame { fill: var(--ap-white); stroke: var(--ap-black); stroke-width: 4; }
+
+.scene--illustration-bande-dessinee .bd__panel {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-bd-panel 9s var(--ap-ease-spring) var(--d, 0s) infinite backwards;
+}
+
+.scene--illustration-bande-dessinee .bd__ink {
+    fill: none;
+    stroke: var(--ap-black);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    animation: ap-sc-bd-ink 9s var(--ap-ease-in-out) var(--d, 0s) infinite backwards;
+}
+
+.scene--illustration-bande-dessinee .bd__sun { fill: var(--ap-yellow); stroke: var(--ap-black); stroke-width: 3; }
+.scene--illustration-bande-dessinee .bd__block { stroke: var(--ap-black); stroke-width: 3; }
+.scene--illustration-bande-dessinee .bd__block--red { fill: var(--ap-red); }
+.scene--illustration-bande-dessinee .bd__block--blue { fill: var(--ap-blue); }
+.scene--illustration-bande-dessinee .bd__lines { fill: none; stroke: var(--ap-smoke); stroke-width: 3; }
+
+.scene--illustration-bande-dessinee .bd__bubble {
+    transform-box: fill-box;
+    transform-origin: 30% 100%;
+    animation: ap-sc-bd-bubble 9s var(--ap-ease-spring) infinite backwards;
+}
+
+.scene--illustration-bande-dessinee .bd__bubble-shape { fill: var(--ap-white); stroke: var(--ap-black); stroke-width: 3.5; }
+.scene--illustration-bande-dessinee .bd__bubble-tri { fill: var(--ap-red-bright); }
+
+.scene--illustration-bande-dessinee .bd__pencil {
+    transform: translate(330px, 370px);
+    animation: ap-sc-bd-pencil 9s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--illustration-bande-dessinee .bd__pencil-tip { fill: var(--ap-black); }
+.scene--illustration-bande-dessinee .bd__pencil-body { fill: var(--ap-blue); stroke: var(--ap-black); stroke-width: 1.5; }
+
+/** @anim group=scene demo=scene scene=illustration-bande-dessinee dur=9s ease=var(--ap-ease-spring) fr="Cases de BD qui apparaissent" en="Comic panels popping in" */
+@keyframes ap-sc-bd-panel {
+    0% { transform: scale(0.6); opacity: 0; }
+    6% { transform: scale(1); opacity: 1; }
+    86% { opacity: 1; }
+    94%,
+    100% { opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=illustration-bande-dessinee dur=9s fr="Encrage du dessin" en="Inking the drawing" */
+@keyframes ap-sc-bd-ink {
+    0%,
+    6% { stroke-dashoffset: 1; }
+    22% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 0; }
+}
+
+/** @anim group=scene demo=scene scene=illustration-bande-dessinee dur=9s ease=var(--ap-ease-spring) fr="Bulle qui s’ouvre" en="Speech bubble popping open" */
+@keyframes ap-sc-bd-bubble {
+    0%,
+    40% { transform: scale(0); }
+    48% { transform: scale(1.12); }
+    52% { transform: scale(1); }
+    86% { transform: scale(1); opacity: 1; }
+    94%,
+    100% { transform: scale(1); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=illustration-bande-dessinee dur=9s fr="Le crayon dessine les cases" en="The pencil drawing the panels" */
+@keyframes ap-sc-bd-pencil {
+    0% { transform: translate(78px, 172px); }
+    8% { transform: translate(128px, 84px); }
+    14% { transform: translate(178px, 172px); }
+    22% { transform: translate(214px, 160px); }
+    30% { transform: translate(330px, 96px); }
+    38% { transform: translate(110px, 262px); }
+    46% { transform: translate(190px, 262px); }
+    54% { transform: translate(290px, 246px); }
+    64%,
+    100% { transform: translate(330px, 370px); }
+}

@@ -1,0 +1,78 @@
+/* Scene · mosaique-vitrail — light passing through stained glass (8 s loop). */
+
+.scene--mosaique-vitrail .mosaic__bg { fill: var(--ap-black); }
+.scene--mosaique-vitrail .mosaic__wall { fill: var(--ap-coal); }
+.scene--mosaique-vitrail .mosaic__glass-bg { fill: var(--ap-ink); }
+
+.scene--mosaique-vitrail .mosaic__sun {
+    fill: var(--ap-yellow);
+    filter: drop-shadow(0 0 10px rgb(248 212 73 / 0.8));
+    animation: ap-sc-mosaic-sun 8s var(--ap-ease-in-out) infinite;
+}
+
+.scene--mosaique-vitrail .mosaic__pane {
+    stroke: var(--ap-black);
+    stroke-width: 3.2;
+    stroke-linejoin: round;
+    animation: ap-sc-mosaic-pane 8s ease-in-out var(--d, 0s) infinite backwards;
+}
+
+.scene--mosaique-vitrail .mosaic__pane--blue { fill: var(--ap-blue); }
+.scene--mosaique-vitrail .mosaic__pane--blue-bright { fill: var(--ap-blue-bright); }
+.scene--mosaique-vitrail .mosaic__pane--yellow { fill: var(--ap-yellow); }
+.scene--mosaique-vitrail .mosaic__pane--amber { fill: var(--ap-amber); }
+.scene--mosaique-vitrail .mosaic__pane--orange { fill: var(--ap-orange); }
+.scene--mosaique-vitrail .mosaic__pane--red { fill: var(--ap-red); }
+.scene--mosaique-vitrail .mosaic__pane--white { fill: var(--ap-white); }
+
+.scene--mosaique-vitrail .mosaic__frame { fill: none; stroke: var(--ap-steel); stroke-width: 10; }
+.scene--mosaique-vitrail .mosaic__frame-light { fill: none; stroke: var(--ap-white); stroke-width: 2; }
+
+.scene--mosaique-vitrail .mosaic__rays polygon {
+    fill: url(#mosaic-ray);
+    animation: ap-sc-mosaic-ray 4s ease-in-out var(--d, 0s) infinite;
+}
+
+.scene--mosaique-vitrail .mosaic__tile {
+    stroke: var(--ap-black);
+    stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-mosaic-flip 4.4s var(--ap-ease-in-out) var(--d, 0s) infinite;
+}
+
+.scene--mosaique-vitrail .mosaic__tile--blue { fill: var(--ap-blue); }
+.scene--mosaique-vitrail .mosaic__tile--yellow { fill: var(--ap-yellow); }
+.scene--mosaique-vitrail .mosaic__tile--red { fill: var(--ap-red); }
+.scene--mosaique-vitrail .mosaic__tile--white { fill: var(--ap-white); }
+
+/** @anim group=scene demo=scene scene=mosaique-vitrail dur=8s fr="Vitres qui s’illuminent" en="Window panes lighting up" */
+@keyframes ap-sc-mosaic-pane {
+    0% { opacity: 0.25; filter: brightness(0.7); }
+    12% { opacity: 1; filter: brightness(1.35); }
+    30% { opacity: 1; filter: brightness(1); }
+    80% { opacity: 1; }
+    100% { opacity: 0.25; filter: brightness(0.7); }
+}
+
+/** @anim group=scene demo=scene scene=mosaique-vitrail dur=8s fr="Soleil qui traverse le ciel" en="Sun crossing the sky" */
+@keyframes ap-sc-mosaic-sun {
+    0%,
+    100% { transform: translate(0, 40px); opacity: 0.5; }
+    50% { transform: translate(280px, -10px); opacity: 1; }
+}
+
+/** @anim group=scene demo=scene scene=mosaique-vitrail dur=4s fr="Rayons de lumière colorée" en="Rays of coloured light" */
+@keyframes ap-sc-mosaic-ray {
+    0%,
+    100% { opacity: 0.35; }
+    50% { opacity: 1; }
+}
+
+/** @anim group=scene demo=scene scene=mosaique-vitrail dur=4.4s fr="Tesselles qui se retournent" en="Tesserae flipping over" */
+@keyframes ap-sc-mosaic-flip {
+    0%,
+    40%,
+    100% { transform: scaleY(1); }
+    20% { transform: scaleY(-1); }
+}

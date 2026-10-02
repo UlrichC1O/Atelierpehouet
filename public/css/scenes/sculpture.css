@@ -1,0 +1,116 @@
+/* Scene · sculpture — CSS 3D pyramid on a plinth (12 s rotation, 2.4 s strikes). */
+
+.scene--sculpture .sculpt__bg { fill: var(--ap-black); }
+.scene--sculpture .sculpt__halo { animation: ap-sc-sculpt-light 6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.scene--sculpture .sculpt__floor { stroke: var(--ap-steel); stroke-width: 2; }
+.scene--sculpture .sculpt__plinth-top { fill: var(--ap-steel); }
+.scene--sculpture .sculpt__plinth-body { fill: var(--ap-graphite); stroke: var(--ap-steel); stroke-width: 2; }
+.scene--sculpture .sculpt__plinth-seam { stroke: var(--ap-white); stroke-width: 1.5; opacity: 0.5; }
+
+.scene--sculpture .sculpt__stage {
+    position: absolute;
+    inset: 0;
+    perspective: 120cqi;
+    perspective-origin: 50% 30%;
+}
+
+.scene--sculpture .sculpt__pyramid {
+    position: absolute;
+    left: 33cqi;
+    top: 34cqi;
+    width: 34cqi;
+    height: 30cqi;
+    transform-style: preserve-3d;
+    transform: rotateX(-12deg) rotateY(-32deg);
+    animation: ap-sc-sculpt-rotate 12s linear infinite;
+}
+
+.scene--sculpture .sculpt__face {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 34cqi;
+    height: 34.48cqi;
+    transform-origin: 50% 100%;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    backface-visibility: visible;
+    overflow: hidden;
+}
+
+/* a beam of light running across each facet */
+.scene--sculpture .sculpt__face::after {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background: linear-gradient(110deg, transparent 40%, rgb(250 252 253 / 0.45) 50%, transparent 60%);
+    animation: ap-sc-sculpt-sheen 4s var(--ap-ease-in-out) infinite;
+}
+
+.scene--sculpture .sculpt__face--front { background: linear-gradient(180deg, var(--ap-blue-bright), var(--ap-blue)); transform: translateZ(17cqi) rotateX(29.5deg); }
+.scene--sculpture .sculpt__face--right { background: linear-gradient(180deg, var(--ap-yellow), var(--ap-amber)); transform: rotateY(90deg) translateZ(17cqi) rotateX(29.5deg); }
+.scene--sculpture .sculpt__face--back { background: linear-gradient(180deg, var(--ap-red-bright), var(--ap-red)); transform: rotateY(180deg) translateZ(17cqi) rotateX(29.5deg); }
+.scene--sculpture .sculpt__face--left { background: linear-gradient(180deg, var(--ap-white), var(--ap-mist)); transform: rotateY(-90deg) translateZ(17cqi) rotateX(29.5deg); }
+
+.scene--sculpture .sculpt__fx { pointer-events: none; }
+
+.scene--sculpture .sculpt__tool {
+    transform: translate(268px, 236px);
+}
+
+.scene--sculpture .sculpt__chisel-blade { fill: var(--ap-mist); stroke: var(--ap-white); stroke-width: 1; }
+.scene--sculpture .sculpt__chisel-handle { fill: var(--ap-amber); }
+.scene--sculpture .sculpt__hammer-head { fill: var(--ap-steel); stroke: var(--ap-smoke); stroke-width: 1.5; }
+.scene--sculpture .sculpt__hammer-handle { stroke: var(--ap-orange); stroke-width: 7; stroke-linecap: round; }
+
+.scene--sculpture .sculpt__hammer {
+    transform-box: view-box;
+    transform-origin: 384px 206px;
+    animation: ap-sc-sculpt-strike 2.4s var(--ap-ease-in) infinite;
+}
+
+.scene--sculpture .sculpt__chips polygon {
+    fill: var(--ap-white);
+    transform: translate(268px, 236px);
+    animation: ap-sc-sculpt-chip 2.4s var(--ap-ease-out) infinite;
+}
+
+.scene--sculpture .sculpt__chips polygon:nth-child(2) { fill: var(--ap-blue-bright); }
+.scene--sculpture .sculpt__chips polygon:nth-child(3) { fill: var(--ap-yellow); }
+
+/** @anim group=scene demo=scene scene=sculpture dur=12s ease=linear fr="Pyramide 3D qui tourne" en="Rotating 3D pyramid" */
+@keyframes ap-sc-sculpt-rotate {
+    from { transform: rotateX(-12deg) rotateY(-32deg); }
+    to { transform: rotateX(-12deg) rotateY(328deg); }
+}
+
+/** @anim group=scene demo=scene scene=sculpture dur=2.4s ease=var(--ap-ease-in) fr="Coup de maillet" en="Mallet strike" */
+@keyframes ap-sc-sculpt-strike {
+    0%,
+    100% { transform: rotate(0deg); }
+    60% { transform: rotate(-26deg); }
+    70% { transform: rotate(6deg); }
+    78% { transform: rotate(0deg); }
+}
+
+/** @anim group=scene demo=scene scene=sculpture dur=2.4s fr="Éclats qui jaillissent" en="Chips flying off" */
+@keyframes ap-sc-sculpt-chip {
+    0%,
+    68% { opacity: 0; transform: translate(268px, 236px) rotate(0deg); }
+    72% { opacity: 1; }
+    100% { opacity: 0; transform: translate(calc(268px + var(--dx, 40px)), calc(236px + var(--dy, -40px))) rotate(var(--r, 180deg)); }
+}
+
+/** @anim group=scene demo=scene scene=sculpture dur=4s fr="Lumière sur les facettes" en="Light across the facets" */
+@keyframes ap-sc-sculpt-sheen {
+    0%,
+    30% { transform: translateX(-70%); }
+    70%,
+    100% { transform: translateX(70%); }
+}
+
+/** @anim group=scene demo=scene scene=sculpture dur=6s fr="Halo d’atelier" en="Studio halo" */
+@keyframes ap-sc-sculpt-light {
+    0%,
+    100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.06); }
+}

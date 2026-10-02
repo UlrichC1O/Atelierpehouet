@@ -164,8 +164,8 @@ Invalid input → HTTP 422 plain text. Response: `image/svg+xml; charset=utf-8`,
 
 ## 4. Services
 
-18 services, each with **its own page** (`/services/{slug}`), **its own content file**
-(`resources/content/services/{slug}.php`), **its own animated scene**
+22 art services (the site must always offer **at least 20**), each with **its own page** (`/services/{slug}`),
+**its own content file** (`resources/content/services/{slug}.php`), **its own animated scene**
 (`resources/views/services/scenes/{slug}.blade.php` + `public/css/scenes/{slug}.css`).
 
 | # | slug | category | accent | icon | art_style | scene code |
@@ -178,16 +178,22 @@ Invalid input → HTTP 422 plain text. Response: `image/svg+xml; charset=utf-8`,
 | 6 | `enseignes-signaletique` | design | red | sign | soleil | enseigne |
 | 7 | `calligraphie-lettrage` | design | white | nib | eclats | calli |
 | 8 | `art-numerique` | design | blue | tablet | mosaique | numerique |
-| 9 | `sculpture` | matiere | blue | chisel | prisme | sculpt |
-| 10 | `ceramique-poterie` | matiere | orange | vase | soleil | ceram |
-| 11 | `mosaique-vitrail` | matiere | yellow | mosaic | vitrail | mosaic |
-| 12 | `restauration-encadrement` | matiere | white | frame | mondrian | restau |
-| 13 | `decoration-interieure` | espaces | blue | sofa | tissage | deco |
-| 14 | `decors-evenements` | espaces | red | stage | mosaique | event |
-| 15 | `photographie` | image | white | camera | vitrail | photo |
-| 16 | `serigraphie-impression` | image | yellow | print | pehouet | serig |
-| 17 | `cours-ateliers` | communaute | amber | pencil | pehouet | cours |
-| 18 | `art-communautaire` | communaute | orange | hands | mosaique | commu |
+| 9 | `decoration-vehicules` | design | orange | van | eclats | vehicule |
+| 10 | `sculpture` | matiere | blue | chisel | prisme | sculpt |
+| 11 | `ceramique-poterie` | matiere | orange | vase | soleil | ceram |
+| 12 | `mosaique-vitrail` | matiere | yellow | mosaic | vitrail | mosaic |
+| 13 | `restauration-encadrement` | matiere | white | frame | mondrian | restau |
+| 14 | `art-textile` | matiere | red | thread | tissage | textile |
+| 15 | `decoration-interieure` | espaces | blue | sofa | tissage | deco |
+| 16 | `decors-evenements` | espaces | red | stage | mosaique | event |
+| 17 | `maquillage-artistique` | espaces | yellow | mask | soleil | maquillage |
+| 18 | `photographie` | image | white | camera | vitrail | photo |
+| 19 | `serigraphie-impression` | image | yellow | print | pehouet | serig |
+| 20 | `illustration-bande-dessinee` | image | blue | book | prisme | bd |
+| 21 | `cours-ateliers` | communaute | amber | pencil | pehouet | cours |
+| 22 | `art-communautaire` | communaute | orange | hands | mosaique | commu |
+
+Never hard-code the number of services in copy or code: count them (`$services->count()`).
 
 Category labels: `__('ui.categories.{key}')` — peinture *Peinture & couleur / Painting & colour*,
 design *Design & lettrage / Design & lettering*, matiere *Volume & matière / Form & material*,
@@ -210,8 +216,8 @@ return [
         'title' => 'Peinture murale & fresques',      // ≤ 40 chars
         'short' => '…',                                // card one-liner, ≤ 110 chars
         'tagline' => '…',                              // hero tagline, ≤ 90 chars, poetic
-        'intro' => '…',                                // 55–90 words
-        'body' => ['…', '…'],                          // 2 paragraphs, 50–90 words each
+        'intro' => '…',                                // ≈ 45–90 words
+        'body' => ['…', '…'],                          // 2 paragraphs, ≈ 35–90 words each
         'features' => [['title' => '…', 'text' => '…'], /* exactly 6 */],
         'process' => [['title' => '…', 'text' => '…'], /* exactly 4 */],
         'ideal_for' => ['…', '…', '…', '…'],           // exactly 4 audiences
@@ -228,7 +234,7 @@ always "sur devis / on quote".
 
 ### `App\Support\ServiceCatalog` (B)
 `all(?locale)`, `find(slug, ?locale)`, `slugs()`, `byCategory(?locale)`, `neighbors(slug)` (`['prev'=>…, 'next'=>…]`),
-`related(slug, limit = 3)`. A **localized service array** contains: `slug, order, number ('01'…'18'),
+`related(slug, limit = 3)`. A **localized service array** contains: `slug, order, number ('01'…'22'),
 category, category_label, accent, icon, art_style, scene, url` + the locale's content keys
 (`title, short, tagline, intro, body, features, process, ideal_for, faq, scene_alt, meta_description`).
 Missing English keys fall back to French.
@@ -263,13 +269,13 @@ Pages set: `@section('title')`, `@section('meta_description')`, `@section('body_
 Body classes: `page-home`, `page-services`, `page-service`, `page-about`, `page-community`,
 `page-gallery`, `page-generator`, `page-motion`, `page-contact`, `page-error`.
 
-Header: logo wordmark (links home), main nav — Services (mega menu with the 18 services grouped by
+Header: logo wordmark (links home), main nav — Services (mega menu with all the services grouped by
 category), Galerie, Atelier numérique, Mouvement, Communauté, À propos — language switch
 (FR/EN → `route('locale.switch', 'en')`), motion toggle, CTA button "Demander un devis" → `route('contact')`.
 Mobile (< 1100px): burger → full-screen menu revealed by diagonal colour slices.
 Use `aria-current="page"` on the active link (`request()->routeIs(...)`).
 
-Footer: big statement + CTA, the 18 services by category, page links, contact (e-mail/phone/address
+Footer: big statement + CTA, all the services by category, page links, contact (e-mail/phone/address
 only when configured), socials (only when configured), motion toggle, language switch,
 `© {year} Ateliers Pehouet — {tagline}`.
 
@@ -280,7 +286,7 @@ only when configured), socials (only when configured), motion toggle, language s
 Load order (global, every page): `01-tokens` → `02-base` → `03-layout` → `04-components` →
 `05-anim-brand` → `06-anim-ambient` → `07-anim-ui`; then page sheets via `@push('styles')`:
 `css/pages/{page}.css`, and on a service page `css/pages/services.css` + `css/scenes/{slug}.css`.
-The motion page also loads all 18 scene sheets.
+The motion page also loads every scene sheet.
 
 Conventions: BEM-ish (`.block`, `.block__el`, `.block--mod`), state classes `.is-*`, JS hooks are
 `data-*` attributes (never style by `data-*` hooks except the documented ones). Mobile-first; breakpoints
@@ -381,7 +387,7 @@ Use `@props([...])` with defaults; merge `$attributes` on the root element; all 
 | Component | Props (defaults) | Notes |
 |---|---|---|
 | `x-button` | `href=null, variant='primary', size='md', icon=null, iconBefore=null, magnetic=false, type='button', external=false` | `<a>` when `href`, else `<button>`; adds `data-ripple`; `magnetic` ⇒ `data-magnetic` |
-| `x-icon` | `name, size=null` | inline 24×24 stroke SVG, `aria-hidden`. Must include all 18 service icons (§4) and UI icons: `arrow-right arrow-left arrow-up arrow-down arrow-up-right chevron-down close menu mail phone map-pin clock whatsapp instagram facebook tiktok youtube globe download refresh dice play pause sparkle check plus minus quote eye palette triangle wave heart users calendar star external motion filter grid` |
+| `x-icon` | `name, size=null` | inline 24×24 stroke SVG, `aria-hidden`. Must include every service icon (§4) and UI icons: `arrow-right arrow-left arrow-up arrow-down arrow-up-right chevron-down close menu mail phone map-pin clock whatsapp instagram facebook tiktok youtube globe download refresh dice play pause sparkle check plus minus quote eye palette triangle wave heart users calendar star external motion filter grid` |
 | `x-section-heading` | `eyebrow=null, title, lead=null, align='left', level=2, accent='yellow'` | title split into words (`data-split="words"`) |
 | `x-page-hero` | `eyebrow=null, title, lead=null, breadcrumbs=[], accent='red', compact=false` | default slot = actions; named slot `aside` = visual. Decorated with Mondrian blocks & triangles |
 | `x-service-card` | `service, index=0, variant='default'` (`default|compact|feature`) | number, icon, title, short, category label, accent class, link, `data-tilt`, `data-reveal` |
@@ -442,7 +448,7 @@ adds `is-loading` on the first page view of the session when motion is allowed.
 | `data-reveal="fade-up"` (+`data-reveal-delay="ms"`) | adds `.is-revealed` when visible. Types: `fade-up fade-down fade-left fade-right zoom-in zoom-out flip-x flip-y tri diagonal curtain rotate blur skew mondrian rise drop` |
 | `data-reveal-stagger="80"` | on a parent: incremental delays for `[data-reveal]` children |
 | `data-split="chars|words"` (+`data-split-anim="rise|flip|glow|wave|drop|neon"`) | wraps units in `.split__unit` with `--i`; animates when visible; keeps an accessible label |
-| `data-count-to="18"` (+`data-count-from`, `-duration`, `-prefix`, `-suffix`) | animated counter |
+| `data-count-to="22"` (+`data-count-from`, `-duration`, `-prefix`, `-suffix`) | animated counter |
 | `data-tilt` (+`data-tilt-max="10"`) | 3D tilt following the pointer |
 | `data-magnetic` (+`data-magnetic-strength`) | element drifts toward the pointer |
 | `data-ripple` | triangle ripple on click |

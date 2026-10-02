@@ -1,0 +1,88 @@
+/* Scene · decors-evenements — showtime (9 s loop). */
+
+.scene--decors-evenements .event__bg { fill: var(--ap-black); }
+.scene--decors-evenements .event__backdrop {
+    fill: url(#event-teliers);
+    filter: drop-shadow(0 0 18px rgb(232 67 59 / 0.6));
+    animation: ap-sc-event-glow 3s ease-in-out infinite;
+}
+.scene--decors-evenements .event__backdrop-line { fill: none; stroke: var(--ap-white); stroke-width: 2; }
+.scene--decors-evenements .event__stage { fill: var(--ap-graphite); }
+.scene--decors-evenements .event__stage-edge { stroke: var(--ap-yellow); stroke-width: 3; }
+
+.scene--decors-evenements .event__beam {
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+    mix-blend-mode: screen;
+    animation: ap-sc-event-spot 5s var(--ap-ease-in-out) infinite;
+}
+.scene--decors-evenements .event__beam--r { animation-delay: -2.5s; }
+
+.scene--decors-evenements .event__bit {
+    transform: translate(var(--x), -20px);
+    animation: ap-sc-event-confetti var(--dur, 4s) linear var(--d, 0s) infinite backwards;
+}
+.scene--decors-evenements .event__bit--blue { fill: var(--ap-blue-bright); }
+.scene--decors-evenements .event__bit--yellow { fill: var(--ap-yellow); }
+.scene--decors-evenements .event__bit--red { fill: var(--ap-red-bright); }
+.scene--decors-evenements .event__bit--white { fill: var(--ap-white); }
+.scene--decors-evenements .event__bit--amber { fill: var(--ap-amber); }
+
+.scene--decors-evenements .event__valance { fill: var(--ap-red-deep); stroke: var(--ap-amber); stroke-width: 2; }
+.scene--decors-evenements .event__curtain path:first-child { fill: var(--ap-red); }
+.scene--decors-evenements .event__curtain-folds { fill: none; stroke: var(--ap-red-deep); stroke-width: 8; opacity: 0.6; }
+
+.scene--decors-evenements .event__curtain--l {
+    transform: translateX(-170px);
+    animation: ap-sc-event-curtain 9s var(--ap-ease-in-out) infinite backwards;
+    --dir: -170px;
+}
+
+.scene--decors-evenements .event__curtain--r {
+    transform: translateX(170px);
+    animation: ap-sc-event-curtain 9s var(--ap-ease-in-out) infinite backwards;
+    --dir: 170px;
+}
+
+.scene--decors-evenements .event__person circle,
+.scene--decors-evenements .event__person path { fill: var(--ap-coal); stroke: var(--ap-steel); stroke-width: 1.5; }
+
+.scene--decors-evenements .event__person {
+    animation: ap-sc-event-crowd 1.6s var(--ap-ease-in-out) var(--d, 0s) infinite;
+}
+
+/** @anim group=scene demo=scene scene=decors-evenements dur=9s fr="Ouverture des rideaux" en="Curtains opening" */
+@keyframes ap-sc-event-curtain {
+    0%,
+    6% { transform: translateX(0); }
+    24% { transform: translateX(var(--dir, -170px)); }
+    86% { transform: translateX(var(--dir, -170px)); }
+    100% { transform: translateX(0); }
+}
+
+/** @anim group=scene demo=scene scene=decors-evenements dur=5s fr="Projecteurs qui balaient la scène" en="Spotlights sweeping the stage" */
+@keyframes ap-sc-event-spot {
+    0%,
+    100% { transform: rotate(-14deg); }
+    50% { transform: rotate(14deg); }
+}
+
+/** @anim group=scene demo=scene scene=decors-evenements dur=4s ease=linear fr="Pluie de confettis triangulaires" en="Shower of triangle confetti" */
+@keyframes ap-sc-event-confetti {
+    from { transform: translate(var(--x, 200px), -20px) rotate(0deg); }
+    to { transform: translate(calc(var(--x, 200px) + 30px), 300px) rotate(calc(var(--r, 180deg) + 540deg)); }
+}
+
+/** @anim group=scene demo=scene scene=decors-evenements dur=3s fr="Toile de fond qui rayonne" en="Glowing backdrop" */
+@keyframes ap-sc-event-glow {
+    0%,
+    100% { filter: drop-shadow(0 0 10px rgb(232 67 59 / 0.45)); }
+    50% { filter: drop-shadow(0 0 26px rgb(248 212 73 / 0.75)); }
+}
+
+/** @anim group=scene demo=scene scene=decors-evenements dur=1.6s fr="Public qui applaudit" en="Audience cheering" */
+@keyframes ap-sc-event-crowd {
+    0%,
+    100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}

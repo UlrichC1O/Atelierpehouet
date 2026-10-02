@@ -1,0 +1,102 @@
+/* Scene · peinture-murale — the roller paints the logo as a mural (10 s loop). */
+
+.scene--peinture-murale .mural__wall { fill: var(--ap-coal); }
+.scene--peinture-murale .mural__ground { fill: var(--ap-ink); }
+
+.scene--peinture-murale .mural__f { stroke: none; }
+.scene--peinture-murale .mural__f--yellow { fill: var(--ap-yellow); }
+.scene--peinture-murale .mural__f--blue { fill: var(--ap-blue); }
+.scene--peinture-murale .mural__f--white { fill: var(--ap-white); }
+.scene--peinture-murale .mural__f--red { fill: var(--ap-red); }
+.scene--peinture-murale .mural__f--black { fill: var(--ap-black); }
+
+.scene--peinture-murale .mural__art {
+    animation: ap-sc-mural-paint 10s linear infinite backwards;
+}
+
+.scene--peinture-murale .mural__seams {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 0.75;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    filter: drop-shadow(0 0 2px rgb(232 67 59 / 0.8));
+    animation: ap-sc-mural-seam 10s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--peinture-murale .mural__drip {
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+    animation: ap-sc-mural-drip 10s var(--ap-ease-out) infinite backwards;
+}
+
+.scene--peinture-murale .mural__drip--blue { fill: var(--ap-blue); }
+.scene--peinture-murale .mural__drip--white { fill: var(--ap-white); }
+.scene--peinture-murale .mural__drip--red { fill: var(--ap-red-bright); }
+.scene--peinture-murale .mural__drip--yellow { fill: var(--ap-yellow); }
+
+.scene--peinture-murale .mural__ladder path {
+    fill: none;
+    stroke: var(--ap-steel);
+    stroke-width: 4;
+    stroke-linecap: round;
+}
+
+.scene--peinture-murale .mural__pot path:first-child { fill: var(--ap-graphite); stroke: var(--ap-steel); stroke-width: 2; }
+.scene--peinture-murale .mural__pot-paint { fill: var(--accent, var(--ap-red)); }
+
+.scene--peinture-murale .mural__roller {
+    transform: translate(344px, 300px) rotate(-8deg);
+    animation: ap-sc-mural-roll 10s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--peinture-murale .mural__roller-cyl { fill: var(--ap-red); stroke: var(--ap-white); stroke-width: 2; }
+.scene--peinture-murale .mural__roller-shine { fill: var(--ap-white-32); }
+.scene--peinture-murale .mural__roller-arm { fill: none; stroke: var(--ap-mist); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+
+/** @anim group=scene demo=scene scene=peinture-murale dur=10s ease=linear fr="La fresque se peint de gauche à droite" en="The mural painted from left to right" */
+@keyframes ap-sc-mural-paint {
+    0%,
+    6% { clip-path: inset(0 100% 0 0); opacity: 1; }
+    56% { clip-path: inset(0 0 0 0); opacity: 1; }
+    90% { clip-path: inset(0 0 0 0); opacity: 1; }
+    97%,
+    100% { clip-path: inset(0 0 0 0); opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=peinture-murale dur=10s fr="Rouleau en zigzag sur le mur" en="Roller zigzagging up the wall" */
+@keyframes ap-sc-mural-roll {
+    0% { transform: translate(-60px, 220px) rotate(0deg); }
+    6% { transform: translate(70px, 150px) rotate(0deg); }
+    12% { transform: translate(100px, 300px) rotate(0deg); }
+    18% { transform: translate(132px, 150px) rotate(0deg); }
+    24% { transform: translate(164px, 300px) rotate(0deg); }
+    30% { transform: translate(196px, 120px) rotate(0deg); }
+    36% { transform: translate(228px, 300px) rotate(0deg); }
+    42% { transform: translate(260px, 160px) rotate(0deg); }
+    48% { transform: translate(292px, 300px) rotate(0deg); }
+    56% { transform: translate(334px, 250px) rotate(0deg); }
+    64%,
+    100% { transform: translate(470px, 250px) rotate(12deg); }
+}
+
+/** @anim group=scene demo=scene scene=peinture-murale dur=10s fr="Les joints blancs se tracent" en="White seams drawing in" */
+@keyframes ap-sc-mural-seam {
+    0%,
+    56% { stroke-dashoffset: 1; opacity: 1; }
+    70% { stroke-dashoffset: 0; opacity: 1; }
+    90% { stroke-dashoffset: 0; opacity: 1; }
+    97%,
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/** @anim group=scene demo=scene scene=peinture-murale dur=10s fr="Coulures de peinture fraîche" en="Fresh paint drips" */
+@keyframes ap-sc-mural-drip {
+    0%,
+    40% { transform: scaleY(0); opacity: 1; }
+    72% { transform: scaleY(1); opacity: 1; }
+    90% { transform: scaleY(1.15); opacity: 1; }
+    97%,
+    100% { transform: scaleY(1.15); opacity: 0; }
+}

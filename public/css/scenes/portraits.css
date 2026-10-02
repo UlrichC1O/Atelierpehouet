@@ -1,0 +1,76 @@
+/* Scene · portraits — facets light up one by one (8 s loop). */
+
+.scene--portraits .portrait__bg { fill: var(--ap-black); }
+.scene--portraits .portrait__glow { transform-box: fill-box; transform-origin: center; animation: ap-sc-portrait-glow 6s ease-in-out infinite; }
+
+.scene--portraits .portrait__facet {
+    stroke: var(--ap-black);
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+    animation: ap-sc-portrait-facet 8s var(--ap-ease-out) calc(var(--i) * 0.11s) infinite backwards;
+}
+
+.scene--portraits .portrait__facet--yellow { fill: var(--ap-yellow); }
+.scene--portraits .portrait__facet--amber { fill: var(--ap-amber); }
+.scene--portraits .portrait__facet--orange { fill: var(--ap-orange); }
+.scene--portraits .portrait__facet--red { fill: var(--ap-red); }
+.scene--portraits .portrait__facet--red-bright { fill: var(--ap-red-bright); }
+.scene--portraits .portrait__facet--red-deep { fill: var(--ap-red-deep); }
+.scene--portraits .portrait__facet--blue { fill: var(--ap-blue); }
+.scene--portraits .portrait__facet--blue-deep { fill: var(--ap-blue-deep); }
+.scene--portraits .portrait__facet--white { fill: var(--ap-white); }
+
+.scene--portraits .portrait__eye {
+    fill: var(--ap-white);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ap-sc-portrait-blink 5s ease-in-out infinite;
+}
+
+.scene--portraits .portrait__frame {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 3;
+    stroke-dasharray: 1;
+    animation: ap-sc-portrait-frame 8s var(--ap-ease-in-out) infinite backwards;
+}
+
+.scene--portraits .portrait__frame--inner {
+    stroke: var(--ap-amber);
+    stroke-width: 1;
+    animation-delay: 0.4s;
+}
+
+/** @anim group=scene demo=scene scene=portraits dur=8s fr="Facettes du portrait qui s’allument" en="Portrait facets lighting up" */
+@keyframes ap-sc-portrait-facet {
+    0% { opacity: 0.08; filter: brightness(1); }
+    6% { opacity: 1; filter: brightness(1.6); }
+    14% { opacity: 1; filter: brightness(1); }
+    80% { opacity: 1; }
+    92%,
+    100% { opacity: 0.08; }
+}
+
+/** @anim group=scene demo=scene scene=portraits dur=5s fr="Clignement d’œil" en="Blinking eye" */
+@keyframes ap-sc-portrait-blink {
+    0%,
+    46%,
+    54%,
+    100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.1); }
+}
+
+/** @anim group=scene demo=scene scene=portraits dur=8s fr="Cadre blanc qui se trace" en="White frame drawing itself" */
+@keyframes ap-sc-portrait-frame {
+    0%,
+    30% { stroke-dashoffset: 1; }
+    50% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 0; }
+}
+
+/** @anim group=scene demo=scene scene=portraits dur=6s fr="Halo ambré du modèle" en="The sitter's amber halo" */
+@keyframes ap-sc-portrait-glow {
+    0%,
+    100% { opacity: 0.6; transform: scale(0.94); }
+    50% { opacity: 1; transform: scale(1.04); }
+}

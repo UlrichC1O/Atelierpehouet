@@ -179,6 +179,11 @@ abbr[title] {
 a {
     color: var(--ap-link);
     text-decoration: none;
+}
+
+/* Plain text links get an animated TELIERS-gradient underline. Designed links
+   (nav, buttons, cards — anything with a class) style themselves. */
+a:not([class]) {
     background-image: linear-gradient(90deg, var(--ap-yellow), var(--ap-amber), var(--ap-red-bright));
     background-repeat: no-repeat;
     background-position: 0 100%;
@@ -186,22 +191,13 @@ a {
     transition: background-size var(--ap-dur) var(--ap-ease-out), color var(--ap-dur-fast) ease;
 }
 
-a:hover {
-    background-size: 100% 1px;
-}
-
-/* Links that are clearly designed elements (nav, buttons, cards) opt out of the underline. */
-a[class] {
-    background-image: none;
-}
-
-.prose a,
+a:not([class]):hover,
+.prose a:not([class]),
 p a:not([class]) {
     background-size: 100% 1px;
-    background-image: linear-gradient(90deg, var(--ap-yellow), var(--ap-red-bright));
 }
 
-.prose a:hover,
+.prose a:not([class]):hover,
 p a:not([class]):hover {
     color: var(--ap-white);
 }
