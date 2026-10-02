@@ -1,0 +1,429 @@
+/* ==========================================================================
+   Ateliers Pehouet — "Mouvement" (the animation catalogue). Keyframes: ap-mo-*
+   ========================================================================== */
+
+.motion-hero {
+    position: relative;
+    overflow: hidden;
+    margin-top: calc(-1 * var(--ap-header-h));
+    padding: calc(var(--ap-header-h) + clamp(3rem, 7vw, 5rem)) 0 clamp(3rem, 7vw, 5rem);
+    background: radial-gradient(60% 70% at 70% 40%, rgb(179 44 43 / 0.2), transparent 70%), var(--ap-black);
+}
+
+.motion-hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 1.2rem;
+    justify-items: start;
+}
+
+.motion-hero__title {
+    font-size: clamp(2.6rem, 1.2rem + 5vw, 6rem);
+    text-transform: uppercase;
+    color: var(--ap-red-bright);
+    text-shadow: var(--ap-neon-red);
+}
+
+.motion-hero__count {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.8rem;
+    max-width: none;
+}
+
+.motion-hero__number {
+    font-family: var(--ap-font-display);
+    font-size: clamp(4.5rem, 2rem + 12vw, 12rem);
+    line-height: 0.9;
+    background: var(--ap-gradient-teliers);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.06em rgb(232 67 59 / 0.8));
+    animation: ap-mo-count-glow 4s ease-in-out infinite;
+}
+
+.motion-hero__label {
+    font-family: var(--ap-font-tagline);
+    font-size: var(--ap-step-1);
+    color: var(--ap-mist);
+}
+
+.motion-hero__manifesto {
+    display: grid;
+    gap: 0.8rem;
+    max-width: 62ch;
+}
+
+.motion-hero__kaleido {
+    position: absolute;
+    right: -4rem;
+    top: 18%;
+    opacity: 0.55;
+}
+
+/* --- Sticky controls ------------------------------------------------------- */
+
+.motion-controls {
+    position: sticky;
+    top: 0;
+    z-index: var(--ap-z-sticky);
+    padding-block: 0.9rem;
+    margin-bottom: 1.5rem;
+    background: rgb(0 0 0 / 0.82);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-block: 1px solid var(--ap-white-08);
+}
+
+.motion-controls__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.9rem;
+}
+
+.motion-controls__tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.motion-search {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--ap-white-16);
+    border-radius: var(--ap-radius-pill);
+    background: var(--ap-ink);
+    color: var(--ap-text-muted);
+}
+
+.motion-search input {
+    width: 12rem;
+    border: 0;
+    background: transparent;
+    color: var(--ap-white);
+    outline: none;
+}
+
+.motion-search:focus-within {
+    border-color: var(--ap-yellow);
+}
+
+.motion-speed {
+    display: inline-flex;
+    border: 1px solid var(--ap-white-16);
+    border-radius: var(--ap-radius-pill);
+    padding: 2px;
+}
+
+.motion-speed__btn {
+    min-width: 2.6rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--ap-radius-pill);
+    font-family: var(--ap-font-display);
+    font-size: 0.72rem;
+    color: var(--ap-text-muted);
+}
+
+.motion-speed__btn[aria-pressed="true"] {
+    background: var(--ap-yellow);
+    color: var(--ap-black);
+}
+
+.motion-count {
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--ap-text-muted);
+}
+
+/* --- Grid of tiles ---------------------------------------------------------- */
+
+.motion-grid {
+    --mspeed: 1;
+    display: grid;
+    gap: clamp(0.75rem, 1.5vw, 1.1rem);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr));
+}
+
+.motion-grid.is-frozen .mdemo__el {
+    animation-play-state: paused !important;
+}
+
+.mtile {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background: var(--ap-coal);
+    border: 1px solid var(--ap-white-08);
+    cursor: pointer;
+    transition: border-color var(--ap-dur-fast) ease, transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.mtile:hover,
+.mtile:focus-visible {
+    border-color: var(--ap-yellow);
+    transform: translateY(-3px);
+}
+
+.mtile.is-search-hidden {
+    display: none;
+}
+
+.mtile__stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background:
+        radial-gradient(80% 80% at 50% 50%, var(--ap-graphite), var(--ap-black));
+    border-bottom: 1px solid var(--ap-white-08);
+}
+
+.mtile__meta {
+    display: grid;
+    gap: 0.25rem;
+    align-content: start;
+    padding: 0.8rem 0.9rem 1rem;
+}
+
+.mtile__num {
+    font-family: var(--ap-font-display);
+    font-size: 0.75rem;
+    color: var(--ap-yellow);
+}
+
+.mtile__title {
+    font-family: var(--ap-font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.3;
+}
+
+.mtile__name {
+    font-size: 0.72rem;
+    color: var(--ap-red-bright);
+    overflow-wrap: anywhere;
+}
+
+.mtile__group {
+    font-size: 0.7rem;
+    color: var(--ap-text-muted);
+}
+
+/* --- The demo stages (one per demo type) ------------------------------------ */
+
+.mdemo {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.mdemo--shape .mdemo__el {
+    width: 34%;
+    aspect-ratio: 1 / 0.866;
+    background: linear-gradient(135deg, var(--ap-yellow), var(--ap-orange), var(--ap-red));
+    clip-path: var(--ap-clip-tri);
+}
+
+.mdemo--blocks {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 0.6fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;
+    width: 64%;
+    height: 60%;
+    padding: 3px;
+    background: var(--ap-white);
+}
+
+.mdemo--blocks .mdemo__el:nth-child(1) { background: var(--ap-blue); grid-row: span 2; }
+.mdemo--blocks .mdemo__el:nth-child(2) { background: var(--ap-yellow); }
+.mdemo--blocks .mdemo__el:nth-child(3) { background: var(--ap-black); }
+.mdemo--blocks .mdemo__el:nth-child(4) { background: var(--ap-red); grid-column: span 2; }
+.mdemo--blocks .mdemo__el:nth-child(5) { display: none; }
+
+.mdemo--blocks .mdemo__el {
+    transform-origin: center;
+}
+
+.mdemo--text .mdemo__el {
+    font-family: var(--ap-font-display);
+    font-size: 1.5rem;
+    color: var(--ap-white);
+    background: var(--ap-gradient-teliers);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+}
+
+.mdemo--letters {
+    display: flex;
+    gap: 2px;
+    width: auto;
+}
+
+.mdemo--letters .mdemo__el {
+    display: inline-block;
+    font-family: var(--ap-font-display);
+    font-size: 1.6rem;
+    color: var(--ap-red-bright);
+    background: linear-gradient(90deg, var(--ap-yellow), var(--ap-red-bright));
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.mdemo--path {
+    width: 46%;
+    height: auto;
+    overflow: visible;
+}
+
+.mdemo--path .mdemo__el {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 4;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    filter: drop-shadow(0 0 4px rgb(232 67 59 / 0.8));
+}
+
+.mdemo--bar {
+    padding-inline: 14%;
+}
+
+.mdemo--bar .mdemo__el {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background: var(--ap-gradient-teliers);
+    background-size: 200% 100%;
+    transform-origin: left;
+}
+
+.mdemo--ring .mdemo__el {
+    width: 38%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid var(--ap-yellow);
+    background: conic-gradient(from var(--ap-angle), var(--ap-blue), var(--ap-yellow), var(--ap-red), var(--ap-blue));
+    -webkit-mask: radial-gradient(closest-side, transparent 72%, var(--ap-black) 74%);
+    mask: radial-gradient(closest-side, transparent 72%, var(--ap-black) 74%);
+}
+
+.mdemo--dots {
+    display: flex;
+    gap: 0.6rem;
+    width: auto;
+}
+
+.mdemo--dots .mdemo__el {
+    width: 1rem;
+    height: 0.87rem;
+    clip-path: var(--ap-clip-tri);
+}
+
+.mdemo--dots .mdemo__el:nth-child(1) { background: var(--ap-blue-bright); }
+.mdemo--dots .mdemo__el:nth-child(2) { background: var(--ap-yellow); }
+.mdemo--dots .mdemo__el:nth-child(3) { background: var(--ap-red-bright); }
+
+.mdemo--panel .mdemo__el {
+    width: 58%;
+    height: 62%;
+    background:
+        linear-gradient(90deg, var(--ap-blue) 0 38%, var(--ap-white) 38% 41%, var(--ap-yellow) 41% 100%) top / 100% 55% no-repeat,
+        linear-gradient(90deg, var(--ap-red) 0 62%, var(--ap-white) 62% 65%, var(--ap-black) 65%) bottom / 100% 42% no-repeat,
+        var(--ap-white);
+    outline: 3px solid var(--ap-white);
+}
+
+/* --- Scenes ----------------------------------------------------------------- */
+
+.motion-scenes__grid {
+    display: grid;
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+}
+
+.motion-scene {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+}
+
+.motion-scene__stage {
+    width: 100%;
+    animation: none;
+}
+
+.motion-scene__title {
+    font-size: var(--ap-step-1);
+    text-transform: uppercase;
+}
+
+.motion-scene__title span {
+    color: var(--accent-bright);
+}
+
+.motion-scene__label {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.motion-scene__list {
+    display: grid;
+    gap: 0.25rem;
+    list-style: none;
+    padding: 0;
+    font-size: 0.85rem;
+    color: var(--ap-text-soft);
+}
+
+.motion-scene__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-weight: 700;
+    color: var(--accent-bright);
+}
+
+.motion-scene__link:hover .icon {
+    animation: ap-mo-arrow 0.9s var(--ap-ease-in-out) infinite;
+}
+
+.motion-a11y__inner {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    padding: 2rem;
+    border: 1px solid var(--ap-white-16);
+    border-left: 4px solid var(--ap-yellow);
+    background: var(--ap-coal);
+}
+
+/** @anim group=page demo=text dur=4s fr="Compteur d’animations lumineux" en="Glowing animation counter" */
+@keyframes ap-mo-count-glow {
+    0%,
+    100% { filter: drop-shadow(0 0 0.04em rgb(232 67 59 / 0.7)); }
+    50% { filter: drop-shadow(0 0 0.14em rgb(248 212 73 / 0.8)); }
+}
+
+/** @anim group=page demo=shape dur=0.9s fr="Flèche vers la scène" en="Arrow to the scene" */
+@keyframes ap-mo-arrow {
+    0%,
+    100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+}

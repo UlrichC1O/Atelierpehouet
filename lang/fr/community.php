@@ -1,0 +1,46 @@
+<?php
+
+// Community page (resources/views/pages/community.blade.php).
+return [
+    'title' => 'Communauté',
+    'meta' => 'L’art au service de la communauté : fresques de quartier, ateliers pour enfants, projets participatifs et décors pour associations avec les Ateliers Pehouet.',
+    'eyebrow' => 'Communauté',
+    'hero_title' => 'L’art se fait ensemble',
+    'lead' => 'Notre devise n’est pas une formule : c’est une manière de travailler. L’atelier imagine avec vous des projets où l’art rassemble, transmet et embellit le quotidien.',
+    'cta_propose' => 'Proposer un projet',
+    'programmes_eyebrow' => 'Ce que nous proposons',
+    'programmes_title' => 'Des formats pour chaque communauté',
+    'programmes' => [
+        ['icon' => 'pencil', 'title' => 'Ateliers pour enfants', 'text' => 'Des séances de dessin, de peinture et de modelage adaptées à chaque âge, en temps scolaire ou pendant les vacances.'],
+        ['icon' => 'roller', 'title' => 'Fresques d’écoles et de quartiers', 'text' => 'Des murs imaginés et peints avec les élèves, les habitants ou les commerçants d’une rue.'],
+        ['icon' => 'hands', 'title' => 'Projets participatifs', 'text' => 'Mosaïques, installations et œuvres collectives où chaque participant trouve sa place.'],
+        ['icon' => 'stage', 'title' => 'Décors pour associations', 'text' => 'Des décors de fêtes, de spectacles et de célébrations pensés avec les bénévoles.'],
+        ['icon' => 'heart', 'title' => 'Art et causes', 'text' => 'Des créations qui portent un message de solidarité, de santé ou d’environnement.'],
+        ['icon' => 'users', 'title' => 'Ateliers ouverts', 'text' => 'Des moments où l’atelier ouvre ses portes pour montrer, expliquer et faire essayer.'],
+    ],
+    'join_eyebrow' => 'Participer',
+    'join_title' => 'Comment s’impliquer',
+    'join' => [
+        ['title' => 'Prenez contact', 'text' => 'Racontez-nous votre lieu, votre groupe et votre envie.'],
+        ['title' => 'Imaginons ensemble', 'text' => 'Une rencontre pour définir le format, le calendrier et les partenaires.'],
+        ['title' => 'Créons', 'text' => 'Des séances encadrées où chacun contribue à l’œuvre.'],
+        ['title' => 'Célébrons', 'text' => 'Une inauguration pour partager le résultat avec tous.'],
+    ],
+    'for_eyebrow' => 'Pour qui ?',
+    'for_title' => 'Ouvert à tous ceux qui font vivre un lieu',
+    'for' => ['Écoles et centres de loisirs', 'Associations de quartier', 'Mairies et collectivités', 'Lieux de culte', 'Entreprises et commerçants', 'Familles et habitants', 'Maisons de retraite', 'Centres sociaux'],
+    'services_eyebrow' => 'Services associés',
+    'services_title' => 'Les savoir-faire au cœur de nos projets communautaires',
+    'faq_title' => 'Questions sur les projets communautaires',
+    'faq' => [
+        ['q' => 'Faut-il des compétences artistiques pour participer ?', 'a' => 'Aucune. L’atelier adapte chaque tâche aux participants et garantit la qualité de l’œuvre finale.'],
+        ['q' => 'Qui finance un projet communautaire ?', 'a' => 'Chaque projet est différent : structure porteuse, partenaires, mécénat… Nous vous aidons à préparer une présentation claire pour vos interlocuteurs.'],
+        ['q' => 'Combien de temps dure un projet ?', 'a' => 'D’une journée pour un atelier ponctuel à plusieurs semaines pour une fresque participative. Le calendrier est construit avec vous.'],
+        ['q' => 'Pouvez-vous intervenir avec un public spécifique ?', 'a' => 'Oui : enfants, adolescents, personnes âgées ou personnes en situation de handicap. Nous adaptons les gestes, les outils et le rythme.'],
+    ],
+    'quote' => 'Une œuvre partagée appartient à tous ceux qui l’ont regardée naître.',
+    'cta_title' => 'Votre communauté a une histoire à peindre',
+    'cta_text' => 'Écrivez-nous : nous imaginerons ensemble le projet qui lui ressemble.',
+    'cta_button' => 'Proposer un projet',
+    'cta_secondary' => 'Voir l’art communautaire',
+];

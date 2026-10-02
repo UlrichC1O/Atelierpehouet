@@ -1,0 +1,294 @@
+/* ==========================================================================
+   Ateliers Pehouet — About. Keyframes: ap-pg-about-*
+   ========================================================================== */
+
+.about-hero-art {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: clamp(16rem, 34vw, 26rem);
+}
+
+.about-hero-art__mark {
+    width: min(80%, 22rem);
+    filter: drop-shadow(0 30px 60px rgb(179 44 43 / 0.45));
+}
+
+.about-hero-art__signature {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(70%, 18rem);
+    --sig-delay: 1.6s;
+}
+
+.about-logo__grid {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.about-part {
+    display: grid;
+    gap: 0.9rem;
+    align-content: start;
+    padding: 1.6rem;
+    background: linear-gradient(170deg, var(--ap-coal), var(--ap-black));
+    border: 1px solid var(--ap-white-08);
+}
+
+.about-part__visual {
+    height: 7.5rem;
+    width: auto;
+    margin-bottom: 0.4rem;
+}
+
+.about-part__tri {
+    fill: none;
+    stroke: var(--ap-white);
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    filter: drop-shadow(0 0 6px rgb(232 67 59 / 0.8));
+    animation: ap-pg-about-draw 5s var(--ap-ease-in-out) infinite;
+}
+
+.about-part__mondrian {
+    width: 7.5rem;
+}
+
+.about-part__teliers {
+    display: flex;
+    align-items: center;
+    max-width: none;
+    font-family: var(--ap-font-display);
+    font-size: 2.4rem;
+    background: linear-gradient(90deg, var(--ap-yellow), var(--ap-amber), var(--ap-orange), var(--ap-red-bright), var(--ap-red), var(--ap-orange), var(--ap-yellow));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 6px rgb(232 67 59 / 0.6));
+    animation: ap-pg-about-sweep 6s linear infinite;
+}
+
+.about-part__sig {
+    width: 12rem;
+}
+
+.about-part__title {
+    font-size: var(--ap-step-1);
+    text-transform: uppercase;
+}
+
+.about-part__text {
+    color: var(--ap-text-soft);
+}
+
+.about-mission__art {
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.about-mission__art .mondrian {
+    width: min(100%, 24rem);
+    rotate: 4deg;
+}
+
+.about-mission__orbit {
+    position: absolute;
+    left: -1rem;
+    bottom: -2rem;
+}
+
+.about-values__grid {
+    display: grid;
+    gap: var(--ap-seam);
+    padding: var(--ap-seam);
+    background: var(--ap-white-16);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+
+.about-value {
+    position: relative;
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+    min-height: 15rem;
+    padding: 1.5rem;
+    background: var(--ap-black);
+    overflow: hidden;
+}
+
+.about-value__chip {
+    width: 100%;
+    height: 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.about-value--blue .about-value__chip { background: var(--ap-blue); }
+.about-value--yellow .about-value__chip { background: var(--ap-yellow); }
+.about-value--red .about-value__chip { background: var(--ap-red); }
+.about-value--white .about-value__chip { background: var(--ap-white); }
+.about-value--black .about-value__chip { background: var(--ap-black); outline: 1px solid var(--ap-white-32); }
+
+.about-value__name {
+    font-size: var(--ap-step-2);
+    text-transform: uppercase;
+}
+
+.about-value__text {
+    color: var(--ap-text-soft);
+}
+
+.about-value:hover .about-value__chip {
+    animation: ap-pg-about-chip 0.8s var(--ap-ease-spring);
+}
+
+/* Timeline with a line that draws itself */
+.about-timeline {
+    position: relative;
+    list-style: none;
+    padding: 0 0 0 3.5rem;
+    display: grid;
+    gap: 2.2rem;
+}
+
+.about-timeline::before {
+    content: "";
+    position: absolute;
+    left: 1.2rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 2px;
+    background: linear-gradient(180deg, var(--ap-yellow), var(--ap-orange), var(--ap-red), var(--ap-blue));
+    transform-origin: top;
+    transform: scaleY(0);
+}
+
+.about-timeline.is-revealed::before,
+html.motion-off .about-timeline::before {
+    animation: ap-pg-about-line 2.4s var(--ap-ease-out) forwards;
+}
+
+.about-timeline__item {
+    position: relative;
+    display: grid;
+    gap: 0.35rem;
+}
+
+.about-timeline__node {
+    position: absolute;
+    left: -3.5rem;
+    top: -0.2rem;
+    display: grid;
+    place-items: end center;
+    width: 2.6rem;
+    height: 2.3rem;
+    padding-bottom: 0.2rem;
+    font-family: var(--ap-font-display);
+    font-size: 0.85rem;
+    background: var(--ap-yellow);
+    color: var(--ap-black);
+    clip-path: var(--ap-clip-tri);
+    animation: ap-pg-about-node 3s var(--ap-ease-in-out) infinite;
+}
+
+.about-timeline__item:nth-child(2) .about-timeline__node { background: var(--ap-amber); animation-delay: -0.6s; }
+.about-timeline__item:nth-child(3) .about-timeline__node { background: var(--ap-orange); color: var(--ap-white); animation-delay: -1.2s; }
+.about-timeline__item:nth-child(4) .about-timeline__node { background: var(--ap-red); color: var(--ap-white); animation-delay: -1.8s; }
+.about-timeline__item:nth-child(5) .about-timeline__node { background: var(--ap-blue); color: var(--ap-white); animation-delay: -2.4s; }
+
+.about-timeline__title {
+    font-size: var(--ap-step-1);
+    text-transform: uppercase;
+}
+
+.about-timeline__text {
+    color: var(--ap-text-soft);
+}
+
+.about-not__list {
+    display: grid;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+}
+
+.about-not__list li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--ap-white-08);
+    background: var(--ap-coal);
+    font-size: var(--ap-step-1);
+}
+
+.about-not__list li::before {
+    content: "";
+    flex: none;
+    width: 1rem;
+    height: 0.87rem;
+    background: var(--ap-red-bright);
+    clip-path: var(--ap-clip-tri);
+    rotate: 180deg;
+}
+
+.about-not__text {
+    position: relative;
+}
+
+.about-not__text::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 55%;
+    height: 2px;
+    background: var(--ap-red-bright);
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+.about-not__list li.is-revealed .about-not__text::after,
+html.motion-off .about-not__text::after {
+    animation: ap-pg-about-strike 0.8s var(--ap-ease-out) 0.5s forwards;
+}
+
+/** @anim group=page demo=bar dur=2.4s ease=var(--ap-ease-out) dir=alternate fr="Ligne du temps qui se trace" en="Timeline drawing itself" */
+@keyframes ap-pg-about-line {
+    to { transform: scaleY(1); }
+}
+
+/** @anim group=page demo=shape dur=3s fr="Repères triangulaires qui pulsent" en="Pulsing triangle markers" */
+@keyframes ap-pg-about-node {
+    0%,
+    100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/** @anim group=page demo=text dur=6s ease=linear fr="Dégradé TELIERS qui coule" en="Flowing TELIERS gradient" */
+@keyframes ap-pg-about-sweep {
+    from { background-position: 0% 0; }
+    to { background-position: 200% 0; }
+}
+
+/** @anim group=page demo=path dur=5s fr="Triangle du toit tracé" en="Roof triangle drawn" */
+@keyframes ap-pg-about-draw {
+    0% { stroke-dashoffset: 1; }
+    40%,
+    100% { stroke-dashoffset: 0; }
+}
+
+/** @anim group=page demo=bar dur=0.8s ease=var(--ap-ease-out) dir=alternate fr="Ce que nous ne faisons pas, barré" en="What we don't do, struck through" */
+@keyframes ap-pg-about-strike {
+    to { transform: scaleX(1); }
+}
+
+/** @anim group=page demo=bar dur=0.8s ease=var(--ap-ease-spring) fr="Bande de valeur qui rebondit" en="Value band bouncing" */
+@keyframes ap-pg-about-chip {
+    0% { transform: scaleX(0.4); }
+    100% { transform: scaleX(1); }
+}

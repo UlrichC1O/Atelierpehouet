@@ -1,0 +1,518 @@
+/* ==========================================================================
+   Ateliers Pehouet — Home. Keyframes: ap-pg-home-*
+   ========================================================================== */
+
+/* --- Hero ------------------------------------------------------------------- */
+
+.home-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin-top: calc(-1 * var(--ap-header-h));
+    padding-top: var(--ap-header-h);
+    display: grid;
+    align-items: center;
+    background: radial-gradient(70% 60% at 50% 45%, rgb(179 44 43 / 0.16), transparent 70%), var(--ap-black);
+}
+
+.home-hero::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: min(70vw, 60rem);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    z-index: -1;
+    background: radial-gradient(closest-side, rgb(232 67 59 / 0.18), transparent);
+    animation: ap-pg-home-halo 7s var(--ap-ease-in-out) infinite;
+}
+
+.home-hero__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.home-hero__slashes {
+    z-index: -1;
+}
+
+.home-hero__inner {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    padding-block: clamp(3rem, 8vw, 6rem) clamp(5rem, 10vw, 8rem);
+    text-align: center;
+}
+
+.home-hero__title {
+    font-size: inherit;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.home-hero__title .wordmark {
+    white-space: nowrap;
+}
+
+.home-hero__type {
+    margin-top: clamp(1.2rem, 3vw, 2.4rem);
+    max-width: none;
+    font-family: var(--ap-font-display);
+    font-size: clamp(1.1rem, 0.8rem + 1.4vw, 2rem);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ap-mist);
+}
+
+.home-hero__word {
+    background: var(--ap-gradient-teliers);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.home-hero__actions {
+    justify-content: center;
+}
+
+.home-hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(1.25rem, 3vw, 2.25rem);
+    translate: -50% 0;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid var(--ap-white-32);
+    border-radius: 50%;
+}
+
+.home-hero__scroll-tri {
+    width: 0.9rem;
+    height: 0.75rem;
+    background: var(--ap-yellow);
+    clip-path: var(--ap-clip-tri-down);
+    animation: ap-pg-home-scroll 1.8s var(--ap-ease-in-out) infinite;
+}
+
+@media (max-width: 40em) {
+    .home-hero__title .wordmark--hero {
+        --u: 13vw;
+    }
+}
+
+/* --- Marquees ---------------------------------------------------------------- */
+
+.home-marquees {
+    display: grid;
+    gap: 0;
+    background: var(--ap-black);
+}
+
+.home-marquees .marquee + .marquee {
+    border-top: 0;
+}
+
+/* --- Manifesto -------------------------------------------------------------- */
+
+.home-manifesto .container {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.home-manifesto__statement {
+    max-width: 22ch;
+    font-family: var(--ap-font-display);
+    font-size: clamp(2rem, 1.2rem + 3.6vw, 4.6rem);
+    line-height: 1.08;
+    text-transform: uppercase;
+}
+
+.home-manifesto__statement .split__unit:nth-child(4n + 3) {
+    color: var(--ap-yellow);
+}
+
+.home-colours {
+    display: grid;
+    gap: var(--ap-seam);
+    margin-top: clamp(1.5rem, 4vw, 3rem);
+    padding: var(--ap-seam);
+    background: var(--ap-white);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+
+@media (min-width: 64em) {
+    .home-colours {
+        grid-template-columns: 1.5fr 1fr 1.2fr 0.8fr 1fr;
+        min-height: 22rem;
+    }
+}
+
+.home-colour {
+    position: relative;
+    display: grid;
+    align-content: end;
+    gap: 0.4rem;
+    min-height: 12rem;
+    padding: 1.4rem;
+    overflow: hidden;
+    transition: transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.home-colour:hover,
+.home-colour:focus-visible {
+    z-index: 1;
+    transform: translateY(-6px);
+}
+
+.home-colour--blue { background: var(--ap-blue); color: var(--ap-white); }
+.home-colour--yellow { background: var(--ap-yellow); color: var(--ap-black); }
+.home-colour--red { background: var(--ap-red); color: var(--ap-white); }
+.home-colour--white { background: var(--ap-white); color: var(--ap-black); }
+.home-colour--black { background: var(--ap-black); color: var(--ap-white); }
+
+.home-colour__swatch {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    width: 2.4rem;
+    height: 2.1rem;
+    background: currentColor;
+    clip-path: var(--ap-clip-tri);
+    opacity: 0.25;
+    animation: ap-pg-home-swatch 6s var(--ap-ease-in-out) infinite;
+}
+
+.home-colour__name {
+    font-size: var(--ap-step-2);
+    text-transform: uppercase;
+}
+
+.home-colour__meaning {
+    font-size: 0.95rem;
+    line-height: 1.45;
+    opacity: 0.92;
+}
+
+/* --- Services -------------------------------------------------------------- */
+
+.home-services__head {
+    display: grid;
+    gap: 1.5rem;
+    align-items: end;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+@media (min-width: 64em) {
+    .home-services__head {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .home-services__head .section-heading {
+        margin-bottom: 0;
+    }
+
+    .home-services__head .filters {
+        justify-content: flex-end;
+    }
+}
+
+.home-services__grid {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    grid-auto-flow: dense;
+}
+
+@media (min-width: 64em) {
+    .home-services__wide {
+        grid-column: span 2;
+    }
+}
+
+.home-services__all {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    max-width: none;
+    text-align: center;
+}
+
+/* --- Process: four steps around a self-drawing triangle ----------------------- */
+
+.home-process__stage {
+    position: relative;
+    max-width: 62rem;
+    margin-inline: auto;
+}
+
+.home-process__tri {
+    display: none;
+}
+
+.home-process__steps {
+    display: grid;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+}
+
+@media (min-width: 56em) {
+    .home-process__stage {
+        aspect-ratio: 600 / 520;
+    }
+
+    .home-process__tri {
+        display: block;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+
+    .home-process__steps {
+        position: absolute;
+        inset: 0;
+        display: block;
+    }
+
+    .home-process__step {
+        position: absolute;
+        width: 15rem;
+        translate: -50% -50%;
+        text-align: center;
+    }
+
+    .home-process__step--1 { left: 50%; top: 2%; }
+    .home-process__step--2 { left: 92%; top: 92%; }
+    .home-process__step--3 { left: 8%; top: 92%; }
+    .home-process__step--4 { left: 50%; top: 62%; }
+}
+
+.home-process__path {
+    fill: none;
+    stroke: var(--ap-white-32);
+    stroke-width: 2;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    stroke-linejoin: round;
+}
+
+.home-process__path--inner {
+    stroke: var(--ap-red-bright);
+    stroke-width: 1.5;
+    opacity: 0.6;
+}
+
+.home-process__stage.is-revealed .home-process__path,
+html.motion-off .home-process__path {
+    animation: ap-pg-home-path 2.4s var(--ap-ease-in-out) forwards;
+}
+
+.home-process__stage.is-revealed .home-process__path--inner {
+    animation-delay: 0.6s;
+}
+
+.home-process__step {
+    display: grid;
+    justify-items: center;
+    gap: 0.4rem;
+    padding: 1.2rem;
+    background: var(--ap-black-70);
+    border: 1px solid var(--ap-white-08);
+}
+
+.home-process__num {
+    display: grid;
+    place-items: end center;
+    width: 3.4rem;
+    height: 3rem;
+    padding-bottom: 0.3rem;
+    font-family: var(--ap-font-display);
+    clip-path: var(--ap-clip-tri);
+}
+
+.home-process__step--1 .home-process__num { background: var(--ap-yellow); color: var(--ap-black); }
+.home-process__step--2 .home-process__num { background: var(--ap-red); color: var(--ap-white); }
+.home-process__step--3 .home-process__num { background: var(--ap-blue); color: var(--ap-white); }
+.home-process__step--4 .home-process__num { background: var(--ap-white); color: var(--ap-black); }
+
+.home-process__title {
+    font-size: var(--ap-step-1);
+    text-transform: uppercase;
+}
+
+.home-process__text {
+    font-size: 0.9rem;
+    color: var(--ap-text-soft);
+}
+
+/* --- Numbers -------------------------------------------------------------- */
+
+.home-numbers__grid {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+}
+
+/* --- Generator teaser ---------------------------------------------------- */
+
+.home-generator__visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.home-generator__frame {
+    position: relative;
+    width: min(100%, 30rem);
+    padding: 0.7rem;
+    /* declared here (not via --ap-gradient-prism) so the animated --ap-angle applies */
+    background: conic-gradient(from var(--ap-angle), var(--ap-blue), var(--ap-yellow), var(--ap-amber), var(--ap-orange), var(--ap-red), var(--ap-blue));
+    animation: ap-pg-home-frame 8s linear infinite;
+}
+
+.home-generator__img {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 4px solid var(--ap-black);
+    background: var(--ap-black);
+    transition: opacity 0.6s ease;
+}
+
+.home-generator__img.is-swapping {
+    opacity: 0;
+}
+
+.home-generator__orbit {
+    position: absolute;
+    right: -1rem;
+    bottom: -1rem;
+}
+
+/* --- Gallery strip -------------------------------------------------------- */
+
+.home-gallery__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1.5rem;
+}
+
+.home-gallery__strip {
+    overflow: hidden;
+    padding-block: 2rem 3rem;
+    transform: rotate(-3deg);
+    margin-inline: -2rem;
+}
+
+.home-gallery__track {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+    padding-inline: 2rem;
+    animation: ap-pg-home-strip 50s linear infinite;
+}
+
+.home-gallery__strip:hover .home-gallery__track {
+    animation-play-state: paused;
+}
+
+.home-gallery__item {
+    width: clamp(12rem, 22vw, 18rem);
+}
+
+.home-gallery__item:nth-child(even) {
+    translate: 0 1.5rem;
+}
+
+/* --- Community ------------------------------------------------------------ */
+
+.home-community__quote {
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--ap-orange);
+    font-family: var(--ap-font-tagline);
+    font-size: var(--ap-step-1);
+    color: var(--ap-white);
+}
+
+.home-community__quote::before {
+    content: "“";
+    position: absolute;
+    left: -0.4rem;
+    top: -1.6rem;
+    font-family: var(--ap-font-display);
+    font-size: 4rem;
+    color: var(--ap-orange);
+    animation: ap-pg-home-quote 4s var(--ap-ease-in-out) infinite;
+}
+
+.home-community__visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.home-community__mark {
+    position: absolute;
+    width: clamp(5rem, 10vw, 8rem);
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+
+/** @anim group=page demo=shape dur=1.8s fr="Indice de défilement" en="Scroll hint" */
+@keyframes ap-pg-home-scroll {
+    0%,
+    100% { transform: translateY(-3px); opacity: 1; }
+    50% { transform: translateY(5px); opacity: 0.6; }
+}
+
+/** @anim group=page demo=ring dur=7s fr="Halo central de l’accueil" en="Home central halo" */
+@keyframes ap-pg-home-halo {
+    0%,
+    100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.15); opacity: 1; }
+}
+
+/** @anim group=page demo=shape dur=6s fr="Triangle de couleur qui respire" en="Breathing colour triangle" */
+@keyframes ap-pg-home-swatch {
+    0%,
+    100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(0.8); }
+}
+
+/** @anim group=page demo=path dur=2.4s dir=alternate fr="Chemin triangulaire de la méthode" en="Triangular path of the method" */
+@keyframes ap-pg-home-path {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+}
+
+/** @anim group=page demo=ring dur=8s ease=linear fr="Cadre prismatique tournant" en="Rotating prismatic frame" */
+@keyframes ap-pg-home-frame {
+    to { --ap-angle: 360deg; }
+}
+
+/** @anim group=page demo=bar dur=50s ease=linear fr="Bande de la galerie qui défile" en="Scrolling gallery strip" */
+@keyframes ap-pg-home-strip {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/** @anim group=page demo=text dur=4s fr="Guillemet qui pulse" en="Pulsing quotation mark" */
+@keyframes ap-pg-home-quote {
+    0%,
+    100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.15); opacity: 1; }
+}

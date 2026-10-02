@@ -1,0 +1,46 @@
+<?php
+
+// Community page (resources/views/pages/community.blade.php).
+return [
+    'title' => 'Community',
+    'meta' => 'Art in the service of the community: neighbourhood murals, children’s workshops, participatory projects and sets for associations with Ateliers Pehouet.',
+    'eyebrow' => 'Community',
+    'hero_title' => 'Art is made together',
+    'lead' => 'Our motto is not a slogan: it is a way of working. With you, the atelier imagines projects where art brings people together, passes on skills and brightens everyday life.',
+    'cta_propose' => 'Propose a project',
+    'programmes_eyebrow' => 'What we offer',
+    'programmes_title' => 'Formats for every community',
+    'programmes' => [
+        ['icon' => 'pencil', 'title' => 'Children’s workshops', 'text' => 'Drawing, painting and modelling sessions suited to every age, during school time or the holidays.'],
+        ['icon' => 'roller', 'title' => 'School & neighbourhood murals', 'text' => 'Walls imagined and painted with pupils, residents or the shopkeepers of a street.'],
+        ['icon' => 'hands', 'title' => 'Participatory projects', 'text' => 'Mosaics, installations and collective works where every participant finds a place.'],
+        ['icon' => 'stage', 'title' => 'Sets for associations', 'text' => 'Sets for parties, shows and celebrations designed with volunteers.'],
+        ['icon' => 'heart', 'title' => 'Art for causes', 'text' => 'Creations that carry a message of solidarity, health or the environment.'],
+        ['icon' => 'users', 'title' => 'Open studio days', 'text' => 'Moments when the atelier opens its doors to show, explain and let people try.'],
+    ],
+    'join_eyebrow' => 'Take part',
+    'join_title' => 'How to get involved',
+    'join' => [
+        ['title' => 'Get in touch', 'text' => 'Tell us about your place, your group and your wish.'],
+        ['title' => 'Imagine together', 'text' => 'A meeting to define the format, the schedule and the partners.'],
+        ['title' => 'Create', 'text' => 'Guided sessions where everyone contributes to the work.'],
+        ['title' => 'Celebrate', 'text' => 'An unveiling to share the result with everyone.'],
+    ],
+    'for_eyebrow' => 'For whom?',
+    'for_title' => 'Open to everyone who brings a place to life',
+    'for' => ['Schools and youth centres', 'Neighbourhood associations', 'Town halls and local authorities', 'Places of worship', 'Companies and shopkeepers', 'Families and residents', 'Care homes', 'Community centres'],
+    'services_eyebrow' => 'Related services',
+    'services_title' => 'The crafts at the heart of our community projects',
+    'faq_title' => 'Questions about community projects',
+    'faq' => [
+        ['q' => 'Do participants need artistic skills?', 'a' => 'None. The atelier adapts every task to the participants and guarantees the quality of the final work.'],
+        ['q' => 'Who funds a community project?', 'a' => 'Every project is different: the host organisation, partners, sponsorship… We help you prepare a clear presentation for the people you need to convince.'],
+        ['q' => 'How long does a project last?', 'a' => 'From one day for a single workshop to several weeks for a participatory mural. The schedule is built with you.'],
+        ['q' => 'Can you work with a specific audience?', 'a' => 'Yes: children, teenagers, elderly people or people with disabilities. We adapt the gestures, the tools and the pace.'],
+    ],
+    'quote' => 'A shared artwork belongs to everyone who watched it being born.',
+    'cta_title' => 'Your community has a story to paint',
+    'cta_text' => 'Write to us: together we will imagine the project that looks like it.',
+    'cta_button' => 'Propose a project',
+    'cta_secondary' => 'See community art',
+];

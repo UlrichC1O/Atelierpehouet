@@ -1,0 +1,127 @@
+/* ==========================================================================
+   Ateliers Pehouet — Community. Keyframes: ap-pg-community-*
+   ========================================================================== */
+
+.community-hero-art {
+    display: grid;
+    place-items: center;
+}
+
+.community-hero-art__stage {
+    position: relative;
+    width: min(100%, 26rem);
+    aspect-ratio: 1;
+    border: var(--ap-seam) solid var(--ap-white);
+    box-shadow: 0 0 0 6px var(--ap-black), 0 0 0 7px var(--ap-orange), 0 40px 80px -30px rgb(201 99 56 / 0.6);
+    overflow: hidden;
+}
+
+.community-programmes__grid {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.community-programme {
+    display: grid;
+    gap: 0.8rem;
+    align-content: start;
+    padding: 1.6rem;
+    background: linear-gradient(165deg, var(--ap-coal), var(--ap-black));
+    border: 1px solid var(--ap-white-08);
+    border-bottom: 3px solid var(--accent);
+    transition: transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.community-programme:hover {
+    transform: translateY(-5px);
+}
+
+.community-programme__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    color: var(--accent-bright);
+    border: 1px solid var(--accent);
+    animation: ap-pg-community-pulse 4s var(--ap-ease-in-out) infinite;
+}
+
+.community-programme:nth-child(odd) .community-programme__icon { animation-delay: -2s; }
+
+.community-programme__icon .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.community-programme__title {
+    font-size: var(--ap-step-1);
+    text-transform: uppercase;
+}
+
+.community-programme__text {
+    color: var(--ap-text-soft);
+}
+
+.community-for__cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    list-style: none;
+    padding: 0;
+}
+
+.community-for__tag {
+    padding: 0.7em 1.2em;
+    border: 1px solid var(--ap-white-16);
+    border-radius: var(--ap-radius-pill);
+    background: var(--ap-coal);
+    font-weight: 600;
+    animation: ap-pg-community-float 5s var(--ap-ease-in-out) infinite;
+    animation-delay: calc(var(--i) * -0.6s);
+}
+
+.community-for__tag:nth-child(4n + 1) { border-color: var(--ap-blue-bright); }
+.community-for__tag:nth-child(4n + 2) { border-color: var(--ap-yellow); }
+.community-for__tag:nth-child(4n + 3) { border-color: var(--ap-red-bright); }
+
+.community-quote {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(4rem, 9vw, 7rem);
+    background: radial-gradient(60% 80% at 50% 50%, rgb(201 99 56 / 0.18), transparent 70%), var(--ap-black);
+    text-align: center;
+}
+
+.community-quote__text {
+    margin-inline: auto;
+    max-width: 24ch;
+    font-family: var(--ap-font-tagline);
+    font-size: clamp(1.8rem, 1rem + 3vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ap-white);
+    animation: ap-pg-community-quote 6s ease-in-out infinite;
+}
+
+/** @anim group=page demo=shape dur=5s fr="Publics qui flottent" en="Floating audiences" */
+@keyframes ap-pg-community-float {
+    0%,
+    100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/** @anim group=page demo=ring dur=4s fr="Icône de programme qui pulse" en="Pulsing programme icon" */
+@keyframes ap-pg-community-pulse {
+    0%,
+    100% { box-shadow: 0 0 0 0 transparent; }
+    50% { box-shadow: 0 0 0 8px rgb(201 99 56 / 0.18); }
+}
+
+/** @anim group=page demo=text dur=6s fr="Citation lumineuse" en="Glowing quotation" */
+@keyframes ap-pg-community-quote {
+    0%,
+    100% { text-shadow: 0 0 0 transparent; }
+    50% { text-shadow: 0 0 0.4em rgb(227 169 78 / 0.45); }
+}

@@ -1,0 +1,100 @@
+/* ==========================================================================
+   Ateliers Pehouet — Error pages. Keyframes: ap-pg-error-*
+   ========================================================================== */
+
+.error-page {
+    position: relative;
+    overflow: hidden;
+    min-height: calc(100vh - var(--ap-header-h));
+    display: grid;
+    align-items: center;
+    padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.error-page--minimal {
+    min-height: 100vh;
+}
+
+.error-page__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+}
+
+@media (min-width: 56em) {
+    .error-page__inner {
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    }
+}
+
+.broken {
+    width: min(100%, 26rem);
+    justify-self: center;
+}
+
+.broken__svg {
+    width: 100%;
+    overflow: visible;
+}
+
+.broken__piece {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: translate(var(--dx), var(--dy)) rotate(var(--r));
+    animation: ap-pg-error-drift 6s var(--ap-ease-in-out) infinite;
+}
+
+.broken__piece:nth-child(2) { animation-delay: -1.2s; }
+.broken__piece:nth-child(3) { animation-delay: -2.4s; }
+.broken__piece:nth-child(4) { animation-delay: -3.6s; }
+.broken__piece:nth-child(5) { animation-delay: -4.8s; }
+
+.broken__crack {
+    filter: drop-shadow(0 0 3px rgb(232 67 59 / 0.9));
+    animation: ap-pg-error-crack 2.8s steps(1, end) infinite;
+}
+
+.error-page__text {
+    display: grid;
+    gap: 1.1rem;
+    justify-items: start;
+}
+
+.error-page__code {
+    font-family: var(--ap-font-tagline);
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    text-transform: uppercase;
+    color: var(--ap-red-bright);
+}
+
+.error-page__title {
+    font-size: clamp(2.4rem, 1.4rem + 4vw, 5rem);
+    text-transform: uppercase;
+    background: var(--ap-gradient-teliers);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.error-page__lead {
+    font-size: var(--ap-step-1);
+    color: var(--ap-text-soft);
+}
+
+/** @anim group=page demo=blocks dur=6s fr="Pièces du triangle à la dérive" en="Triangle pieces adrift" */
+@keyframes ap-pg-error-drift {
+    0%,
+    100% { transform: translate(var(--dx, 10px), var(--dy, 10px)) rotate(var(--r, 10deg)); }
+    50% { transform: translate(calc(var(--dx, 10px) * 1.6), calc(var(--dy, 10px) * 1.6)) rotate(calc(var(--r, 10deg) * -0.6)); }
+}
+
+/** @anim group=page demo=path dur=2.8s ease=steps(1,end) fr="Fissure qui grésille" en="Crackling fissure" */
+@keyframes ap-pg-error-crack {
+    0%,
+    100% { opacity: 1; }
+    42% { opacity: 0.55; }
+    48% { opacity: 1; }
+}
