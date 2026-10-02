@@ -75,7 +75,8 @@ final class GeneratorController extends Controller
 
         $response = response($art['svg'], 200, [
             'Content-Type' => 'image/svg+xml; charset=utf-8',
-            'Cache-Control' => 'public, max-age=604800',
+            // s-maxage lets Vercel's CDN serve repeat requests (same query, same artwork).
+            'Cache-Control' => 'public, max-age=604800, s-maxage=604800',
             'X-Art-Engine' => $art['source'],
             'Content-Security-Policy' => "default-src 'none'; style-src 'unsafe-inline'",
         ]);
