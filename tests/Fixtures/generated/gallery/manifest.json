@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "items": [
+        {"file": "gallery/prisme-1.svg", "style": "prisme", "seed": "prisme-seed-1", "title": {"fr": "Prisme d’aube", "en": "Dawn prism"}, "width": 800, "height": 800},
+        {"file": "gallery/pehouet-1.svg", "style": "pehouet", "seed": "pehouet-seed-1", "title": {"fr": "Triangle ardent", "en": "Blazing triangle"}, "width": 800, "height": 800},
+        {"file": "gallery/mondrian-1.svg", "style": "mondrian", "seed": "mondrian-seed-1", "title": {"fr": "Grille rouge"}, "width": 1200, "height": 900},
+        {"file": "gallery/pehouet-2.svg", "style": "pehouet", "seed": "pehouet-seed-2", "title": "Titre unique", "width": "800", "height": 800},
+        {"file": "gallery/missing-1.svg", "style": "soleil", "seed": "missing", "title": {"fr": "Fichier absent"}},
+        {"file": "gallery/unknown-1.svg", "style": "cubisme", "seed": "unknown", "title": {"fr": "Style inconnu"}},
+        {"file": "../../evil.svg", "style": "pehouet", "seed": "evil", "title": {"fr": "Chemin interdit"}},
+        "not an item"
+    ]
+}

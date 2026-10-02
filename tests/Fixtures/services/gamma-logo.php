@@ -1,0 +1,72 @@
+<?php
+
+// Test fixture (tests/Unit/ServiceCatalogTest.php…) — not real content.
+return [
+    'slug' => 'gamma-logo',
+    'order' => 2,
+    'category' => 'design',
+    'accent' => 'yellow',
+    'icon' => 'pen-tool',
+    'art_style' => 'tissage',
+    'scene' => 'gamma-logo',
+    'fr' => [
+        'title' => 'Logo gamma',
+        'short' => 'Texte de test — accroche Logo gamma',
+        'tagline' => 'Texte de test — tagline',
+        'intro' => 'Texte de test — intro.',
+        'body' => ['Texte de test 1.', 'Texte de test 2.'],
+        'features' => [
+            ['title' => 'Texte de test F1', 'text' => 'Texte de test.'],
+            ['title' => 'Texte de test F2', 'text' => 'Texte de test.'],
+            ['title' => 'Texte de test F3', 'text' => 'Texte de test.'],
+            ['title' => 'Texte de test F4', 'text' => 'Texte de test.'],
+            ['title' => 'Texte de test F5', 'text' => 'Texte de test.'],
+            ['title' => 'Texte de test F6', 'text' => 'Texte de test.'],
+        ],
+        'process' => [
+            ['title' => 'Texte de test P1', 'text' => 'Texte de test.'],
+            ['title' => 'Texte de test P2', 'text' => 'Texte de test.'],
+            ['title' => 'Texte de test P3', 'text' => 'Texte de test.'],
+            ['title' => 'Texte de test P4', 'text' => 'Texte de test.'],
+        ],
+        'ideal_for' => ['Texte de test A', 'Texte de test B', 'Texte de test C', 'Texte de test D'],
+        'faq' => [
+            ['q' => 'Texte de test Q1 ?', 'a' => 'Texte de test.'],
+            ['q' => 'Texte de test Q2 ?', 'a' => 'Texte de test.'],
+            ['q' => 'Texte de test Q3 ?', 'a' => 'Texte de test.'],
+            ['q' => 'Texte de test Q4 ?', 'a' => 'Texte de test.'],
+        ],
+        'scene_alt' => 'Texte de test — scène',
+        'meta_description' => 'Texte de test — meta',
+    ],
+    'en' => [
+        'title' => 'Gamma logo',
+        'short' => 'Test copy — card line Gamma logo',
+        'tagline' => 'Test copy — tagline',
+        'intro' => 'Test copy — intro.',
+        'body' => ['Test copy 1.', 'Test copy 2.'],
+        'features' => [
+            ['title' => 'Test copy F1', 'text' => 'Test copy.'],
+            ['title' => 'Test copy F2', 'text' => 'Test copy.'],
+            ['title' => 'Test copy F3', 'text' => 'Test copy.'],
+            ['title' => 'Test copy F4', 'text' => 'Test copy.'],
+            ['title' => 'Test copy F5', 'text' => 'Test copy.'],
+            ['title' => 'Test copy F6', 'text' => 'Test copy.'],
+        ],
+        'process' => [
+            ['title' => 'Test copy P1', 'text' => 'Test copy.'],
+            ['title' => 'Test copy P2', 'text' => 'Test copy.'],
+            ['title' => 'Test copy P3', 'text' => 'Test copy.'],
+            ['title' => 'Test copy P4', 'text' => 'Test copy.'],
+        ],
+        'ideal_for' => ['Test copy A', 'Test copy B', 'Test copy C', 'Test copy D'],
+        'faq' => [
+            ['q' => 'Test copy Q1 ?', 'a' => 'Test copy.'],
+            ['q' => 'Test copy Q2 ?', 'a' => 'Test copy.'],
+            ['q' => 'Test copy Q3 ?', 'a' => 'Test copy.'],
+            ['q' => 'Test copy Q4 ?', 'a' => 'Test copy.'],
+        ],
+        'scene_alt' => 'Test copy — scène',
+        'meta_description' => 'Test copy — meta',
+    ],
+];

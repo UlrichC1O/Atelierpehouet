@@ -1,0 +1,627 @@
+/* ==========================================================================
+   Ateliers Pehouet — 05 · Brand & shell animations
+   The logo lockup (mark + TELIERS + tagline + signature), its assembly
+   sequence, the loader, menus, page transitions and the cursor layer.
+   Keyframes: ap-logo-* ap-brand-* ap-sig-* ap-nav-* ap-load-* ap-vt-* ap-fx-*
+   ========================================================================== */
+
+@property --wm-flow {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0px;
+}
+
+/* --- The mark --------------------------------------------------------------- */
+
+.logo-mark {
+    height: auto;
+    overflow: visible;
+}
+
+.logo-mark__piece {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.logo-mark--animated .logo-mark__piece {
+    animation: ap-logo-fly 1.15s var(--ap-ease-spring) both;
+}
+
+.logo-mark--animated .logo-mark__piece--yellow { --from: translate(10%, -140%) rotate(-24deg); animation-delay: 0.05s; }
+.logo-mark--animated .logo-mark__piece--blue { --from: translate(-170%, -20%) rotate(30deg); animation-delay: 0.18s; }
+.logo-mark--animated .logo-mark__piece--red { --from: translate(160%, 30%) rotate(-28deg); animation-delay: 0.3s; }
+.logo-mark--animated .logo-mark__piece--black { --from: translate(-40%, 170%) rotate(8deg); animation-delay: 0.42s; }
+.logo-mark--animated .logo-mark__piece--white { --from: scale(0) rotate(90deg); animation-delay: 0.62s; }
+
+.logo-mark--animated .logo-mark__outline {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: ap-logo-outline 1.1s var(--ap-ease-in-out) 0.85s forwards;
+}
+
+/* Idle: the fields breathe apart along their own direction, then close again. */
+.logo-mark--idle .logo-mark__pieces {
+    animation: ap-logo-glow 5.5s var(--ap-ease-in-out) 2.2s infinite;
+}
+
+.logo-mark--idle .logo-mark__piece {
+    animation: ap-logo-breathe 5.5s var(--ap-ease-in-out) 2.2s infinite;
+}
+
+.logo-mark--animated.logo-mark--idle .logo-mark__piece {
+    animation: ap-logo-fly 1.15s var(--ap-ease-spring) both, ap-logo-breathe 5.5s var(--ap-ease-in-out) 2.4s infinite;
+}
+
+.logo-mark--animated.logo-mark--idle .logo-mark__piece--yellow { animation-delay: 0.05s, 2.4s; }
+.logo-mark--animated.logo-mark--idle .logo-mark__piece--blue { animation-delay: 0.18s, 2.4s; }
+.logo-mark--animated.logo-mark--idle .logo-mark__piece--red { animation-delay: 0.3s, 2.4s; }
+.logo-mark--animated.logo-mark--idle .logo-mark__piece--black { animation-delay: 0.42s, 2.4s; }
+.logo-mark--animated.logo-mark--idle .logo-mark__piece--white { animation-delay: 0.62s, 2.4s; }
+
+.logo-mark__piece--yellow { --bx: 0; --by: -4%; }
+.logo-mark__piece--blue { --bx: -6%; --by: -1%; }
+.logo-mark__piece--red { --bx: 5%; --by: 2%; }
+.logo-mark__piece--black { --bx: -3%; --by: 5%; }
+.logo-mark__piece--white { --bx: 0; --by: 0; }
+
+/* --- The wordmark (u = font-size of .wordmark = height of the mark) -------- */
+
+.wordmark {
+    --u: 2.1rem;
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    font-size: var(--u);
+    line-height: 1;
+    color: var(--ap-white);
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.wordmark__mark {
+    flex: none;
+    height: 1em;
+    width: auto;
+    /* the triangle's base (y = 86.6 of the viewBox) sits on the text baseline */
+    margin-bottom: -0.0324em;
+}
+
+.wordmark__word {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    margin-left: calc(-0.13em / 0.634);
+    font-family: var(--ap-font-display);
+    font-size: 0.634em;
+    line-height: 1;
+    letter-spacing: 0;
+    filter: drop-shadow(0 0 0.04em rgb(232 67 59 / 0.85)) drop-shadow(0 0 0.28em rgb(179 44 43 / 0.5));
+}
+
+.wordmark__letter {
+    display: inline-block;
+    margin-right: var(--wm-track, 0.1em);
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    /* layer 1: a moving light band; layer 2: the logo's TELIERS gradient, one slice per letter */
+    background-image:
+        linear-gradient(100deg, transparent 0 40%, rgb(250 252 253 / 0.55) 48%, transparent 56% 100%),
+        var(--ap-gradient-teliers);
+    background-size: var(--wm-w, 5.5em) 100%, var(--wm-w, 5.5em) 100%;
+    background-position: calc(var(--wm-w, 5.5em) - var(--x, 0em)) 0, calc(-1 * var(--x, 0em)) 0;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.wordmark__letter:last-child {
+    margin-right: 0;
+}
+
+.wordmark__tagline {
+    position: absolute;
+    left: 0.02em;
+    top: calc(100% + 0.16em);
+    font-family: var(--ap-font-tagline);
+    font-size: 0.125em;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--ap-mist);
+    white-space: nowrap;
+}
+
+.wordmark__signature {
+    position: absolute;
+    left: 3.128em;
+    top: 0.42em;
+    width: 2.759em;
+    height: auto;
+    pointer-events: none;
+}
+
+.wordmark--tagged {
+    padding-bottom: 0.4em;
+}
+
+.wordmark--signed {
+    padding-right: max(0px, calc(5.9em - 1.14em - 3.47em));
+}
+
+/* Sizes */
+.wordmark--header {
+    --u: clamp(1.75rem, 1.4rem + 0.9vw, 2.15rem);
+}
+
+.wordmark--footer {
+    --u: clamp(2.4rem, 2rem + 1.5vw, 3.3rem);
+}
+
+.wordmark--hero {
+    --u: min(14.6vw, 11.5rem);
+}
+
+/* Header: a quick neon flicker on hover, like a sign being switched on. */
+.site-header__brand:hover .wordmark__word,
+.site-header__brand:focus-visible .wordmark__word {
+    animation: ap-brand-flicker 0.9s steps(1, end) 1;
+}
+
+.site-header__brand:hover .wordmark__mark .logo-mark__pieces {
+    animation: ap-logo-glow 1.6s var(--ap-ease-in-out) 1;
+}
+
+/* Hero sequence: pieces assemble → outline → letters rise → light sweeps → tagline → signature. */
+.wordmark--animated .wordmark__letter {
+    animation:
+        ap-brand-letter-rise 0.9s var(--ap-ease-out) both,
+        ap-brand-shine 4.8s var(--ap-ease-in-out) infinite;
+    animation-delay: calc(1.25s + var(--i) * 0.07s), 3.2s;
+}
+
+.wordmark--animated .wordmark__word {
+    animation: ap-brand-neon-pulse 4.2s ease-in-out 2.2s infinite;
+}
+
+.wordmark--animated .wordmark__tagline {
+    clip-path: inset(0 100% 0 0);
+    animation: ap-brand-tagline-type 1.5s steps(var(--chars, 33), end) 2.15s forwards;
+}
+
+.wordmark--animated .wordmark__tagline::after {
+    content: "";
+    position: absolute;
+    right: -0.5em;
+    top: 0.05em;
+    bottom: 0.05em;
+    width: 0.12em;
+    background: var(--ap-yellow);
+    animation: ap-brand-caret 0.75s steps(1, end) 2.15s 6 both;
+}
+
+/* --- Signature -------------------------------------------------------------- */
+
+.signature {
+    overflow: visible;
+}
+
+.signature__path {
+    stroke: var(--ap-white);
+    filter: drop-shadow(0 0 2px rgb(250 252 253 / 0.45));
+}
+
+.signature--animated .signature__path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: ap-sig-draw var(--t, 0.35s) var(--ap-ease-in-out) forwards;
+    animation-delay: calc(var(--sig-delay, 2.4s) + var(--d, 0s));
+}
+
+.signature__glint {
+    stroke: var(--ap-yellow);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 0.06 1.1;
+    stroke-dashoffset: 1.1;
+    filter: drop-shadow(0 0 4px rgb(248 212 73 / 0.9));
+    animation: ap-sig-glint 6s var(--ap-ease-in-out) 5.5s infinite;
+}
+
+.site-footer .signature {
+    --sig-delay: 0s;
+}
+
+/* --- View transitions (cross-document): a triangle of light opens the next page */
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: ap-vt-out 0.45s var(--ap-ease-in) both;
+}
+
+::view-transition-new(root) {
+    animation: ap-vt-in 0.75s var(--ap-ease-out) both;
+}
+
+html.motion-off::view-transition-group(*),
+html.motion-off::view-transition-old(*),
+html.motion-off::view-transition-new(*) {
+    animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html:not(.motion-on)::view-transition-group(*),
+    html:not(.motion-on)::view-transition-old(*),
+    html:not(.motion-on)::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+
+/** @anim group=brand demo=shape dur=1.2s ease=var(--ap-ease-spring) fr="Envol des pièces du triangle" en="Triangle pieces flying in" */
+@keyframes ap-logo-fly {
+    from {
+        transform: var(--from, translate(-60%, -60%) rotate(-20deg));
+        opacity: 0;
+    }
+    60% {
+        opacity: 1;
+    }
+    to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+/** @anim group=brand demo=path dur=1.4s fr="Contour du triangle tracé" en="Triangle outline drawing" */
+@keyframes ap-logo-outline {
+    from {
+        stroke-dashoffset: 1;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/** @anim group=brand demo=blocks dur=5.5s fr="Respiration des champs de couleur" en="Colour fields breathing" */
+@keyframes ap-logo-breathe {
+    0%,
+    100% {
+        transform: none;
+    }
+    45%,
+    55% {
+        transform: translate(var(--bx, 4%), var(--by, -4%));
+    }
+}
+
+/** @anim group=brand demo=shape dur=5.5s fr="Halo rouge du logo" en="Logo red halo" */
+@keyframes ap-logo-glow {
+    0%,
+    100% {
+        filter: drop-shadow(0 0 0 rgb(179 44 43 / 0));
+    }
+    50% {
+        filter: drop-shadow(0 0 0.12em rgb(232 67 59 / 0.75)) drop-shadow(0 0 0.35em rgb(248 212 73 / 0.25));
+    }
+}
+
+/** @anim group=brand demo=letters dur=1.1s ease=var(--ap-ease-out) dir=alternate fr="Lettres TELIERS qui se lèvent" en="TELIERS letters rising" */
+@keyframes ap-brand-letter-rise {
+    from {
+        opacity: 0;
+        transform: translateY(0.55em) skewY(8deg);
+        filter: blur(6px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+}
+
+/** @anim group=brand demo=letters dur=4.8s fr="Éclat de lumière sur les lettres" en="Light sweeping across the letters" */
+@keyframes ap-brand-shine {
+    0%,
+    55% {
+        background-position: calc(var(--wm-w, 5.5em) - var(--x, 0em)) 0, calc(-1 * var(--x, 0em)) 0;
+    }
+    100% {
+        background-position: calc(-1 * var(--wm-w, 5.5em) - var(--x, 0em)) 0, calc(-1 * var(--x, 0em)) 0;
+    }
+}
+
+/** @anim group=brand demo=text dur=4.2s fr="Pulsation du néon rouge" en="Red neon pulse" */
+@keyframes ap-brand-neon-pulse {
+    0%,
+    100% {
+        filter: drop-shadow(0 0 0.04em rgb(232 67 59 / 0.85)) drop-shadow(0 0 0.28em rgb(179 44 43 / 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 0.07em rgb(232 67 59 / 1)) drop-shadow(0 0 0.5em rgb(179 44 43 / 0.75));
+    }
+}
+
+/** @anim group=brand demo=text dur=0.9s fr="Néon qui s’allume (vacillement)" en="Neon switching on (flicker)" */
+@keyframes ap-brand-flicker {
+    0% { opacity: 1; }
+    12% { opacity: 0.62; }
+    20% { opacity: 1; }
+    48% { opacity: 0.7; }
+    56% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+/** @anim group=text demo=text dur=1.6s dir=alternate fr="Slogan tapé à la machine" en="Typewriter tagline" */
+@keyframes ap-brand-tagline-type {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/** @anim group=text demo=bar dur=0.8s fr="Curseur clignotant" en="Blinking caret" */
+@keyframes ap-brand-caret {
+    0%,
+    100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/** @anim group=brand demo=path dur=1.2s dir=alternate fr="Signature qui s’écrit" en="Signature writing itself" */
+@keyframes ap-sig-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/** @anim group=brand demo=path dur=6s fr="Étincelle le long de la signature" en="Spark along the signature" */
+@keyframes ap-sig-glint {
+    0% {
+        stroke-dashoffset: 1.1;
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    30% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+    34%,
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0;
+    }
+}
+
+/** @anim group=ui demo=bar dur=3.6s fr="Soulignement tricolore actif" en="Active tri-colour underline" */
+@keyframes ap-nav-current {
+    0%,
+    100% {
+        background-position: 0 0;
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.35);
+    }
+}
+
+/** @anim group=ui demo=blocks dur=0.9s ease=var(--ap-ease-out) dir=alternate fr="Colonnes du méga-menu" en="Mega-menu columns unfolding" */
+@keyframes ap-nav-mega-group {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+/** @anim group=ui demo=blocks dur=0.8s ease=var(--ap-ease-out) dir=alternate fr="Tranches de couleur du menu" en="Menu colour slices" */
+@keyframes ap-nav-slice-in {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: scaleY(1);
+    }
+}
+
+/** @anim group=ui demo=panel dur=1s dir=alternate fr="Voile noir du menu" en="Menu black veil" */
+@keyframes ap-nav-veil {
+    from {
+        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    }
+    to {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+/** @anim group=ui demo=text dur=0.8s ease=var(--ap-ease-out) dir=alternate fr="Liens du menu en cascade" en="Menu links cascading in" */
+@keyframes ap-nav-item-in {
+    from {
+        opacity: 0;
+        transform: translateX(-2rem) skewX(-8deg);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=loader demo=shape dur=1.2s ease=var(--ap-ease-spring) fr="Assemblage du chargement" en="Loader assembly" */
+@keyframes ap-load-piece {
+    from {
+        transform: var(--from, scale(0.4));
+        opacity: 0;
+    }
+    to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+/** @anim group=loader demo=path dur=1.2s dir=alternate fr="Contour de chargement" en="Loader outline" */
+@keyframes ap-load-outline {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/** @anim group=loader demo=bar dur=1.8s fr="Barre de progression TELIERS" en="TELIERS progress bar" */
+@keyframes ap-load-progress {
+    from {
+        transform: scaleX(0);
+    }
+    60% {
+        transform: scaleX(0.8);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/** @anim group=loader demo=text dur=1.4s fr="Texte de chargement qui respire" en="Breathing loader text" */
+@keyframes ap-load-blink {
+    0%,
+    100% { opacity: 1; }
+    50% { opacity: 0.45; }
+}
+
+/** @anim group=loader demo=blocks dur=0.8s dir=alternate fr="Panneaux bleu, jaune, rouge" en="Blue, yellow, red panels" */
+@keyframes ap-load-panel {
+    0% {
+        transform: scaleY(0);
+        transform-origin: bottom;
+    }
+    50% {
+        transform: scaleY(1);
+        transform-origin: bottom;
+    }
+    51% {
+        transform: scaleY(1);
+        transform-origin: top;
+    }
+    100% {
+        transform: scaleY(0);
+        transform-origin: top;
+    }
+}
+
+/** @anim group=loader demo=panel dur=0.8s dir=alternate fr="Sortie du rideau de chargement" en="Loader curtain exit" */
+@keyframes ap-load-exit {
+    0%,
+    45% {
+        clip-path: inset(0 0 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 100% 0);
+        visibility: hidden;
+    }
+}
+
+/** @anim group=transition demo=panel dur=0.8s ease=var(--ap-ease-out) fr="Triangle de lumière (page suivante)" en="Triangle of light (next page)" */
+@keyframes ap-vt-in {
+    from {
+        clip-path: polygon(50% 100%, 50% 100%, 50% 100%);
+    }
+    to {
+        clip-path: polygon(50% -160%, 260% 140%, -160% 140%);
+    }
+}
+
+/** @anim group=transition demo=panel dur=0.5s dir=alternate fr="Page qui s’efface" en="Page fading away" */
+@keyframes ap-vt-out {
+    to {
+        opacity: 0.25;
+        transform: scale(0.97);
+        filter: blur(3px);
+    }
+}
+
+/** @anim group=ui demo=dots dur=1.6s fr="Danse des triangles (interrupteur)" en="Dancing triangles (toggle)" */
+@keyframes ap-fx-toggle-dance {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+    40% {
+        transform: translateY(-0.28em) scale(1.12);
+    }
+}
+
+/** @anim group=ui demo=blocks dur=7s fr="Bande Mondrian du pied de page" en="Footer Mondrian strip" */
+@keyframes ap-fx-mondrian-strip {
+    0%,
+    100% {
+        transform: scaleX(1);
+    }
+    50% {
+        transform: scaleX(0.82);
+    }
+}
+
+/** @anim group=ui demo=bar dur=3s fr="Lueur de la barre de défilement" en="Scroll bar glow" */
+@keyframes ap-fx-progress-glow {
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgb(179 44 43 / 0.5);
+    }
+    50% {
+        box-shadow: 0 0 18px rgb(248 212 73 / 0.55);
+    }
+}
+
+/** @anim group=ui demo=shape dur=6s ease=linear fr="Curseur triangle qui tourne" en="Spinning triangle cursor" */
+@keyframes ap-fx-cursor-spin {
+    to {
+        rotate: 360deg;
+    }
+}
+
+/** @anim group=ui demo=shape dur=0.9s ease=var(--ap-ease-out) fr="Traînée de triangles" en="Triangle trail" */
+@keyframes ap-fx-trail {
+    from {
+        opacity: 0.9;
+        transform: translate(var(--tx, 0), var(--ty, 0)) rotate(0deg) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(var(--tx, 0), calc(var(--ty, 0px) + 18px)) rotate(var(--rot, 160deg)) scale(0.2);
+    }
+}
+
+/** @anim group=ui demo=shape dur=0.9s fr="Flèche qui rebondit" en="Bobbing arrow" */
+@keyframes ap-fx-top-bob {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+/** @anim group=ui demo=shape dur=0.7s ease=var(--ap-ease-in) fr="Décollage vers le haut" en="Launch to the top" */
+@keyframes ap-fx-top-launch {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    35% {
+        transform: translateY(4px) scaleY(0.85);
+    }
+    100% {
+        transform: translateY(-140%) scaleY(1.3);
+        opacity: 0;
+    }
+}

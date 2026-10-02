@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "total": 8,
+    "groups": ["brand", "text", "reveal", "ui", "ambient", "loader", "transition", "page", "scene"],
+    "animations": [
+        {"n": 3, "name": "ap-rv-tri", "group": "reveal", "demo": "panel", "file": "css/07-anim-ui.css", "scene": null, "label": {"fr": "Révélation en triangle", "en": "Triangle reveal"}, "dur": "1.1s", "ease": "var(--ap-ease-out)", "dir": "alternate", "iter": "infinite"},
+        {"n": 1, "name": "ap-logo-assemble", "group": "brand", "demo": "shape", "file": "css/05-anim-brand.css", "scene": null, "label": {"fr": "Assemblage du triangle", "en": "Triangle assembly"}, "dur": "2.4s", "ease": "ease-in-out", "dir": "normal", "iter": "infinite"},
+        {"n": 2, "name": "ap-tx-neon", "group": "text", "demo": "letters", "file": "css/07-anim-ui.css", "scene": null, "label": {"fr": "Néon TELIERS"}},
+        {"n": 4, "name": "ap-sc-mural-roll", "group": "scene", "demo": "scene", "file": "css/scenes/alpha-fresque.css", "scene": "alpha-fresque", "label": {"fr": "Rouleau qui peint", "en": "Painting roller"}, "dur": "3s", "ease": "linear", "dir": "normal", "iter": 1},
+        {"n": 5, "name": "ap-sc-mural-drip", "group": "scene", "demo": "scene", "file": "css/scenes/alpha-fresque.css", "scene": "alpha-fresque", "label": {"fr": "Coulure", "en": "Drip"}},
+        {"n": 6, "name": "ap-sc-tableau-easel", "group": "scene", "demo": "scene", "file": "css/scenes/beta-portrait.css", "scene": "beta-portrait", "label": {"fr": "Chevalet", "en": "Easel"}},
+        {"n": 7, "name": "ap-amb-drift", "group": "ambient", "demo": "shape", "file": "css/06-anim-ambient.css", "scene": null, "label": {"fr": "Dérive", "en": "Drift"}},
+        {"n": 8, "name": "ap-custom-orbit", "group": "experimental", "demo": "ring", "file": "css/pages/motion.css", "scene": null, "label": {"fr": "Orbite", "en": "Orbit"}},
+        {"n": 9, "group": "brand", "demo": "shape", "label": {"fr": "Sans nom"}},
+        "not an entry"
+    ]
+}
