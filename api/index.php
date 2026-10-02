@@ -60,4 +60,9 @@ $app->useStoragePath($tmp.'/storage');
 // X-Forwarded-*: trust them so URLs are generated as https and visitor IPs are real.
 TrustProxies::at('*');
 
+// php -S reports any existing repo file (e.g. /composer.json) as the script, which makes
+// Laravel route it to "/": pin the front controller so such URLs get the 404 page.
+$_SERVER['SCRIPT_FILENAME'] = __FILE__;
+$_SERVER['SCRIPT_NAME'] = $_SERVER['PHP_SELF'] = '/index.php';
+
 $app->handleRequest(Request::capture());
