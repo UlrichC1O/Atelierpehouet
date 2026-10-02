@@ -38,10 +38,13 @@ foreach ($files as $file) {
         $failed++;
         continue;
     }
-    $tmp = tempnam(sys_get_temp_dir(), 'blade').'.php';
+    $base = tempnam(sys_get_temp_dir(), 'blade');
+    $tmp = $base.'.php';
     file_put_contents($tmp, $php);
+    $out = [];
     exec('php -l '.escapeshellarg($tmp).' 2>&1', $out, $code);
     unlink($tmp);
+    unlink($base);
     if ($code !== 0) {
         echo "✗ {$file}: ".preg_replace('/in \S+ on/', 'on', trim(implode(' ', array_filter($out, fn ($l) => ! str_starts_with($l, 'Errors parsing')))))."\n";
         $failed++;
