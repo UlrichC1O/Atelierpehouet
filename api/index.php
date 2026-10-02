@@ -64,5 +64,6 @@ TrustProxies::at('*');
 // Laravel route it to "/": pin the front controller so such URLs get the 404 page.
 $_SERVER['SCRIPT_FILENAME'] = __FILE__;
 $_SERVER['SCRIPT_NAME'] = $_SERVER['PHP_SELF'] = '/index.php';
+unset($_SERVER['PATH_INFO'], $_SERVER['PATH_TRANSLATED'], $_SERVER['ORIG_SCRIPT_NAME']);
 
 $app->handleRequest(Request::capture());
