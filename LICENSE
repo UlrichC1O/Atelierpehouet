@@ -1,0 +1,13 @@
+Copyright (c) 2026 Ateliers Pehouet. All rights reserved.
+
+This repository is public so the website can be built and reviewed. That does
+not grant a licence: you may not copy, modify, redistribute or reuse its code,
+text, artwork, generated images, or the "Ateliers Pehouet" name, logo and
+signature, without written permission from Ateliers Pehouet.
+
+Third-party parts keep their own licences:
+
+- Files derived from the Laravel application skeleton (laravel/laravel),
+  Copyright (c) Taylor Otwell, MIT licence.
+- The fonts in public/fonts, SIL Open Font License 1.1 (see public/fonts/OFL.txt).
+- The Composer packages listed in composer.lock, each under its own licence.
