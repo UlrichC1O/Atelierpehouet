@@ -1,12 +1,35 @@
-/* Ateliers Pehouet — contact.js: character counter, inline hints, sending state, focus on first error. */
+/* Ateliers Pehouet — contact.js: message draft, character counter, inline hints, sending state, focus on first error. */
 (function () {
     'use strict';
     var AP = window.AP;
     if (!AP) { return; }
 
+    var DRAFT_KEY = 'ap-contact-message';
+
+    function draftStore() {
+        try { return window.sessionStorage; } catch (e) { return null; }
+    }
+
     AP.ready(function () {
         var form = AP.qs('[data-contact-form]');
         if (!form) { return; }
+
+        // The server never sends the message back (it would overflow the session cookie),
+        // so this tab keeps the draft until the request has been received.
+        var message = form.querySelector('textarea[name="message"]');
+        var store = draftStore();
+        if (message && store) {
+            try {
+                if (document.querySelector('.contact__success')) {
+                    store.removeItem(DRAFT_KEY);
+                } else if (!message.value && store.getItem(DRAFT_KEY)) {
+                    message.value = store.getItem(DRAFT_KEY);
+                }
+            } catch (e) { /* storage unavailable: the form still works */ }
+            message.addEventListener('input', function () {
+                try { store.setItem(DRAFT_KEY, message.value); } catch (e) { /* full or blocked */ }
+            });
+        }
 
         AP.qsa('[data-counter]', form).forEach(function (field) {
             var counter = document.getElementById(field.getAttribute('data-counter'));

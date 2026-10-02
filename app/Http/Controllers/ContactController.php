@@ -62,8 +62,9 @@ final class ContactController extends Controller
         $mailed = $this->notify($message);
 
         if (! $stored && ! $mailed) {
+            // The message itself is not flashed (see bootstrap/app.php): contact.js restores it.
             return redirect()->to(route('contact').'#contact-form')
-                ->withInput($request->except(ContactRequest::HONEYPOT))
+                ->withInput($request->except([ContactRequest::HONEYPOT, 'message']))
                 ->withErrors(['message' => __('mail.contact.failed')]);
         }
 

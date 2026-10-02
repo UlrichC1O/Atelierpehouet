@@ -24,4 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        // A contact message (up to 5000 characters) would overflow the 4 KB cookie session
+        // when flashed back with errors; public/js/contact.js keeps the draft instead.
+        $exceptions->dontFlash('message');
     })->create();

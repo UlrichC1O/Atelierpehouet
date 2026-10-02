@@ -49,6 +49,8 @@ class ContactFormTest extends TestCase
             ->post(route('contact.store'), self::VISITOR)
             ->assertRedirect(route('contact').'#contact-form')
             ->assertSessionHasErrors('message')
+            ->assertSessionHasInput('name', self::VISITOR['name'])
+            ->assertSessionMissing('_old_input.message')
             ->assertSessionMissing('status');
 
         Log::shouldHaveReceived('warning')->withArgs(fn (string $line) => str_contains($line, 'only records messages'));
@@ -70,6 +72,22 @@ class ContactFormTest extends TestCase
 
         $this->assertDatabaseHas('contact_messages', ['email' => self::VISITOR['email']]);
         Mail::assertNothingSent();
+    }
+
+    public function test_a_long_message_sent_back_with_errors_fits_in_the_session_cookie(): void
+    {
+        config(['session.driver' => 'cookie']);
+        $visitor = ['message' => mb_substr(str_repeat('Une fresque été à l’école, déco éclatante. ', 120), 0, 5000)]
+            + array_diff_key(self::VISITOR, ['consent' => true]);
+
+        $response = $this->post(route('contact.store'), $visitor)
+            ->assertSessionHasErrors('consent')
+            ->assertSessionHasInput('email', self::VISITOR['email'])
+            ->assertSessionMissing('_old_input.message');
+
+        foreach ($response->headers->getCookies() as $cookie) {
+            $this->assertLessThan(4096, strlen($cookie->getName().'='.$cookie->getValue()), $cookie->getName().' cookie is too big');
+        }
     }
 
     private function inProduction(): void
