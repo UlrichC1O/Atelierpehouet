@@ -24,13 +24,14 @@ return [
         'en' => 'English',
     ],
 
+    // Empty values are hidden on the site, so no placeholder address is ever published.
     'contact' => [
-        'email' => env('ATELIER_EMAIL', 'contact@example.com'),
+        'email' => env('ATELIER_EMAIL', ''),
         'phone' => env('ATELIER_PHONE', ''),
         'whatsapp' => env('ATELIER_WHATSAPP', ''),
         'address' => env('ATELIER_ADDRESS', ''),
         // Where new quote requests are e-mailed (defaults to the public e-mail).
-        'notify' => env('ATELIER_NOTIFY_EMAIL') ?: env('ATELIER_EMAIL', 'contact@example.com'),
+        'notify' => env('ATELIER_NOTIFY_EMAIL') ?: env('ATELIER_EMAIL', ''),
     ],
 
     // Social profiles — leave empty in .env to hide an icon.
