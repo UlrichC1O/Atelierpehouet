@@ -1,0 +1,13 @@
+# Vercel installs Composer dependencies itself (no dev packages) — see vercel.json.
+/vendor
+/node_modules
+/.env
+/.env.backup
+/.env.production
+/.phpunit.cache
+/bootstrap/cache/*.php
+/database/*.sqlite*
+/storage/logs/*
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
