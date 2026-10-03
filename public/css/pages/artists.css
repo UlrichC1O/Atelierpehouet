@@ -1,0 +1,1987 @@
+/* ==========================================================================
+   Ateliers Pehouet — Artist pages (docs/ARTISTS.md §5): /artistes and /artistes/{slug}
+   The gallery-grade reference template: editorial type, generous black space, works shown
+   un-cropped on wall mats, exhibitions as a real CV, the logo motifs used with restraint.
+   Classes: .artists-* · .artist-* · .artwork* · .exhibition*   Keyframes: ap-pg-artists-*
+   ========================================================================== */
+
+/* The colour that answers the artist's accent in the small Mondrian clusters. */
+.artist,
+.artists-list,
+.artists-hero-art {
+    --artist-pair: var(--ap-blue);
+}
+
+.artist.accent-blue {
+    --artist-pair: var(--ap-yellow);
+}
+
+.artist.accent-white {
+    --artist-pair: var(--ap-red);
+}
+
+/* ==========================================================================
+   1 · Hero — name, discipline, location, statement · portrait / key work / monogram
+   ========================================================================== */
+
+.artist-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(3.5rem, 7vw, 6rem);
+    background:
+        radial-gradient(44rem 32rem at 82% 34%, color-mix(in srgb, var(--accent) 11%, transparent), transparent 70%),
+        radial-gradient(36rem 26rem at 0% 100%, rgb(38 95 165 / 0.12), transparent 70%),
+        var(--ap-black);
+}
+
+/* Under the sticky header like every hero — unless a preview banner comes first. */
+.artist-hero:first-child {
+    margin-top: calc(-1 * var(--ap-header-h));
+    padding-top: calc(var(--ap-header-h) + clamp(2rem, 5vw, 4.5rem));
+}
+
+/* One long signature slash crossing the black canvas. */
+.artist-hero::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: -10%;
+    bottom: 22%;
+    width: 75%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ap-white-16) 45%, transparent);
+    rotate: -20deg;
+    transform-origin: left center;
+    pointer-events: none;
+}
+
+.artist-hero__inner {
+    position: relative;
+    display: grid;
+    grid-template-areas: "head" "visual" "body";
+    gap: clamp(2rem, 6vw, 3rem);
+}
+
+.artist-hero__head {
+    grid-area: head;
+    display: grid;
+    gap: 1.1rem;
+    justify-items: start;
+    min-width: 0;
+}
+
+.artist-hero__head .breadcrumbs {
+    margin-bottom: 0.4rem;
+}
+
+.artist-hero__name {
+    max-width: 100%;
+    font-size: clamp(2.5rem, 1.6rem + 4.5vw, 6rem);
+    line-height: 0.94;
+    letter-spacing: 0.012em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+    hyphens: manual;
+}
+
+.artist-hero__name--l {
+    font-size: clamp(2.15rem, 1.45rem + 3.2vw, 4.5rem);
+    line-height: 0.98;
+}
+
+.artist-hero__name--xl {
+    font-size: clamp(1.75rem, 1.25rem + 2.2vw, 3.3rem);
+    line-height: 1.04;
+}
+
+.artist-hero__location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.artist-hero__location .icon {
+    color: var(--accent-bright);
+}
+
+.artist-hero__visual {
+    grid-area: visual;
+    display: grid;
+    justify-items: center;
+    min-width: 0;
+}
+
+.artist-hero__body {
+    grid-area: body;
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.1rem);
+    justify-items: start;
+    align-content: end;
+    min-width: 0;
+}
+
+.artist-hero__statement {
+    position: relative;
+    max-width: 36ch;
+    padding-inline-start: clamp(1.1rem, 2vw, 1.6rem);
+    font-family: var(--ap-font-tagline);
+    font-size: var(--ap-step-2);
+    line-height: 1.42;
+    color: var(--ap-white);
+}
+
+/* The accent seam on the inline-start side of the statement. */
+.artist-hero__statement::before {
+    content: "";
+    position: absolute;
+    inset-block: 0.25em;
+    inset-inline-start: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 25%, transparent));
+}
+
+.artist-hero__statement p {
+    max-width: none;
+}
+
+.artist-hero__statement--long {
+    max-width: 48ch;
+    font-size: var(--ap-step-1);
+    line-height: 1.5;
+}
+
+.artist-hero__actions {
+    --cluster-gap: 0.9rem 1.5rem;
+}
+
+.artist-hero__example {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    font-size: 0.82rem;
+    color: var(--ap-text-muted);
+}
+
+.artist-hero__example .icon {
+    color: var(--accent-bright);
+}
+
+@media (min-width: 64em) {
+    .artist-hero__inner {
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        grid-template-rows: auto 1fr;
+        grid-template-areas: "head visual" "body visual";
+        column-gap: clamp(3rem, 6vw, 6.5rem);
+        row-gap: clamp(1.75rem, 3vw, 2.5rem);
+    }
+
+    .artist-hero__visual {
+        justify-items: end;
+        align-self: center;
+    }
+}
+
+/* --- The frame: portrait (or key work, or monogram), white seam, accent corner, Mondrian blocks --- */
+
+.artist-frame {
+    --frame-offset: clamp(1rem, 2.6vw, 1.75rem);
+    position: relative;
+    width: min(100%, 25rem);
+    margin: 0;
+    padding: 0 0 var(--frame-offset) var(--frame-offset);
+}
+
+@media (min-width: 64em) {
+    .artist-frame {
+        width: min(100%, 28rem);
+    }
+}
+
+/* A small Mondrian cluster offset behind the frame: only an L-shaped strip of it shows. */
+.artist-frame__blocks {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 62%;
+    height: 46%;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 1fr 0.7fr;
+    gap: var(--ap-seam);
+    background: var(--ap-white);
+}
+
+.artist-frame__blocks span {
+    display: block;
+    animation: ap-pg-artists-blocks 1.2s var(--ap-ease-out) backwards;
+    animation-delay: calc(0.35s + var(--i, 0) * 0.09s);
+}
+
+.artist-frame__blocks span:nth-child(1) { background: var(--accent); --bx: -40%; --by: 0%; }
+.artist-frame__blocks span:nth-child(2) { background: var(--ap-black); --bx: 0%; --by: -40%; }
+.artist-frame__blocks span:nth-child(3) { background: var(--artist-pair); --bx: -40%; --by: 40%; }
+.artist-frame__blocks span:nth-child(4) { background: var(--ap-red); --bx: 30%; --by: 40%; }
+
+.artist.accent-red .artist-frame__blocks span:nth-child(4),
+.artist.accent-orange .artist-frame__blocks span:nth-child(4) {
+    background: var(--ap-yellow);
+}
+
+.artist-portrait {
+    position: relative;
+    z-index: 1;
+    display: block;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--ap-coal);
+    box-shadow: var(--ap-shadow-deep);
+    container-type: inline-size;
+    animation: ap-pg-artists-portrait 1.4s var(--ap-ease-out) 0.1s backwards;
+}
+
+.artist-portrait__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* The white seam inset over the picture, drawn once the portrait is revealed. */
+.artist-portrait__seam {
+    position: absolute;
+    z-index: 2;
+    inset: 4.5cqi;
+    border: 1px solid var(--ap-white-64);
+    pointer-events: none;
+    animation: ap-pg-artists-seam 1.1s var(--ap-ease-out) 1s backwards;
+}
+
+/* Key work in the portrait frame: a wall mat holding it at its natural ratio. */
+.artist-portrait__mat {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 13cqi;
+    background:
+        radial-gradient(80% 60% at 50% 40%, var(--ap-graphite), transparent 80%),
+        var(--ap-coal);
+}
+
+.artist-portrait__work {
+    display: block;
+    width: min(100%, calc(99cqi * var(--ratio, 1)));
+    box-shadow: 0 24px 40px -18px var(--ap-black-90), 0 8px 16px -8px var(--ap-black-70);
+}
+
+.artist-portrait__work .artist-portrait__img {
+    object-fit: contain;
+}
+
+.artist-frame--work .artist-portrait__seam {
+    border-color: var(--ap-white-16);
+}
+
+/* The accent triangle on the bottom-right corner of the frame. */
+.artist-frame__tri {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    bottom: var(--frame-offset);
+    width: clamp(2.6rem, 6vw, 3.6rem);
+    aspect-ratio: 1;
+    background: var(--accent);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    animation: ap-pg-artists-blocks 1s var(--ap-ease-out) 1.05s backwards;
+    --bx: 40%;
+    --by: 40%;
+}
+
+.artist-frame__caption {
+    display: grid;
+    gap: 0.25rem;
+    padding-top: calc(var(--frame-offset) + 0.4rem);
+    font-size: 0.86rem;
+    color: var(--ap-text-soft);
+}
+
+.artist-frame__label {
+    font-family: var(--ap-font-tagline);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    text-transform: uppercase;
+    color: var(--accent-bright);
+}
+
+/* --- Monogram: outlined initials over a slowly shifting Mondrian field (card + hero) --- */
+
+.artist-monogram {
+    --monogram-pair: var(--ap-blue);
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    container-type: inline-size;
+    background: var(--ap-ink);
+}
+
+.artist-monogram.accent-blue {
+    --monogram-pair: var(--ap-red);
+}
+
+.artist-monogram__field {
+    position: absolute;
+    inset: 0;
+}
+
+.artist-monogram__block {
+    position: absolute;
+    outline: var(--ap-seam) solid var(--ap-black);
+    animation: ap-pg-artists-monogram 18s var(--ap-ease-in-out) infinite alternate;
+    animation-delay: calc(var(--i, 0) * -3.4s);
+}
+
+.artist-monogram__block--a { left: 0; top: 0; width: 58%; height: 47%; background: var(--accent); --dx: 2%; --dy: 3%; }
+.artist-monogram__block--b { left: 58%; top: 0; width: 42%; height: 21%; background: var(--ap-graphite); --dx: -3%; --dy: 4%; }
+.artist-monogram__block--c { left: 58%; top: 21%; width: 42%; height: 49%; background: var(--ap-coal); --dx: 3%; --dy: -2%; }
+.artist-monogram__block--d { left: 0; top: 47%; width: 30%; height: 53%; background: var(--monogram-pair, var(--ap-blue)); --dx: -2%; --dy: 2%; --ds: 1.06; }
+.artist-monogram__block--e { left: 30%; top: 70%; width: 70%; height: 30%; background: var(--ap-steel); --dx: 2%; --dy: -3%; }
+
+.artist-monogram::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(200deg, transparent 30%, var(--ap-black-70));
+}
+
+.artist-monogram__initials {
+    position: absolute;
+    z-index: 1;
+    left: 9cqi;
+    bottom: 6cqi;
+    font-family: var(--ap-font-display);
+    font-size: 44cqi;
+    line-height: 0.8;
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: max(1px, 0.5cqi) var(--ap-white);
+    text-shadow: 0 0 1.2cqi var(--ap-black-40);
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   2 · Facts band — a Mondrian row of cells separated by seams
+   ========================================================================== */
+
+.artist-facts {
+    position: relative;
+    padding-bottom: clamp(0.5rem, 2vw, 1rem);
+}
+
+.artist-facts__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ap-seam);
+    padding: var(--ap-seam);
+    background: var(--ap-white-16);
+}
+
+.artist-facts__cell {
+    position: relative;
+    flex: 1 1 14rem;
+    display: grid;
+    align-content: space-between;
+    gap: 1.1rem;
+    min-width: 0;
+    min-height: 8.25rem;
+    padding: 1.35rem clamp(1.1rem, 2vw, 1.6rem) 1.25rem;
+    background: var(--ap-black);
+}
+
+.artist-facts__cell--count {
+    flex: 1 1 9rem;
+}
+
+.artist-facts__cell--links {
+    flex: 1.35 1 15rem;
+}
+
+/* A Mondrian colour tab on each cell, in the logo's order. */
+.artist-facts__cell::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2.4rem;
+    height: 4px;
+    background: var(--ap-blue);
+}
+
+.artist-facts__cell:nth-child(5n + 2)::before { background: var(--ap-yellow); }
+.artist-facts__cell:nth-child(5n + 3)::before { background: var(--ap-red); }
+.artist-facts__cell:nth-child(5n + 4)::before { background: var(--ap-white); }
+.artist-facts__cell:nth-child(5n + 5)::before { background: var(--accent); }
+
+.artist-facts__label {
+    font-family: var(--ap-font-tagline);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.artist-facts__number {
+    font-family: var(--ap-font-display);
+    font-size: clamp(2.5rem, 1.9rem + 2.4vw, 3.9rem);
+    line-height: 0.9;
+    font-variant-numeric: tabular-nums;
+}
+
+.artist-facts__value {
+    font-size: var(--ap-step-1);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ap-white);
+    overflow-wrap: anywhere;
+}
+
+.artist-links {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.artist-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    max-width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ap-white);
+    transition: color var(--ap-dur-fast) ease;
+}
+
+.artist-link .icon {
+    color: var(--accent-bright);
+}
+
+.artist-link__label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--ap-white-16);
+    transition: border-color var(--ap-dur-fast) ease;
+}
+
+.artist-link .artist-link__arrow {
+    width: 0.95em;
+    height: 0.95em;
+    color: var(--ap-text-muted);
+    transition: transform var(--ap-dur) var(--ap-ease-out), color var(--ap-dur-fast) ease;
+}
+
+.artist-link:hover,
+.artist-link:focus-visible {
+    color: var(--accent-bright);
+}
+
+.artist-link:hover .artist-link__label,
+.artist-link:focus-visible .artist-link__label {
+    border-color: var(--accent-bright);
+}
+
+.artist-link:hover .artist-link__arrow,
+.artist-link:focus-visible .artist-link__arrow {
+    color: var(--accent-bright);
+    transform: translate(2px, -2px);
+}
+
+/* ==========================================================================
+   3 · Biography — prose with a drop cap, sticky aside (key work + fact sheet)
+   ========================================================================== */
+
+.artist-bio__grid {
+    display: grid;
+    gap: clamp(3rem, 6vw, 5rem);
+}
+
+@media (min-width: 64em) {
+    .artist-bio__grid {
+        grid-template-columns: minmax(0, 1.75fr) minmax(17rem, 1fr);
+        align-items: start;
+    }
+}
+
+.artist-bio__main {
+    min-width: 0;
+}
+
+.artist-bio__prose {
+    max-width: 68ch;
+    line-height: 1.75;
+}
+
+.artist-bio__prose > p:first-child {
+    font-size: var(--ap-step-1);
+    line-height: 1.6;
+    color: var(--ap-white);
+}
+
+.artist-bio__prose > p:first-child::first-letter {
+    float: left;
+    margin: 0.08em 0.1em 0 0;
+    font-family: var(--ap-font-display);
+    font-size: 3.5em;
+    line-height: 0.8;
+    color: var(--accent-bright);
+}
+
+.artist-bio__prose em {
+    color: var(--ap-white);
+}
+
+.artist-bio__sticky {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+.artist-keywork {
+    display: grid;
+    gap: 0.9rem;
+    margin: 0;
+}
+
+.artist-keywork__mat {
+    display: grid;
+    place-items: center;
+    padding: clamp(1.4rem, 4vw, 2.2rem);
+    background: var(--ap-coal);
+    box-shadow: var(--ap-shadow-deep), inset 0 0 0 1px var(--ap-white-04);
+    color: inherit;
+}
+
+.artist-keywork__frame {
+    display: block;
+    width: min(100%, calc(var(--keywork-h, 24rem) * var(--ratio, 1)));
+    box-shadow: 0 22px 38px -18px var(--ap-black-90), 0 6px 14px -8px var(--ap-black-70);
+    transition: transform var(--ap-dur-slow) var(--ap-ease-out);
+}
+
+.artist-keywork__img {
+    width: 100%;
+    height: 100%;
+}
+
+.artist-keywork__mat:hover .artist-keywork__frame,
+.artist-keywork__mat:focus-visible .artist-keywork__frame {
+    transform: translateY(-3px);
+}
+
+.artist-keywork__caption {
+    display: grid;
+    gap: 0.2rem;
+    font-size: 0.88rem;
+    color: var(--ap-text-soft);
+}
+
+.artist-keywork__label {
+    font-family: var(--ap-font-tagline);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    text-transform: uppercase;
+    color: var(--accent-bright);
+}
+
+.artist-keywork__caption cite,
+.artist-frame__caption cite {
+    color: var(--ap-white);
+}
+
+.artist-sheet {
+    display: grid;
+    gap: 1.1rem;
+    justify-items: start;
+    padding: 1.5rem;
+    background: linear-gradient(160deg, var(--ap-coal), var(--ap-black));
+    border: 1px solid var(--ap-white-08);
+    border-top: 3px solid var(--accent);
+}
+
+.artist-sheet__title {
+    font-family: var(--ap-font-tagline);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    text-transform: uppercase;
+    color: var(--accent-bright);
+}
+
+.artist-sheet__list {
+    display: grid;
+    width: 100%;
+}
+
+.artist-sheet__list > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.65rem;
+    border-bottom: 1px dashed var(--ap-white-16);
+}
+
+.artist-sheet__list > div:first-child {
+    padding-top: 0;
+}
+
+.artist-sheet__list dt {
+    flex: none;
+    font-size: 0.85rem;
+    color: var(--ap-text-muted);
+}
+
+.artist-sheet__list dd {
+    min-width: 0;
+    font-weight: 600;
+    color: var(--ap-white);
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.artist-sheet__links {
+    display: grid;
+    justify-items: end;
+    gap: 0.2rem;
+}
+
+.artist-sheet__links a {
+    color: var(--ap-white);
+    border-bottom: 1px solid var(--ap-white-16);
+    transition: color var(--ap-dur-fast) ease, border-color var(--ap-dur-fast) ease;
+}
+
+.artist-sheet__links a:hover,
+.artist-sheet__links a:focus-visible {
+    color: var(--accent-bright);
+    border-color: var(--accent-bright);
+}
+
+.artist-sheet__cta {
+    margin-top: 0.3rem;
+}
+
+/* ==========================================================================
+   4 · Selected works — wall mats at the natural ratio, availability filters
+   ========================================================================== */
+
+.artist-works__head {
+    display: grid;
+    gap: 0.5rem 2rem;
+    align-items: end;
+    margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.artist-works__head .section-heading {
+    margin-bottom: 0;
+}
+
+@media (min-width: 64em) {
+    .artist-works__head {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+}
+
+.artist-works__count {
+    font-family: var(--ap-font-tagline);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.artist-works__filters {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.artist-works__filters .artwork__dot {
+    margin-left: -0.1em;
+}
+
+.artist-works__grid {
+    --work-h: min(27rem, 72vh);
+    --mat-pad: clamp(1.4rem, 6vw, 2.25rem);
+    --label-gap: clamp(2.5rem, 4.5vw, 3.75rem);
+    display: grid;
+    /* the last row's label spacing is already given by the section */
+    margin-bottom: calc(-1 * var(--label-gap));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    grid-auto-flow: dense;
+    column-gap: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+
+@media (min-width: 40em) {
+    .artist-works__grid {
+        --work-h: clamp(13rem, 21vw, 18.5rem);
+        --mat-pad: clamp(1.25rem, 2.4vw, 2rem);
+    }
+}
+
+.artist-works__grid--few {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 24rem));
+}
+
+.artwork {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto;
+    margin: 0;
+    min-width: 0;
+}
+
+/* Equal mats on a row: every card spans two rows (mat, label) of the works grid. */
+@supports (grid-template-rows: subgrid) {
+    .artist-works__grid > .artwork {
+        grid-row: span 2;
+        grid-template-rows: subgrid;
+    }
+}
+
+@media (min-width: 64em) {
+    .artwork--landscape {
+        grid-column: span 2;
+    }
+}
+
+.artwork__mat {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: var(--mat-pad);
+    background: var(--ap-coal);
+    box-shadow: var(--ap-shadow-deep), inset 0 0 0 1px var(--ap-white-04);
+    color: inherit;
+}
+
+.artwork__frame {
+    position: relative;
+    display: block;
+    width: min(100%, calc(var(--work-h) * var(--ratio, 1)));
+    overflow: hidden;
+    background: var(--ap-black);
+    box-shadow: 0 18px 32px -16px var(--ap-black-90), 0 5px 12px -6px var(--ap-black-70);
+    transition: transform var(--ap-dur-slow) var(--ap-ease-out), box-shadow var(--ap-dur-slow) var(--ap-ease-out);
+}
+
+.artwork__img {
+    width: 100%;
+    height: 100%;
+}
+
+.artwork__sheen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 32%, var(--ap-white-16) 48%, rgb(250 252 253 / 0.04) 56%, transparent 66%);
+    transform: translateX(-110%);
+    pointer-events: none;
+}
+
+.artwork__zoom {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    display: grid;
+    place-items: center;
+    width: 2.3rem;
+    height: 2.3rem;
+    border: 1px solid var(--ap-white-16);
+    border-radius: 50%;
+    background: var(--ap-black-70);
+    color: var(--ap-yellow);
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity var(--ap-dur) ease, transform var(--ap-dur) var(--ap-ease-spring);
+}
+
+.artwork__zoom .icon {
+    width: 1.05rem;
+    height: 1.05rem;
+}
+
+.artwork__mat:hover .artwork__frame,
+.artwork__mat:focus-visible .artwork__frame {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 40px -18px var(--ap-black-90), 0 8px 16px -8px var(--ap-black-70);
+}
+
+.artwork__mat:hover .artwork__sheen,
+.artwork__mat:focus-visible .artwork__sheen {
+    animation: ap-pg-artists-sheen 1.15s var(--ap-ease-out);
+}
+
+.artwork__mat:hover .artwork__zoom,
+.artwork__mat:focus-visible .artwork__zoom {
+    opacity: 1;
+    transform: scale(1);
+}
+
+@media (hover: none) {
+    .artwork__zoom {
+        opacity: 0.85;
+        transform: scale(0.85);
+    }
+}
+
+/* Works without a photo: a designed Mondrian placeholder in the same mat. */
+.artwork__mat--empty {
+    align-content: center;
+    gap: 1rem;
+}
+
+.artwork__placeholder {
+    position: relative;
+    display: block;
+    width: min(100%, calc(var(--work-h) * 0.8));
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--ap-black);
+    box-shadow: 0 18px 32px -16px var(--ap-black-90), inset 0 0 0 1px var(--ap-white-08);
+}
+
+.artwork__field {
+    position: absolute;
+    outline: var(--ap-seam) solid var(--ap-black);
+}
+
+.artwork__field--a { left: 0; top: 0; width: 62%; height: 46%; background: var(--ap-graphite); }
+.artwork__field--b { left: 62%; top: 0; width: 38%; height: 20%; background: var(--accent); }
+.artwork__field--c { left: 62%; top: 20%; width: 38%; height: 80%; background: var(--ap-steel); }
+.artwork__field--d { left: 0; top: 46%; width: 34%; height: 54%; background: var(--ap-coal); }
+.artwork__field--e { left: 34%; top: 46%; width: 28%; height: 54%; background: var(--ap-ink); }
+
+.artwork__placeholder-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    font-family: var(--ap-font-tagline);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.artwork__placeholder-label::before {
+    content: "";
+    width: 0.7em;
+    height: 0.6em;
+    background: var(--accent);
+    clip-path: var(--ap-clip-tri);
+}
+
+/* The museum label under the mat. */
+.artwork__caption {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 0.3rem;
+    min-width: 0;
+    padding: 1.05rem 0.1rem var(--label-gap, 3rem);
+}
+
+.artwork__title {
+    max-width: 100%;
+    font-family: var(--ap-font-body);
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0.005em;
+    text-wrap: pretty;
+    color: var(--ap-white);
+}
+
+.artwork__meta {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--ap-text-soft);
+}
+
+.artwork__availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    margin-top: 0.45rem;
+    padding: 0.28em 0.8em 0.28em 0.65em;
+    border: 1px solid var(--ap-white-16);
+    border-radius: var(--ap-radius-pill);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ap-text-soft);
+}
+
+.artwork__dot {
+    flex: none;
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--ap-smoke);
+}
+
+.artwork__dot--available { background: var(--ap-yellow); }
+.artwork__dot--reserved { background: var(--ap-amber); }
+.artwork__dot--sold { background: var(--ap-red-bright); }
+.artwork__dot--collection { background: var(--ap-blue-bright); }
+.artwork__dot--commission { background: var(--ap-orange); }
+
+.artwork__details {
+    width: 100%;
+    margin-top: 0.55rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--ap-white-08);
+}
+
+.artwork__summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--accent-bright);
+}
+
+.artwork__summary::-webkit-details-marker {
+    display: none;
+}
+
+.artwork__summary:hover {
+    color: var(--ap-white);
+}
+
+.artwork__chevron {
+    width: 0.45em;
+    height: 0.45em;
+    margin-top: -0.2em;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    rotate: 45deg;
+    transition: rotate var(--ap-dur) var(--ap-ease-out), margin var(--ap-dur) var(--ap-ease-out);
+}
+
+.artwork__details[open] .artwork__chevron {
+    margin-top: 0.25em;
+    rotate: 225deg;
+}
+
+.artwork__description {
+    margin-top: 0.55rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--ap-text-soft);
+}
+
+/* ==========================================================================
+   5 · Exhibitions — current & upcoming as wide cards, then the CV
+   ========================================================================== */
+
+.artist-exhibitions__block + .artist-exhibitions__block {
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+}
+
+.artist-exhibitions__label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+    font-family: var(--ap-font-tagline);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--ap-text-soft);
+}
+
+.artist-exhibitions__label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--ap-white-16), transparent);
+}
+
+.artist-exhibitions__features {
+    display: grid;
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.exhibition-feature {
+    position: relative;
+    display: grid;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--ap-coal), var(--ap-black) 85%);
+    border: 1px solid var(--ap-white-08);
+}
+
+@media (min-width: 64em) {
+    .exhibition-feature {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        align-items: center;
+    }
+}
+
+.exhibition-feature__visual,
+.exhibition-feature__art {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--ap-black);
+}
+
+.exhibition-feature__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* No visual: a quiet panel with the year in outlined numerals and an accent triangle. */
+.exhibition-feature__art {
+    display: grid;
+    place-items: center;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
+        var(--ap-ink);
+    border-inline-end: 1px solid var(--ap-white-08);
+}
+
+.exhibition-feature__year {
+    font-family: var(--ap-font-display);
+    font-size: clamp(3.5rem, 2rem + 6vw, 7rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--ap-white-32);
+}
+
+.exhibition-feature__tri {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 22%;
+    aspect-ratio: 1;
+    background: var(--accent);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.exhibition-feature__body {
+    display: grid;
+    gap: 0.9rem;
+    justify-items: start;
+    align-content: center;
+    min-width: 0;
+    padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.exhibition-feature__tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 1rem;
+}
+
+.exhibition-feature__kind {
+    font-family: var(--ap-font-tagline);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    text-transform: uppercase;
+    color: var(--accent-bright);
+}
+
+.exhibition-feature__title {
+    max-width: 100%;
+    font-family: var(--ap-font-body);
+    font-size: var(--ap-step-3);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: 0;
+    color: var(--ap-white);
+}
+
+.exhibition-feature__facts {
+    display: grid;
+    gap: 0.35rem;
+    color: var(--ap-text-soft);
+}
+
+.exhibition-feature__facts li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6em;
+}
+
+.exhibition-feature__facts .icon {
+    flex: none;
+    position: relative;
+    top: 0.1em;
+    color: var(--accent-bright);
+}
+
+.exhibition-feature__text {
+    color: var(--ap-text-soft);
+    max-width: 52ch;
+}
+
+.exhibition-feature__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.3rem;
+    padding-bottom: 0.15em;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ap-yellow);
+    border-bottom: 1px solid currentColor;
+    transition: color var(--ap-dur-fast) ease;
+}
+
+.exhibition-feature__link:hover,
+.exhibition-feature__link:focus-visible {
+    color: var(--ap-white);
+}
+
+/* Status pills: a current show glows and pulses, an upcoming one stays quiet. */
+.exhibition-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    padding: 0.32em 0.85em 0.32em 0.7em;
+    border: 1px solid var(--ap-white-32);
+    border-radius: var(--ap-radius-pill);
+    font-family: var(--ap-font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.exhibition-status__dot {
+    position: relative;
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--ap-blue-bright);
+}
+
+.exhibition-status--current {
+    border-color: var(--ap-yellow);
+    background: rgb(248 212 73 / 0.08);
+    color: var(--ap-yellow);
+}
+
+.exhibition-status--current .exhibition-status__dot {
+    background: var(--ap-yellow);
+}
+
+.exhibition-status--current .exhibition-status__dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid var(--ap-yellow);
+    opacity: 0;
+    animation: ap-pg-artists-pulse 2.4s ease-out infinite;
+}
+
+/* --- The CV: years in outlined numerals, a line that draws in --- */
+
+.artist-cv {
+    --cv-year: clamp(7.5rem, 13vw, 11rem);
+    --cv-gap: clamp(2rem, 5vw, 4rem);
+}
+
+.artist-cv__years {
+    position: relative;
+    display: grid;
+    gap: clamp(2.25rem, 4vw, 3rem);
+}
+
+.artist-cv__year {
+    display: grid;
+    gap: 0.6rem;
+    min-width: 0;
+}
+
+.artist-cv__numeral {
+    font-family: var(--ap-font-display);
+    font-size: clamp(2.3rem, 1.9rem + 1.6vw, 3rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--ap-white-64);
+    font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 40em) {
+    .artist-cv__year {
+        grid-template-columns: var(--cv-year) minmax(0, 1fr);
+        column-gap: var(--cv-gap);
+        align-items: start;
+    }
+
+    .artist-cv__numeral {
+        position: sticky;
+        top: calc(var(--ap-header-h) + 1.5rem);
+        font-size: calc(var(--cv-year) * 0.29);
+    }
+
+    /* The thin vertical line between the years and the entries. */
+    .artist-cv__years::before {
+        content: "";
+        position: absolute;
+        top: 0.35rem;
+        bottom: 0.35rem;
+        left: calc(var(--cv-year) + var(--cv-gap) / 2);
+        width: 1px;
+        background: linear-gradient(180deg, var(--accent), var(--ap-white-16) 22%, var(--ap-white-08));
+        transform-origin: top;
+    }
+
+    .js .artist-cv:not(.is-revealed) .artist-cv__years::before {
+        transform: scaleY(0);
+    }
+
+    .artist-cv.is-revealed .artist-cv__years::before {
+        animation: ap-pg-artists-cv-line 1.8s var(--ap-ease-out) backwards;
+    }
+}
+
+.artist-cv__list {
+    display: grid;
+}
+
+.exhibition {
+    display: grid;
+    max-width: 56rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem 1.5rem;
+    align-items: start;
+    padding-block: 1.15rem;
+    border-top: 1px solid var(--ap-white-08);
+}
+
+.exhibition:first-child {
+    padding-top: 0.3rem;
+    border-top: 0;
+}
+
+.exhibition--thumb {
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.exhibition__text {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+}
+
+.exhibition__kind {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    font-family: var(--ap-font-tagline);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-bright);
+}
+
+.exhibition__title {
+    font-size: var(--ap-step-1);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--ap-white);
+    overflow-wrap: anywhere;
+}
+
+.exhibition__link {
+    color: inherit;
+    transition: color var(--ap-dur-fast) ease;
+}
+
+.exhibition__link cite {
+    background-image: linear-gradient(90deg, var(--accent-bright), var(--accent-bright));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 1px;
+}
+
+.exhibition__link .icon {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-left: 0.3em;
+    color: var(--accent-bright);
+    transition: transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.exhibition__link:hover,
+.exhibition__link:focus-visible {
+    color: var(--accent-bright);
+}
+
+.exhibition__link:hover .icon,
+.exhibition__link:focus-visible .icon {
+    transform: translate(2px, -2px);
+}
+
+.exhibition__place {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 1.1rem;
+    font-size: 0.92rem;
+    color: var(--ap-text-soft);
+}
+
+.exhibition__dates {
+    color: var(--ap-text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.exhibition__thumb {
+    display: block;
+    width: clamp(4.5rem, 9vw, 7rem);
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--ap-coal);
+    box-shadow: 0 10px 22px -12px var(--ap-black-90);
+    outline: 1px solid var(--ap-white-08);
+}
+
+.exhibition__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ==========================================================================
+   6 · More artists — cards + previous / next
+   ========================================================================== */
+
+.artists-grid {
+    display: grid;
+    gap: clamp(2.25rem, 4vw, 3.25rem) clamp(1.25rem, 2.5vw, 2.25rem);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr));
+}
+
+@media (min-width: 64em) {
+    .artists-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.artist-nav {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    align-items: stretch;
+}
+
+@media (min-width: 40em) {
+    .artist-nav {
+        grid-template-columns: 1fr auto 1fr;
+    }
+
+    .artist-nav__link--next {
+        grid-column: 3;
+    }
+}
+
+.artist-nav__link {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    gap: 0.35rem;
+    justify-items: start;
+    padding: 1.35rem 1.5rem;
+    overflow: hidden;
+    border: 1px solid var(--ap-white-16);
+    color: var(--ap-white);
+    transition: border-color var(--ap-dur) ease;
+}
+
+.artist-nav__link--next {
+    justify-items: end;
+    text-align: right;
+}
+
+.artist-nav__link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--accent);
+    opacity: 0.16;
+    clip-path: polygon(0 100%, 0 100%, 0 100%);
+    transition: clip-path var(--ap-dur-slow) var(--ap-ease-out);
+}
+
+.artist-nav__link:hover,
+.artist-nav__link:focus-visible {
+    border-color: var(--accent);
+}
+
+.artist-nav__link:hover::before,
+.artist-nav__link:focus-visible::before {
+    clip-path: polygon(0 100%, 0 -100%, 200% 100%);
+}
+
+.artist-nav__arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-ink);
+    transition: transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.artist-nav__link--prev:hover .artist-nav__arrow { transform: translateX(-4px); }
+.artist-nav__link--next:hover .artist-nav__arrow { transform: translateX(4px); }
+
+.artist-nav__label {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.artist-nav__name {
+    max-width: 100%;
+    font-family: var(--ap-font-display);
+    font-size: var(--ap-step-1);
+    line-height: 1.2;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+}
+
+.artist-nav__all {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 1rem 1.4rem;
+    border: 1px dashed var(--ap-white-16);
+    color: var(--ap-text-soft);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: uppercase;
+    transition: color var(--ap-dur-fast) ease, border-color var(--ap-dur-fast) ease;
+}
+
+.artist-nav__all:hover,
+.artist-nav__all:focus-visible {
+    color: var(--ap-yellow);
+    border-color: var(--ap-yellow);
+}
+
+/* ==========================================================================
+   Artist card (index + "Autres artistes") — one link, a 4/5 seam frame, an accent corner
+   ========================================================================== */
+
+.artist-card {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 1.15rem;
+    min-width: 0;
+}
+
+.artist-card__visual {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--ap-coal);
+    box-shadow: var(--ap-shadow-deep);
+    container-type: inline-size;
+}
+
+.artist-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.1s var(--ap-ease-out), filter var(--ap-dur-slow) ease;
+}
+
+.artist-card__mat {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 13cqi;
+    background:
+        radial-gradient(80% 60% at 50% 40%, var(--ap-graphite), transparent 80%),
+        var(--ap-coal);
+}
+
+.artist-card__work {
+    display: block;
+    width: min(100%, calc(99cqi * var(--ratio, 1)));
+    box-shadow: 0 18px 30px -14px var(--ap-black-90), 0 5px 12px -6px var(--ap-black-70);
+    transition: transform 1.1s var(--ap-ease-out);
+}
+
+.artist-card__work .artist-card__img {
+    object-fit: contain;
+}
+
+.artist-card__seam {
+    position: absolute;
+    z-index: 1;
+    inset: 4.5cqi;
+    border: 1px solid var(--ap-white-32);
+    pointer-events: none;
+    transition: inset var(--ap-dur-slow) var(--ap-ease-out), border-color var(--ap-dur) ease;
+}
+
+.artist-card__corner {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    width: 24cqi;
+    aspect-ratio: 1;
+    background: var(--accent);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    transform: scale(0.5);
+    transform-origin: 100% 100%;
+    transition: transform var(--ap-dur) var(--ap-ease-spring);
+}
+
+.artist-card__body {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: start;
+    min-width: 0;
+}
+
+.artist-card__discipline {
+    font-family: var(--ap-font-tagline);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--accent-bright);
+}
+
+.artist-card__name {
+    max-width: 100%;
+    font-size: clamp(1.3rem, 1.05rem + 0.8vw, 1.7rem);
+    line-height: 1.08;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+}
+
+.artist-card__link {
+    color: var(--ap-white);
+    transition: color var(--ap-dur-fast) ease;
+}
+
+/* The link of the name covers the whole card. */
+.artist-card__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+}
+
+.artist-card__link:focus-visible {
+    outline: none;
+}
+
+.artist-card__link:focus-visible::after {
+    outline: 2px solid var(--ap-focus);
+    outline-offset: 6px;
+}
+
+.artist-card__location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.85rem;
+    color: var(--ap-text-muted);
+}
+
+.artist-card__location .icon {
+    width: 1.05em;
+    height: 1.05em;
+    color: var(--accent-bright);
+}
+
+.artist-card__statement {
+    font-family: var(--ap-font-tagline);
+    font-size: var(--ap-step-1);
+    line-height: 1.5;
+    color: var(--ap-text-soft);
+}
+
+.artist-card__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    width: 100%;
+    max-width: none;
+    margin-top: 0.45rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--ap-white-08);
+    font-size: 0.82rem;
+}
+
+.artist-card__counts {
+    color: var(--ap-text-soft);
+}
+
+.artist-card__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    margin-left: auto;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-bright);
+}
+
+.artist-card:hover .artist-card__img,
+.artist-card:focus-within .artist-card__img {
+    transform: scale(1.035);
+}
+
+.artist-card:hover .artist-card__work,
+.artist-card:focus-within .artist-card__work {
+    transform: translateY(-3px);
+}
+
+.artist-card:hover .artist-card__seam,
+.artist-card:focus-within .artist-card__seam {
+    inset: 3cqi;
+    border-color: var(--ap-white-64);
+}
+
+.artist-card:hover .artist-card__corner,
+.artist-card:focus-within .artist-card__corner {
+    transform: scale(1);
+}
+
+.artist-card:hover .artist-card__link,
+.artist-card:focus-within .artist-card__link {
+    color: var(--accent-bright);
+}
+
+.artist-card:hover .artist-card__more .icon {
+    animation: ap-ui-arrow-nudge 0.9s var(--ap-ease-in-out) infinite;
+}
+
+/* A lone artist on the index: a wide card with the statement. */
+@media (min-width: 40em) {
+    .artists-grid--single {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .artist-card--feature {
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+        align-items: center;
+        gap: clamp(2rem, 5vw, 4.5rem);
+    }
+
+    .artist-card--feature .artist-card__name {
+        font-size: var(--ap-step-4);
+    }
+
+    .artist-card--feature .artist-card__body {
+        gap: 0.85rem;
+    }
+}
+
+@media (min-width: 64em) {
+    .artist-card--feature {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+
+    .artist-card--feature .artist-card__visual {
+        max-width: 28rem;
+    }
+}
+
+/* ==========================================================================
+   Index — hero collage, list, empty state
+   ========================================================================== */
+
+.artists-hero-art {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: clamp(18rem, 36vw, 28rem);
+}
+
+.artists-hero-art__mondrian {
+    width: min(78%, 21rem);
+}
+
+.artists-tiles {
+    position: relative;
+    width: min(100%, 30rem);
+    aspect-ratio: 1 / 0.92;
+}
+
+.artists-tiles__tile {
+    position: absolute;
+    width: 44%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--ap-coal);
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+    container-type: inline-size;
+    animation: ap-pg-artists-tiles 1.1s var(--ap-ease-out) backwards;
+    animation-delay: calc(0.25s + var(--i, 0) * 0.12s);
+}
+
+/* The white seam around each tile (cut with the corner). */
+.artists-tiles__tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: var(--ap-seam) solid var(--ap-white);
+    pointer-events: none;
+}
+
+.artists-tiles__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artists-tiles__tile:nth-child(1) { left: 2%; top: 15%; z-index: 2; }
+.artists-tiles__tile:nth-child(2) { left: 29%; top: 0; z-index: 3; }
+.artists-tiles__tile:nth-child(3) { left: 56%; top: 13%; z-index: 2; }
+.artists-tiles__tile:nth-child(4) { left: 13%; top: 47%; width: 37%; z-index: 4; }
+.artists-tiles__tile:nth-child(5) { left: 51%; top: 50%; width: 37%; z-index: 5; }
+
+.artists-tiles--1 .artists-tiles__tile { left: 24%; top: 2%; width: 56%; }
+.artists-tiles--2 .artists-tiles__tile:nth-child(1) { left: 6%; top: 6%; width: 48%; }
+.artists-tiles--2 .artists-tiles__tile:nth-child(2) { left: 44%; top: 22%; width: 48%; }
+
+.artists-tiles__mat {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 14cqi;
+    background: var(--ap-coal);
+}
+
+.artists-tiles__work {
+    display: block;
+    width: min(100%, calc(97cqi * var(--ratio, 1)));
+    box-shadow: 0 14px 24px -12px var(--ap-black-90);
+}
+
+.artists-tiles__work .artists-tiles__img {
+    object-fit: contain;
+}
+
+.artists-tiles__tri {
+    position: absolute;
+    z-index: 6;
+    right: 4%;
+    bottom: 2%;
+    width: 13%;
+    aspect-ratio: 1 / 0.866;
+    background: var(--accent);
+    clip-path: var(--ap-clip-tri);
+    animation: ap-pg-artists-tiles 1s var(--ap-ease-out) 0.9s backwards;
+}
+
+.artists-list__head {
+    display: grid;
+    gap: 0.75rem 2rem;
+    align-items: end;
+    margin-bottom: clamp(2rem, 4vw, 3.25rem);
+}
+
+@media (min-width: 64em) {
+    .artists-list__head {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+}
+
+.artists-list__title {
+    font-size: var(--ap-step-4);
+    text-transform: uppercase;
+}
+
+.artists-list__count {
+    font-family: var(--ap-font-tagline);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: var(--ap-tracking-caps);
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+/* Empty or unavailable: an empty gallery wall waiting for its works (HTTP 200). */
+.artists-empty {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: center;
+    padding: clamp(1.75rem, 5vw, 4rem);
+    background: linear-gradient(160deg, var(--ap-coal), var(--ap-black) 80%);
+    border: 1px solid var(--ap-white-08);
+}
+
+@media (min-width: 64em) {
+    .artists-empty {
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    }
+}
+
+.artists-empty__wall {
+    position: relative;
+    width: min(100%, 30rem);
+    aspect-ratio: 5 / 4;
+    margin-inline: auto;
+}
+
+.artists-empty__frame {
+    position: absolute;
+    display: grid;
+    padding: 7%;
+    background: var(--ap-ink);
+    box-shadow: var(--ap-shadow-deep), inset 0 0 0 1px var(--ap-white-16);
+}
+
+.artists-empty__frame span {
+    display: block;
+    border: var(--ap-seam) solid var(--ap-black);
+    outline: 1px solid var(--ap-white-16);
+}
+
+.artists-empty__frame--a { left: 2%; top: 8%; width: 40%; height: 70%; }
+.artists-empty__frame--a span { background: linear-gradient(180deg, var(--ap-yellow) 0 58%, var(--ap-black) 58% 61%, var(--ap-blue) 61%); }
+.artists-empty__frame--b { left: 48%; top: 0; width: 30%; height: 38%; }
+.artists-empty__frame--b span { background: var(--ap-red); }
+.artists-empty__frame--c { left: 84%; top: 12%; width: 14%; height: 18%; padding: 12%; }
+.artists-empty__frame--c span { background: var(--ap-white); }
+.artists-empty__frame--d { left: 48%; top: 46%; width: 50%; height: 34%; }
+.artists-empty__frame--d span { background: linear-gradient(90deg, var(--ap-graphite) 0 62%, var(--ap-black) 62% 64%, var(--ap-steel) 64%); }
+
+.artists-empty__tri {
+    position: absolute;
+    left: 6%;
+    bottom: 0;
+    width: 12%;
+    aspect-ratio: 1 / 0.866;
+    background: var(--ap-orange);
+    clip-path: var(--ap-clip-tri);
+}
+
+.artists-empty__body {
+    display: grid;
+    gap: 1.1rem;
+    justify-items: start;
+}
+
+.artists-empty__title {
+    font-size: var(--ap-step-3);
+    text-transform: uppercase;
+    max-width: 20ch;
+}
+
+.artists-empty__text {
+    color: var(--ap-text-soft);
+    max-width: 52ch;
+}
+
+.artists-empty__body .btn {
+    margin-top: 0.5rem;
+}
+
+/* ==========================================================================
+   Keyframes (catalogued by python/tools/animations.py)
+   ========================================================================== */
+
+/** @anim group=page demo=shape dur=1.4s ease=var(--ap-ease-out) dir=alternate fr="Portrait dévoilé depuis le triangle" en="Portrait unveiled from the triangle" */
+@keyframes ap-pg-artists-portrait {
+    0% { clip-path: polygon(50% 0%, 50% 0%, 100% 100%, 0% 100%); opacity: 0; }
+    30% { opacity: 1; }
+    100% { clip-path: polygon(-30% -30%, 130% -30%, 130% 130%, -30% 130%); opacity: 1; }
+}
+
+/** @anim group=page demo=bar dur=1.1s ease=var(--ap-ease-out) dir=alternate fr="Joint blanc du cadre qui se trace" en="White frame seam drawing in" */
+@keyframes ap-pg-artists-seam {
+    from { clip-path: inset(0 100% 100% 0); }
+    to { clip-path: inset(0 0 0 0); }
+}
+
+/** @anim group=page demo=blocks dur=1.2s ease=var(--ap-ease-out) dir=alternate fr="Blocs Mondrian glissés derrière le portrait" en="Mondrian blocks sliding behind the portrait" */
+@keyframes ap-pg-artists-blocks {
+    from { opacity: 0; transform: translate(var(--bx, -30%), var(--by, 30%)); }
+    to { opacity: 1; transform: none; }
+}
+
+/** @anim group=page demo=blocks dur=18s dir=alternate fr="Champ Mondrian du monogramme qui glisse" en="Monogram Mondrian field drifting" */
+@keyframes ap-pg-artists-monogram {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(var(--dx, 3%), var(--dy, -2%)) scale(var(--ds, 1.04)); }
+}
+
+/** @anim group=page demo=ring dur=2.4s ease=ease-out fr="Pastille « en cours » qui pulse" en="“On view” dot pulsing" */
+@keyframes ap-pg-artists-pulse {
+    0% { opacity: 0.9; transform: scale(1); }
+    70%,
+    100% { opacity: 0; transform: scale(3); }
+}
+
+/** @anim group=page demo=bar dur=1.8s ease=var(--ap-ease-out) dir=alternate fr="Ligne du parcours qui se trace" en="Exhibition history line drawing in" */
+@keyframes ap-pg-artists-cv-line {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+}
+
+/** @anim group=page demo=panel dur=1.15s ease=var(--ap-ease-out) fr="Reflet qui passe sur l’œuvre" en="Sheen sweeping across the work" */
+@keyframes ap-pg-artists-sheen {
+    from { transform: translateX(-110%); }
+    to { transform: translateX(110%); }
+}
+
+/** @anim group=page demo=shape dur=1.1s ease=var(--ap-ease-out) dir=alternate fr="Portraits d’artistes posés un à un" en="Artist tiles laid down one by one" */
+@keyframes ap-pg-artists-tiles {
+    from { opacity: 0; transform: translateY(var(--ty, 1.75rem)) scale(0.94); }
+    to { opacity: 1; transform: none; }
+}

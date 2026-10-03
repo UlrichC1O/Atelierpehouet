@@ -1,0 +1,1611 @@
+/* ==========================================================================
+   Ateliers Pehouet — Admin · artist pages (docs/ARTISTS.md §6.4)
+   Loaded after admin.css on the artist screens only (admin.artists.partials.assets).
+   Prefix adm-artist-, logo palette tokens only, keyframes ap-adm-artists-* (outside
+   the public animation catalogue, like admin.css). Mobile-first — the owner adds
+   photos from a phone; breakpoints 40em / 48em / 64em / 80em; no horizontal
+   overflow at 320px.
+
+   Contents
+     1. Sections, sub-navigation, notices     5. Photo fields (media-field)
+     2. Artist list                            6. Artworks: list, availability, record
+     3. Create / edit forms                    7. Exhibitions
+     4. Accent swatches, Markdown help         8. Danger zone · 9. Keyframes & motion
+   ========================================================================== */
+
+/* --- 1. Sections, sub-navigation, notices ------------------------------------------ */
+
+.adm-artist-section {
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.adm-artist-section__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.35rem 1.5rem;
+}
+
+.adm-artist-section__title {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--ap-font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.adm-artist-section__count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.7rem;
+    height: 1.45rem;
+    padding: 0 0.45rem;
+    border-radius: var(--ap-radius-pill);
+    background: var(--ap-white-08);
+    color: var(--ap-text-soft);
+    font-family: var(--ap-font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-artist-section__hint {
+    max-width: 60ch;
+    color: var(--ap-text-muted);
+    font-size: 0.85rem;
+}
+
+.adm-artist-inline-form {
+    display: inline-flex;
+}
+
+/* Sections of one artist: Profil · Œuvres · Expositions, then status and "Voir la page". */
+.adm-artist-subnav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    border-bottom: 1px solid var(--adm-line);
+}
+
+.adm-artist-subnav__tabs {
+    display: flex;
+    gap: 0.15rem;
+    max-width: 100%;
+    margin: 0 0 -1px;
+    padding: 0;
+    overflow-x: auto;
+    list-style: none;
+    scrollbar-width: none;
+}
+
+.adm-artist-subnav__tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.adm-artist-subnav__tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.9rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: var(--ap-radius-s) var(--ap-radius-s) 0 0;
+    color: var(--ap-text-muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease;
+}
+
+.adm-artist-subnav__tab::after {
+    content: "";
+    position: absolute;
+    left: 0.6rem;
+    right: 0.6rem;
+    bottom: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.adm-artist-subnav__tab:hover {
+    color: var(--ap-white);
+    background: var(--ap-white-04);
+}
+
+.adm-artist-subnav__tab.is-current {
+    color: var(--ap-white);
+}
+
+.adm-artist-subnav__tab.is-current::after {
+    transform: scaleX(1);
+}
+
+.adm-artist-subnav__tab:focus-visible {
+    outline-offset: -2px;
+}
+
+/* Small phones: the three tabs still fit side by side. */
+@media (max-width: 23.99em) {
+    .adm-artist-subnav__tab {
+        gap: 0.35rem;
+        padding-inline: 0.55rem;
+        font-size: 0.86rem;
+    }
+
+    .adm-artist-subnav__tab::after {
+        left: 0.4rem;
+        right: 0.4rem;
+    }
+}
+
+.adm-artist-subnav__count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.5rem;
+    height: 1.35rem;
+    padding: 0 0.4rem;
+    border-radius: var(--ap-radius-pill);
+    background: var(--ap-white-08);
+    color: var(--ap-text-soft);
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-artist-subnav__tab.is-current .adm-artist-subnav__count {
+    background: var(--accent);
+    color: var(--accent-ink);
+}
+
+.adm-artist-subnav__side {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.6rem;
+}
+
+.adm-artist-subnav__form {
+    display: inline-flex;
+}
+
+/* "Page d'exemple" notice (.alert from 04-components, in the blue of the "Exemple" badge). */
+.alert.adm-artist-example {
+    align-items: flex-start;
+    border-color: color-mix(in srgb, var(--ap-blue-bright) 35%, transparent);
+    border-left-color: var(--ap-blue-bright);
+    border-radius: var(--adm-radius);
+    background: linear-gradient(100deg, color-mix(in srgb, var(--ap-blue) 18%, var(--ap-coal)), var(--ap-coal) 70%);
+}
+
+.adm-artist-example__mark {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--ap-blue) 30%, transparent);
+    color: var(--ap-blue-bright);
+}
+
+.adm-artist-example__body {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+    color: var(--ap-text-soft);
+}
+
+.adm-artist-example__title {
+    font-family: var(--ap-font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.adm-artist-example__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    margin-top: 0.2rem;
+    font-weight: 600;
+}
+
+/* --- 2. Artist list ------------------------------------------------------------------ */
+
+.adm-artist-order {
+    min-width: 0;
+}
+
+.adm-artist-list,
+.adm-artist-works {
+    gap: 0.6rem;
+}
+
+/* One artist: grip | photo | name, meta, badges | arrows, then the actions underneath. */
+.adm-sortable__item.adm-artist-row,
+.adm-sortable__item.adm-artist-work {
+    display: grid;
+    grid-template-columns: auto 3.6rem minmax(0, 1fr) auto;
+    grid-template-areas:
+        "grip media body moves"
+        "actions actions actions actions";
+    align-items: start;
+    gap: 0.75rem 0.85rem;
+    padding: 0.75rem 0.75rem 0.85rem;
+}
+
+.adm-sortable__item.adm-artist-row::before,
+.adm-sortable__item.adm-artist-work::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: 0.85rem;
+    bottom: 0.85rem;
+    width: 3px;
+    border-radius: 0 var(--ap-radius-xs) var(--ap-radius-xs) 0;
+    background: var(--accent);
+    opacity: 0.85;
+}
+
+.adm-artist-work.adm-sortable__item::before {
+    background: var(--ap-white-16);
+}
+
+.adm-artist-row__grip {
+    grid-area: grip;
+    display: grid;
+    justify-items: center;
+    gap: 0.1rem;
+    align-self: center;
+}
+
+.adm-artist-row__grip .adm-sortable__number {
+    min-width: 0;
+    font-size: 0.72rem;
+}
+
+.adm-artist-row__media {
+    grid-area: media;
+    position: relative;
+    display: block;
+    align-self: center;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--ap-radius-s);
+    background: var(--ap-graphite);
+}
+
+.adm-artist-row__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--ap-dur-slow) var(--ap-ease-out);
+}
+
+.adm-artist-row:hover .adm-artist-row__img {
+    transform: scale(1.04);
+}
+
+/* No photo yet: the initials on the accent, with the logo's corner triangle. */
+.adm-artist-monogram {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 34%, var(--ap-coal)), var(--ap-coal) 75%);
+    color: var(--ap-white);
+    font-family: var(--ap-font-display);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+}
+
+.adm-artist-monogram::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 42%;
+    height: 34%;
+    background: var(--accent);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.adm-artist-row__body {
+    grid-area: body;
+    display: grid;
+    align-content: center;
+    gap: 0.25rem;
+    min-width: 0;
+    align-self: center;
+}
+
+.adm-artist-row__name {
+    font-family: var(--ap-font-display);
+    font-size: clamp(0.98rem, 0.92rem + 0.3vw, 1.12rem);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    line-height: 1.25;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+}
+
+.adm-artist-row__link {
+    color: var(--ap-white);
+}
+
+.adm-artist-row__link:hover {
+    color: var(--accent-bright);
+}
+
+.adm-artist-row__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.85rem;
+    color: var(--ap-text-soft);
+    font-size: 0.86rem;
+}
+
+.adm-artist-row__missing {
+    color: var(--ap-text-muted);
+    font-style: italic;
+}
+
+.adm-artist-row__place {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--ap-text-muted);
+}
+
+.adm-artist-row__place .icon {
+    width: 0.95em;
+    height: 0.95em;
+}
+
+.adm-artist-row__counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem 0.45rem;
+    color: var(--ap-text-muted);
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-artist-row__count {
+    color: var(--ap-text-soft);
+    text-decoration: underline;
+    text-decoration-color: var(--ap-white-16);
+    text-underline-offset: 0.2em;
+}
+
+.adm-artist-row__count:hover {
+    color: var(--ap-yellow);
+    text-decoration-color: currentColor;
+}
+
+.adm-artist-row__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+}
+
+.adm-artist-row__actions,
+.adm-artist-work__actions {
+    grid-area: actions;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--adm-line);
+}
+
+.adm-artist-row__moves {
+    grid-area: moves;
+    flex-direction: column;
+    align-self: center;
+    margin-left: 0;
+}
+
+/* Publier / Masquer, right after the status badge: a small text button. */
+.adm-artist-row__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 1.9rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--ap-white-16);
+    border-radius: var(--ap-radius-pill);
+    color: var(--ap-text-soft);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    transition: color var(--ap-dur-fast) ease, border-color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease;
+}
+
+.adm-artist-row__toggle .icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.adm-artist-row__toggle:hover {
+    border-color: var(--ap-yellow);
+    color: var(--ap-yellow);
+}
+
+.adm-artist-row__toggle:focus-visible {
+    outline: 2px solid var(--ap-focus);
+    outline-offset: 2px;
+}
+
+/* Without the grip (a list of one), the photo starts the row. */
+.adm-artist-row:not(:has(.adm-artist-row__grip)),
+.adm-artist-work:not(:has(.adm-artist-row__grip)) {
+    grid-template-columns: 3.6rem minmax(0, 1fr);
+    grid-template-areas:
+        "media body"
+        "actions actions";
+}
+
+@media (max-width: 29.99em) {
+    .adm-artist-row__actions .btn,
+    .adm-artist-work__actions .btn {
+        flex: 1 1 auto;
+    }
+}
+
+@media (min-width: 48em) {
+    .adm-sortable__item.adm-artist-row,
+    .adm-sortable__item.adm-artist-work {
+        grid-template-columns: auto 4.5rem minmax(0, 1fr) auto;
+        gap: 0.75rem 1.1rem;
+        padding: 0.85rem 1rem;
+    }
+
+    .adm-artist-row:not(:has(.adm-artist-row__grip)),
+    .adm-artist-work:not(:has(.adm-artist-row__grip)) {
+        grid-template-columns: 4.5rem minmax(0, 1fr);
+    }
+
+    .adm-artist-row__actions,
+    .adm-artist-work__actions {
+        grid-column: 2 / -1;
+        padding-top: 0;
+        border-top: 0;
+    }
+
+    .adm-artist-row:not(:has(.adm-artist-row__grip)) .adm-artist-row__actions,
+    .adm-artist-work:not(:has(.adm-artist-row__grip)) .adm-artist-work__actions {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Wide screens: the actions sit beside the text (two buttons for a work, four for an artist). */
+@media (min-width: 64em) {
+    .adm-sortable__item.adm-artist-work {
+        grid-template-columns: auto 4.5rem minmax(0, 1fr) auto auto;
+        grid-template-areas: "grip media body actions moves";
+        align-items: center;
+    }
+
+    .adm-artist-work:not(:has(.adm-artist-row__grip)) {
+        grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+        grid-template-areas: "media body actions";
+    }
+
+    .adm-artist-work__actions,
+    .adm-artist-work:not(:has(.adm-artist-row__grip)) .adm-artist-work__actions {
+        grid-column: auto;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+    }
+}
+
+@media (min-width: 90em) {
+    .adm-sortable__item.adm-artist-row {
+        grid-template-columns: auto 4.5rem minmax(0, 1fr) auto auto;
+        grid-template-areas: "grip media body actions moves";
+        align-items: center;
+    }
+
+    .adm-artist-row:not(:has(.adm-artist-row__grip)) {
+        grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+        grid-template-areas: "media body actions";
+    }
+
+    .adm-artist-row__actions,
+    .adm-artist-row:not(:has(.adm-artist-row__grip)) .adm-artist-row__actions {
+        grid-column: auto;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+    }
+}
+
+/* --- 3. Create / edit forms ----------------------------------------------------------- */
+
+.adm-artist-form {
+    gap: var(--adm-gap);
+}
+
+/* Fields side by side keep their own height (a hint or an address preview never stretches the input next door). */
+.adm-artist-form .adm-grid,
+.adm-artist-form .adm-pair {
+    align-items: start;
+}
+
+.adm-artist-card-intro {
+    max-width: 70ch;
+    color: var(--ap-text-soft);
+    font-size: 0.9rem;
+}
+
+/* Page address: the field, then the full public URL as it will be. */
+.adm-artist-slug {
+    display: grid;
+    gap: 0.45rem;
+    min-width: 0;
+}
+
+.adm-artist-slug__preview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.2rem 0.5rem;
+    padding: 0.45rem 0.7rem;
+    border-left: 2px solid var(--accent);
+    border-radius: 0 var(--ap-radius-xs) var(--ap-radius-xs) 0;
+    background: var(--ap-white-04);
+    font-size: 0.82rem;
+}
+
+.adm-artist-slug__label {
+    color: var(--ap-text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.adm-artist-slug__url {
+    min-width: 0;
+    color: var(--ap-text-soft);
+    font-family: var(--ap-font-mono);
+    font-size: 0.82rem;
+    overflow-wrap: anywhere;
+}
+
+.adm-artist-slug__url strong {
+    color: var(--ap-white);
+    font-weight: 700;
+}
+
+/* "Et ensuite ?" — the next steps after the creation form. */
+.adm-artist-next {
+    position: relative;
+    display: grid;
+    gap: 0.6rem;
+    overflow: hidden;
+    padding: 1.1rem 1.25rem 1.2rem;
+    border: 1px dashed var(--adm-line-strong);
+    border-radius: var(--adm-radius);
+    background: radial-gradient(90% 120% at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 65%);
+}
+
+.adm-artist-next__title {
+    font-family: var(--ap-font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.adm-artist-next__steps {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: adm-artist-step;
+}
+
+.adm-artist-next__steps li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    color: var(--ap-text-soft);
+    counter-increment: adm-artist-step;
+}
+
+.adm-artist-next__steps li::before {
+    content: counter(adm-artist-step, decimal-leading-zero);
+    flex: none;
+    color: var(--accent-bright);
+    font-family: var(--ap-font-display);
+    font-size: 0.8rem;
+}
+
+.adm-artist-next__note {
+    color: var(--ap-text-muted);
+    font-size: 0.85rem;
+}
+
+/* --- 4. Accent swatches, Markdown help ------------------------------------------------- */
+
+.adm-artist-accents {
+    display: grid;
+    gap: 0.55rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.adm-artist-accents > legend {
+    margin-bottom: 0.15rem;
+    padding: 0;
+}
+
+.adm-artist-accents__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.adm-artist-swatch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2.6rem;
+    padding: 0.35rem 0.9rem 0.35rem 0.4rem;
+    border: 1px solid var(--ap-white-16);
+    border-radius: var(--ap-radius-pill);
+    color: var(--ap-text-soft);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease, color var(--ap-dur-fast) ease;
+}
+
+.adm-artist-swatch:hover {
+    border-color: var(--accent);
+    color: var(--ap-white);
+}
+
+.adm-artist-swatch__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.adm-artist-swatch__chip {
+    position: relative;
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--ap-black-40);
+}
+
+/* The chosen colour: a small black triangle in the chip, the pill takes the accent. */
+.adm-artist-swatch__chip::after {
+    content: "";
+    width: 0.62rem;
+    height: 0.54rem;
+    background: var(--accent-ink);
+    clip-path: var(--ap-clip-tri);
+    transform: scale(0);
+    transition: transform var(--ap-dur) var(--ap-ease-spring);
+}
+
+.adm-artist-swatch__input:checked + .adm-artist-swatch__chip::after {
+    transform: scale(1);
+}
+
+.adm-artist-swatch:has(.adm-artist-swatch__input:checked) {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--ap-white);
+}
+
+.adm-artist-swatch__input:focus-visible + .adm-artist-swatch__chip {
+    outline: 2px solid var(--ap-focus);
+    outline-offset: 3px;
+}
+
+.adm-artist-accents.field--invalid .adm-artist-swatch {
+    border-color: color-mix(in srgb, var(--ap-red-bright) 55%, transparent);
+}
+
+/* Markdown help: a closed <details> under the biography. */
+.adm-artist-help {
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+    background: var(--ap-white-04);
+}
+
+.adm-artist-help__summary {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2.75rem;
+    padding: 0.55rem 0.9rem;
+    color: var(--ap-text-soft);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+}
+
+.adm-artist-help__summary::-webkit-details-marker {
+    display: none;
+}
+
+.adm-artist-help__summary::after {
+    content: "";
+    width: 0.55rem;
+    height: 0.48rem;
+    margin-left: auto;
+    background: currentColor;
+    clip-path: var(--ap-clip-tri-down);
+    transition: transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.adm-artist-help[open] > .adm-artist-help__summary::after {
+    transform: rotate(180deg);
+}
+
+.adm-artist-help__summary:hover {
+    color: var(--ap-white);
+}
+
+.adm-artist-help__body {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0 0.9rem 0.95rem;
+    color: var(--ap-text-soft);
+    font-size: 0.88rem;
+}
+
+.adm-artist-help__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+}
+
+.adm-artist-help__table th {
+    padding: 0.35rem 0.5rem 0.35rem 0;
+    color: var(--ap-text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.adm-artist-help__table td {
+    padding: 0.4rem 0.5rem 0.4rem 0;
+    border-top: 1px solid var(--adm-line);
+    vertical-align: top;
+    overflow-wrap: anywhere;
+}
+
+.adm-artist-help__table code {
+    padding: 0.1em 0.35em;
+    border-radius: var(--ap-radius-xs);
+    background: var(--ap-black-40);
+    color: var(--ap-yellow);
+    font-family: var(--ap-font-mono);
+    font-size: 0.85em;
+    white-space: pre-wrap;
+}
+
+/* --- 5. Photo fields (media-field) ------------------------------------------------------ */
+
+.adm-artist-media {
+    display: grid;
+    gap: 0.7rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.adm-artist-media__legend {
+    margin-bottom: 0.1rem;
+    padding: 0;
+}
+
+.adm-artist-media__body {
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+}
+
+@media (min-width: 40em) {
+    .adm-artist-media__body {
+        grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr);
+        align-items: start;
+    }
+}
+
+.adm-artist-media__frame {
+    position: relative;
+    width: 100%;
+    max-width: 22rem;
+    overflow: hidden;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+    background: repeating-linear-gradient(135deg, var(--ap-ink) 0 10px, var(--ap-coal) 10px 20px);
+}
+
+.adm-artist-media__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.adm-artist-media--contain .adm-artist-media__frame {
+    background: var(--ap-coal);
+}
+
+.adm-artist-media--contain .adm-artist-media__img {
+    object-fit: contain;
+}
+
+.adm-artist-media__img.is-updated {
+    animation: ap-adm-artists-swap 0.5s var(--ap-ease-out) both;
+}
+
+.adm-artist-media__empty {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 0.55rem;
+    padding: 0.75rem;
+    color: var(--ap-text-muted);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.adm-artist-media__empty[hidden] {
+    display: none;
+}
+
+.adm-artist-media__tri {
+    display: block;
+    width: 2.6rem;
+    height: 2.25rem;
+    background: var(--ap-gradient-tri);
+    clip-path: var(--ap-clip-tri);
+    opacity: 0.4;
+}
+
+.adm-artist-media__monogram {
+    display: grid;
+    place-items: center;
+    width: 4.25rem;
+    height: 4.25rem;
+    border: 1px solid var(--ap-white-16);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 22%, var(--ap-coal));
+    color: var(--ap-white);
+    font-family: var(--ap-font-display);
+    font-size: 1.35rem;
+    letter-spacing: 0.06em;
+}
+
+.adm-artist-media__side {
+    display: grid;
+    align-content: start;
+    gap: 0.65rem;
+    min-width: 0;
+}
+
+.adm-artist-media__meta {
+    color: var(--ap-text-soft);
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+.adm-artist-media__fallback {
+    display: grid;
+    gap: 0.4rem;
+    min-width: 0;
+}
+
+.adm-artist-media__fallback[hidden] {
+    display: none;
+}
+
+.adm-artist-media__select-label {
+    color: var(--ap-text-soft);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.adm-artist-media__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+}
+
+.adm-artist-media__actions:not(:has(> :not([hidden]))) {
+    display: none;
+}
+
+.adm-artist-media__edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ap-yellow);
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+}
+
+.adm-artist-media__edit:hover {
+    color: var(--ap-white);
+}
+
+.adm-artist-media__edit[hidden] {
+    display: none;
+}
+
+.adm-artist-media__library[hidden] {
+    display: none;
+}
+
+.adm-artist-media.field--invalid .adm-artist-media__frame {
+    border-color: var(--ap-red-bright);
+}
+
+/* Compact: a small preview beside the choice (artwork record, "photo from the library"). */
+.adm-artist-media--compact .adm-artist-media__body {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 0.9rem;
+}
+
+.adm-artist-media--compact .adm-artist-media__frame {
+    max-height: 7.5rem;
+}
+
+@media (min-width: 40em) {
+    .adm-artist-media--compact .adm-artist-media__body {
+        grid-template-columns: 7rem minmax(0, 1fr);
+    }
+
+    .adm-artist-media--compact .adm-artist-media__frame {
+        max-height: 9rem;
+    }
+}
+
+/* --- 6. Artworks: upload, list, availability, record ------------------------------------- */
+
+.adm-artist-upload__hint {
+    max-width: 70ch;
+    color: var(--ap-text-soft);
+}
+
+.adm-artist-upload__error {
+    margin-top: 0.75rem;
+}
+
+/* Long file names and hints inside the CMS drop zone of the artist cards wrap instead of widening them
+   (the zone and its file input are kept within 320px phones by admin.css itself). */
+.adm-artist-upload .adm-dropzone__text,
+.adm-artist-photo .adm-dropzone__text,
+.adm-artist-portrait .adm-dropzone__text,
+.adm-artist-visual-upload .adm-dropzone__text {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.adm-artist-library {
+    border-top: 1px solid var(--adm-line);
+    padding-top: 0.9rem;
+}
+
+.adm-artist-library__summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    color: var(--ap-text-soft);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.adm-artist-library__summary:hover {
+    color: var(--ap-white);
+}
+
+.adm-artist-library__form {
+    gap: 1rem;
+    margin-top: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+    background: var(--ap-white-04);
+}
+
+/* An artwork row: the work on a dark mat, never cropped. */
+.adm-artist-work__media {
+    grid-area: media;
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 100%;
+    aspect-ratio: 1;
+    padding: 0.3rem;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--ap-radius-s);
+    background: var(--ap-ink);
+    box-shadow: inset 0 0 0 1px var(--ap-black-40);
+}
+
+.adm-artist-work__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    box-shadow: 0 6px 14px -8px var(--ap-black-90);
+}
+
+.adm-artist-work__empty {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    color: var(--ap-smoke);
+    background: linear-gradient(135deg, var(--ap-coal), var(--ap-graphite));
+}
+
+.adm-artist-work__body {
+    grid-area: body;
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+    align-self: center;
+}
+
+.adm-artist-work__title {
+    font-family: var(--ap-font-body);
+    font-size: 1.02rem;
+    font-weight: 600;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.adm-artist-work__link {
+    color: var(--ap-white);
+}
+
+.adm-artist-work__link:hover {
+    color: var(--ap-yellow);
+}
+
+.adm-artist-work__title cite,
+.adm-artist-expo__title cite {
+    font-style: italic;
+}
+
+.adm-artist-work__meta {
+    color: var(--ap-text-muted);
+    font-size: 0.84rem;
+    overflow-wrap: anywhere;
+}
+
+.adm-artist-work__delete:hover {
+    --btn-border: var(--ap-red-bright);
+    --btn-fg: var(--ap-red-bright);
+}
+
+/* Availability: a pill with the colour dot of the public page. */
+.adm-artist-availability {
+    --dot: var(--ap-mist);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    padding: 0.2em 0.65em;
+    border: 1px solid var(--ap-white-16);
+    border-radius: var(--ap-radius-pill);
+    color: var(--ap-text-soft);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 1.35;
+    white-space: nowrap;
+}
+
+.adm-artist-availability::before {
+    content: "";
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: var(--dot);
+}
+
+.adm-artist-availability--available,
+.adm-artist-availability-choice--available { --dot: var(--ap-yellow); }
+.adm-artist-availability--reserved,
+.adm-artist-availability-choice--reserved { --dot: var(--ap-amber); }
+.adm-artist-availability--sold,
+.adm-artist-availability-choice--sold { --dot: var(--ap-red-bright); }
+.adm-artist-availability--collection,
+.adm-artist-availability-choice--collection { --dot: var(--ap-blue-bright); }
+.adm-artist-availability--commission,
+.adm-artist-availability-choice--commission { --dot: var(--ap-orange); }
+.adm-artist-availability-choice--none { --dot: var(--ap-white-32); }
+
+/* The availability choices reuse .choices/.choice; the triangle becomes the colour dot. */
+.adm-artist-availabilities {
+    min-width: 0;
+}
+
+.adm-artist-availabilities > legend {
+    padding: 0;
+}
+
+.adm-artist-availability-choice span::before {
+    width: 0.7em;
+    height: 0.7em;
+    border-radius: 50%;
+    background: var(--dot);
+    clip-path: none;
+}
+
+/* The chosen availability keeps its colour: tinted pill, coloured edge, dot with a halo. */
+.adm-artist-availability-choice input:checked + span {
+    border-color: var(--dot);
+    background: color-mix(in srgb, var(--dot) 16%, transparent);
+    color: var(--ap-white);
+}
+
+.adm-artist-availability-choice input:checked + span::before {
+    background: var(--dot);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--dot) 35%, transparent);
+    transform: none;
+}
+
+.adm-artist-availability-choice--none input:checked + span {
+    border-color: var(--ap-white-32);
+    background: var(--ap-white-08);
+}
+
+/* The record of one artwork: photo on the left (sticky), form on the right, from 64em. */
+.adm-artist-work-layout {
+    display: grid;
+    gap: var(--adm-gap);
+    align-items: start;
+}
+
+.adm-artist-work-layout__media,
+.adm-artist-work-layout__form {
+    display: grid;
+    gap: var(--adm-gap);
+    min-width: 0;
+}
+
+@media (min-width: 64em) {
+    .adm-artist-work-layout {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+
+    .adm-artist-work-layout__media {
+        position: sticky;
+        top: calc(var(--adm-topbar-h) + 1rem);
+    }
+}
+
+/* An artwork's title, as in a catalogue: italic text face rather than the display capitals. */
+.adm-artist-work-head .adm-page-head__title {
+    font-family: var(--ap-font-body);
+    font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.4rem);
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    text-transform: none;
+}
+
+.adm-artist-photo__figure {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+}
+
+/* The "wall mat": the work at its natural ratio, never cropped. */
+.adm-artist-photo__mat {
+    display: grid;
+    place-items: center;
+    padding: clamp(0.75rem, 3vw, 1.75rem);
+    border-radius: var(--ap-radius-s);
+    background:
+        radial-gradient(120% 90% at 50% 0%, var(--ap-white-04), transparent 70%),
+        var(--ap-ink);
+    box-shadow: inset 0 0 0 1px var(--adm-line);
+}
+
+.adm-artist-photo__img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: min(62vh, 34rem);
+    box-shadow: var(--ap-shadow-deep);
+    animation: ap-adm-artists-hang 0.6s var(--ap-ease-out) both;
+}
+
+.adm-artist-photo__caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    color: var(--ap-text-muted);
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+.adm-artist-photo__note {
+    color: var(--ap-text-soft);
+}
+
+.adm-artist-photo__none {
+    display: grid;
+    justify-items: center;
+    gap: 0.75rem;
+    padding: 2rem 1rem;
+    border: 1px dashed var(--adm-line-strong);
+    border-radius: var(--adm-radius);
+    color: var(--ap-text-soft);
+    text-align: center;
+}
+
+.adm-artist-photo__replace {
+    display: grid;
+    gap: 0.6rem;
+}
+
+/* --- 7. Exhibitions ------------------------------------------------------------------------ */
+
+.adm-artist-expos__list {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-artist-expo {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "when"
+        "body"
+        "actions";
+    gap: 0.6rem 1.25rem;
+    min-width: 0;
+    padding: 0.9rem 1rem;
+    background: var(--adm-panel);
+    border: 1px solid var(--adm-line);
+    border-left: 3px solid var(--adm-line-strong);
+    border-radius: var(--adm-radius);
+    transition: border-color var(--ap-dur-fast) ease;
+}
+
+.adm-artist-expo:hover {
+    border-color: var(--ap-white-16);
+    border-left-color: var(--ap-white-32);
+}
+
+.adm-artist-expo__when {
+    grid-area: when;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.2rem 0.75rem;
+    min-width: 0;
+}
+
+.adm-artist-expo__year {
+    color: transparent;
+    font-family: var(--ap-font-display);
+    font-size: 1.6rem;
+    line-height: 1;
+    -webkit-text-stroke: 1px var(--accent-bright);
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-artist-expo__dates {
+    color: var(--ap-text-soft);
+    font-size: 0.82rem;
+}
+
+.adm-artist-expo__body {
+    grid-area: body;
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.adm-artist-expo__kind {
+    color: var(--accent-bright);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.adm-artist-expo__title {
+    font-family: var(--ap-font-body);
+    font-size: 1.04rem;
+    font-weight: 600;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.adm-artist-expo__link {
+    color: var(--ap-white);
+}
+
+.adm-artist-expo__link:hover {
+    color: var(--ap-yellow);
+}
+
+.adm-artist-expo__place {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--ap-text-muted);
+    font-size: 0.85rem;
+    overflow-wrap: anywhere;
+}
+
+.adm-artist-expo__place .icon {
+    flex: none;
+    width: 0.95em;
+    height: 0.95em;
+}
+
+.adm-artist-expo__visual {
+    display: none;
+}
+
+.adm-artist-expo__actions {
+    grid-area: actions;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+@media (min-width: 48em) {
+    .adm-artist-expo {
+        grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+        grid-template-areas: "when body actions";
+        align-items: center;
+    }
+
+    .adm-artist-expo:has(.adm-artist-expo__visual) {
+        grid-template-columns: 7.5rem minmax(0, 1fr) auto auto;
+        grid-template-areas: "when body visual actions";
+    }
+
+    .adm-artist-expo__when {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .adm-artist-expo__visual {
+        grid-area: visual;
+        display: block;
+        width: 6.5rem;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        border: 1px solid var(--adm-line);
+        border-radius: var(--ap-radius-s);
+        background: var(--ap-graphite);
+    }
+
+    .adm-artist-expo__visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .adm-artist-expo__actions {
+        flex-wrap: nowrap;
+    }
+}
+
+/* The group "En cours": a live dot before the title, a warmer edge on its rows. */
+.adm-artist-live {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--ap-yellow);
+    animation: ap-adm-artists-live 2.2s var(--ap-ease-out) infinite;
+}
+
+.adm-artist-expos--current .adm-artist-expo,
+.adm-artist-expos--current .adm-artist-expo:hover {
+    border-left-color: var(--ap-yellow);
+}
+
+.adm-artist-expos--upcoming .adm-artist-expo,
+.adm-artist-expos--upcoming .adm-artist-expo:hover {
+    border-left-color: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+/* --- 8. Danger zone ---------------------------------------------------------------------------- */
+
+.adm-artist-danger .adm-card__body {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.adm-artist-danger .adm-card__body > * + * {
+    margin-top: 0;
+}
+
+.adm-artist-danger__text {
+    max-width: 70ch;
+    color: var(--ap-text-soft);
+}
+
+.adm-artist-danger__form {
+    display: grid;
+    justify-items: start;
+    gap: 0.9rem;
+}
+
+.adm-artist-danger__check {
+    max-width: 62ch;
+}
+
+/* --- 9. Keyframes & motion ------------------------------------------------------------------- */
+
+/** @anim group=ui demo=panel dur=0.5s ease=var(--ap-ease-out) iter=1 fr="La photo choisie apparaît dans son cadre" en="Chosen photo fades into its frame" */
+@keyframes ap-adm-artists-swap {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=ui demo=shape dur=0.6s ease=var(--ap-ease-out) iter=1 fr="L’œuvre s’accroche sur son passe-partout" en="Artwork settles on its mat" */
+@keyframes ap-adm-artists-hang {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=ui demo=ring dur=2.2s ease=var(--ap-ease-out) fr="Pastille « en cours » qui pulse" en="Pulsing “current” dot" */
+@keyframes ap-adm-artists-live {
+    0% {
+        box-shadow: 0 0 0 0 var(--ap-yellow-glow);
+    }
+
+    70% {
+        box-shadow: 0 0 0 0.5rem transparent;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 transparent;
+    }
+}
+
+/* 02-base.css already stops every animation under html.motion-off and prefers-reduced-motion;
+   these keep the end states explicit. */
+html.motion-off .adm-artist-live,
+html.motion-off .adm-artist-photo__img,
+html.motion-off .adm-artist-media__img.is-updated {
+    animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html:not(.motion-on) .adm-artist-live,
+    html:not(.motion-on) .adm-artist-photo__img,
+    html:not(.motion-on) .adm-artist-media__img.is-updated {
+        animation: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .adm-artist-swatch__chip,
+    .adm-artist-availability::before {
+        forced-color-adjust: none;
+    }
+
+    .adm-artist-subnav__tab.is-current {
+        text-decoration: underline;
+    }
+}
+
+@media print {
+    .adm-artist-subnav__side,
+    .adm-artist-row__actions,
+    .adm-artist-row__moves,
+    .adm-artist-work__actions,
+    .adm-artist-expo__actions,
+    .adm-artist-danger,
+    .adm-artist-upload {
+        display: none;
+    }
+}
+
+/* The portrait card (outside the profile form, applied at once): a photo of the library on one side,
+   a new photo from the computer or the phone on the other (stacked on phones). */
+.adm-artist-portrait .adm-card__body {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.adm-artist-portrait__note {
+    margin: 0;
+}
+
+.adm-artist-portrait__library,
+.adm-artist-portrait__upload {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 0;
+    align-content: start;
+}
+
+@media (min-width: 64em) {
+    .adm-artist-portrait .adm-card__body {
+        grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+        align-items: start;
+    }
+
+    .adm-artist-portrait__note {
+        grid-column: 1 / -1;
+    }
+}
