@@ -28,8 +28,7 @@ return [
         'title' => ':count services, one shared vision',
         'lead' => 'Painting, design, material, spaces, image and teaching: choose a family or browse the whole catalogue.',
         'all' => 'See all services',
-        'filter_label' => 'Filter the services',
-        'announce' => '{count} service(s) shown',
+        'family_count' => '{1} :count service|[2,*] :count services',
     ],
     'process' => [
         'eyebrow' => 'Method',
@@ -40,15 +39,6 @@ return [
             ['title' => 'Create', 'text' => 'The atelier’s craft, alone or with you.'],
             ['title' => 'Celebrate', 'text' => 'The work unveiled and shared.'],
         ],
-    ],
-    'numbers' => [
-        'eyebrow' => 'In numbers',
-        'title' => 'The atelier, plainly',
-        'services' => 'art services',
-        'families' => 'families of crafts',
-        'colours' => 'founding colours',
-        'animations' => 'animations on this site',
-        'triangle' => 'triangle to bring it all together',
     ],
     'generator' => [
         'eyebrow' => 'Digital Atelier',

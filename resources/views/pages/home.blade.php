@@ -21,8 +21,8 @@
     <section class="home-hero ap-anim-scope" aria-labelledby="home-title">
         <canvas class="home-hero__canvas" data-hero-canvas aria-hidden="true"></canvas>
         <x-aurora intensity="strong" />
-        <x-floating-shapes :count="12" :seed="3" />
-        <x-slashes :count="5" class="home-hero__slashes" />
+        <x-floating-shapes :count="7" :seed="3" />
+        <x-slashes :count="3" class="home-hero__slashes" />
         <div class="container container--wide home-hero__inner">
             <h1 id="home-title" class="home-hero__title">
                 <x-logo-wordmark size="hero" animated tagline signature />
@@ -42,10 +42,9 @@
         </a>
     </section>
 
-    {{-- 2 · Marquees --}}
+    {{-- 2 · Marquee --}}
     <div class="home-marquees" aria-hidden="true">
-        <x-marquee :items="$services->pluck('title')->all()" />
-        <x-marquee :items="$services->pluck('title')->reverse()->values()->all()" reverse speed="slow" />
+        <x-marquee :items="$services->pluck('title')->all()" speed="slow" />
     </div>
 
     {{-- 3 · Manifesto --}}
@@ -66,22 +65,27 @@
         </div>
     </section>
 
-    {{-- 4 · Services --}}
-    <section class="section section--surface section--slant home-services" data-filter-group data-filter-announce="{{ __('home.services.announce') }}">
+    {{-- 4 · Services: the families at a glance (the full catalogue and its filters live on /services) --}}
+    <section class="section section--surface section--slant home-services">
         <div class="container container--wide">
-            <div class="home-services__head">
-                <x-section-heading :eyebrow="__('home.services.eyebrow')" :title="__('home.services.title', ['count' => $services->count()])" :lead="__('home.services.lead')" accent="red" />
-                <div class="filters" role="group" aria-label="{{ __('home.services.filter_label') }}">
-                    <x-chip filter="all" :active="true">{{ __('components.filter.all') }} <span class="chip__count">{{ $services->count() }}</span></x-chip>
-                    @foreach ($categories as $key => $label)
-                        <x-chip :filter="$key" class="accent-{{ config('atelier.categories.'.$key.'.accent', 'yellow') }}">{{ $label }}</x-chip>
-                    @endforeach
-                </div>
-            </div>
-            <div class="home-services__grid">
-                @foreach ($services as $service)
-                    <x-service-card :service="$service" :index="$loop->index" :variant="in_array($loop->index, [0, 11], true) ? 'feature' : 'default'"
-                                    class="{{ in_array($loop->index, [0, 11], true) ? 'home-services__wide' : '' }}" />
+            <x-section-heading :eyebrow="__('home.services.eyebrow')" :title="__('home.services.title', ['count' => $services->count()])" :lead="__('home.services.lead')" accent="red" />
+            <div class="home-families" data-reveal-stagger="90">
+                @foreach ($categories as $key => $label)
+                    @php($items = $services->where('category', $key))
+                    @continue($items->isEmpty())
+                    <article class="home-family accent-{{ config('atelier.categories.'.$key.'.accent', 'yellow') }}" data-reveal="fade-up">
+                        <h3 class="home-family__title">
+                            <a href="{{ route('services.index', ['famille' => $key]) }}#catalogue">{{ $label }}</a>
+                        </h3>
+                        <p class="home-family__count">{{ trans_choice('home.services.family_count', $items->count(), ['count' => $items->count()]) }}</p>
+                        <ul class="home-family__list" role="list">
+                            @foreach ($items as $service)
+                                <li>
+                                    <a class="home-family__link" href="{{ $service['url'] }}"><x-icon :name="$service['icon']" /><span>{{ $service['title'] }}</span></a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </article>
                 @endforeach
             </div>
             <p class="home-services__all">
@@ -112,21 +116,8 @@
         </div>
     </section>
 
-    {{-- 6 · Numbers (all derived from the site itself) --}}
-    <section class="section section--tight home-numbers">
-        <div class="container">
-            <x-section-heading :eyebrow="__('home.numbers.eyebrow')" :title="__('home.numbers.title')" accent="yellow" />
-            <div class="home-numbers__grid">
-                <x-counter :to="$services->count()" :label="__('home.numbers.services')" accent="red" />
-                <x-counter :to="count($categories)" :label="__('home.numbers.families')" accent="yellow" />
-                <x-counter :to="5" :label="__('home.numbers.colours')" accent="blue" />
-                <x-counter :to="$animationCount" :label="__('home.numbers.animations')" accent="amber" />
-                <x-counter :to="1" :label="__('home.numbers.triangle')" accent="white" />
-            </div>
-        </div>
-    </section>
 
-    {{-- 7 · Generator teaser --}}
+    {{-- 6 · Generator teaser --}}
     <section class="section section--surface home-generator">
         <div class="container split split--reverse">
             <div class="home-generator__visual" data-reveal="tri">
@@ -147,7 +138,7 @@
         </div>
     </section>
 
-    {{-- 8 · Gallery teaser --}}
+    {{-- 7 · Gallery teaser --}}
     <section class="section home-gallery">
         <div class="container container--wide">
             <div class="home-gallery__head">
@@ -165,7 +156,7 @@
         </div>
     </section>
 
-    {{-- 9 · Community --}}
+    {{-- 8 · Community --}}
     <section class="section section--surface home-community">
         <div class="container split">
             <div class="stack" data-reveal="fade-right">

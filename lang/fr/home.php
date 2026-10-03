@@ -28,8 +28,7 @@ return [
         'title' => ':count services, un même regard',
         'lead' => 'Peinture, design, matière, espaces, image et transmission : choisissez une famille ou parcourez tout le catalogue.',
         'all' => 'Voir tous les services',
-        'filter_label' => 'Filtrer les services',
-        'announce' => '{count} service(s) affiché(s)',
+        'family_count' => '{1} :count service|[2,*] :count services',
     ],
     'process' => [
         'eyebrow' => 'Méthode',
@@ -40,15 +39,6 @@ return [
             ['title' => 'Créer', 'text' => 'Le geste de l’atelier, seul ou avec vous.'],
             ['title' => 'Célébrer', 'text' => 'L’œuvre dévoilée et partagée.'],
         ],
-    ],
-    'numbers' => [
-        'eyebrow' => 'En chiffres',
-        'title' => 'L’atelier, sans détour',
-        'services' => 'services artistiques',
-        'families' => 'familles de savoir-faire',
-        'colours' => 'couleurs fondatrices',
-        'animations' => 'animations sur ce site',
-        'triangle' => 'triangle pour tout rassembler',
     ],
     'generator' => [
         'eyebrow' => 'Atelier numérique',

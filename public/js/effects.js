@@ -487,7 +487,10 @@
                 }
             });
             var active = buttons.filter(function (b) { return b.classList.contains('is-active') || b.getAttribute('aria-pressed') === 'true'; })[0];
-            if (active && active.getAttribute('data-filter') !== 'all') { apply(active.getAttribute('data-filter')); }
+            // ?famille=<key> opens the group already filtered (links from the home page's families).
+            var wanted = new URLSearchParams(window.location.search).get('famille');
+            var linked = wanted && buttons.filter(function (b) { return b.getAttribute('data-filter') === wanted; })[0];
+            if (linked) { apply(wanted); } else if (active && active.getAttribute('data-filter') !== 'all') { apply(active.getAttribute('data-filter')); }
         });
     }
 
