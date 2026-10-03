@@ -1,7 +1,13 @@
 {{--
     Self-contained error document for 500 / 503: no database, session, view composer or route
     is needed, so it renders even when the application is failing. Variables: $code (string).
+    Laravel's own error views extend this layout with @section('code') instead of $code, and a
+    status without its own texts falls back to the generic 4xx / 500 ones.
 --}}
+@php
+    $status = (string) ($code ?? (trim($__env->yieldContent('code')) ?: '500'));
+    $code = \Illuminate\Support\Facades\Lang::has('errors.'.$status.'.title') ? $status : ((int) $status >= 500 ? '500' : '4xx');
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -21,7 +27,7 @@
         <div class="container error-page__inner">
             @include('errors.broken')
             <div class="error-page__text">
-                <p class="error-page__code">{{ __('errors.'.$code.'.code') }}</p>
+                <p class="error-page__code">{{ __('errors.'.$code.'.code', ['code' => $status]) }}</p>
                 <h1 class="error-page__title">{{ __('errors.'.$code.'.title') }}</h1>
                 <p class="error-page__lead">{{ __('errors.'.$code.'.text') }}</p>
                 <div class="cluster error-page__actions">

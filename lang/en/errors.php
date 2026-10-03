@@ -6,6 +6,27 @@ return [
     'services' => 'See the services',
     'contact' => 'Write to us',
     'retry' => 'Try again',
+    '401' => [
+        'title' => 'Sign-in required',
+        'text' => 'This page is private. Please sign in to see it.',
+        'code' => 'Error 401',
+    ],
+    '402' => [
+        'title' => 'Not available',
+        'text' => 'This page is not available right now.',
+        'code' => 'Error 402',
+    ],
+    '403' => [
+        'title' => 'Access denied',
+        'text' => 'You don’t have permission to see this page.',
+        'code' => 'Error 403',
+    ],
+    // Any other client error (400, 405, 410, 413…): the code shows the actual status.
+    '4xx' => [
+        'title' => 'Request not possible',
+        'text' => 'The link may be incomplete, or the page may have changed. Go back home or write to us.',
+        'code' => 'Error :code',
+    ],
     '404' => [
         'title' => 'Artwork not found',
         'text' => 'This page has come loose from the triangle. It may have moved, or it never existed.',
