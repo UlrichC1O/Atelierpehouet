@@ -74,9 +74,15 @@
 }
 
 @media (min-width: 64em) {
+    .services-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
     .services-grid__wide {
         grid-column: span 2;
     }
+}
+
+@media (min-width: 80em) {
+    .services-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 .services-bridge__art {

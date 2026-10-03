@@ -117,7 +117,7 @@
 }
 
 .h1 { font-family: var(--ap-font-display); font-size: var(--ap-step-5); line-height: var(--ap-leading-tight); }
-.h2 { font-family: var(--ap-font-display); font-size: var(--ap-step-4); line-height: var(--ap-leading-tight); }
+.h2 { font-family: var(--ap-font-display); font-size: var(--ap-step-4); line-height: var(--ap-leading-tight); text-transform: uppercase; }
 .h3 { font-family: var(--ap-font-display); font-size: var(--ap-step-2); line-height: var(--ap-leading-snug); }
 .h4 { font-family: var(--ap-font-display); font-size: var(--ap-step-1); line-height: var(--ap-leading-snug); }
 

@@ -47,7 +47,7 @@
     background: var(--c);
     outline: 2px solid var(--ap-black);
     box-shadow: 0 0 0 3px var(--ap-white-16);
-    opacity: 0.4;
+    opacity: 0.75;
 }
 
 .floating-shapes__item--bar {

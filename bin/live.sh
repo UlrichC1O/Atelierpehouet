@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Put Ateliers Pehouet live from this machine (built for GitHub Codespaces).
 #
-#   bin/live.sh start    production mode: cache config/routes/views, migrate, start the Python
+#   bin/live.sh start    production mode (APP_DEBUG=false via the process environment), migrate, start the Python
 #                        art engine (127.0.0.1:8765) and Laravel (0.0.0.0:$PORT), make the port public
 #   bin/live.sh stop     stop both processes and clear the production caches (back to dev mode)
 #   bin/live.sh status   show processes, health and the public URL
@@ -52,26 +52,31 @@ start() {
     local secure=false
     case "$PUBLIC_URL" in https://*) secure=true ;; esac
 
-    echo "→ caching production configuration for $PUBLIC_URL"
-    APP_ENV=production APP_DEBUG=false APP_URL="$PUBLIC_URL" SESSION_SECURE_COOKIE="$secure" \
-        php artisan config:cache --no-interaction >/dev/null
-    php artisan route:cache --no-interaction >/dev/null
-    php artisan view:cache --no-interaction >/dev/null
+    # Production settings live in the server's process environment (they beat .env), not in a
+    # shared config cache: clearing caches or running the tests elsewhere can't flip the public
+    # site back to debug mode.
+    export APP_ENV=production APP_DEBUG=false APP_URL="$PUBLIC_URL" SESSION_SECURE_COOKIE="$secure" LOG_LEVEL=warning
+    php artisan config:clear --no-interaction >/dev/null
     php artisan migrate --force --no-interaction >/dev/null
 
     echo "→ starting the Python art engine on 127.0.0.1:$ART_PORT"
-    (cd python && setsid nohup python3 -m art_engine serve --host 127.0.0.1 --port "$ART_PORT" \
-        >"$LOGS/live-art.log" 2>&1 < /dev/null & echo $! >"$PIDS/live-art.pid")
+    setsid nohup bash -c 'cd python && exec python3 -m art_engine serve --host 127.0.0.1 --port "$0"' "$ART_PORT" \
+        >"$LOGS/live-art.log" 2>&1 < /dev/null &
+    echo $! >"$PIDS/live-art.pid"
+    disown || true
 
     echo "→ starting Laravel on 0.0.0.0:$PORT"
-    PHP_CLI_SERVER_WORKERS="${PHP_CLI_SERVER_WORKERS:-4}" setsid nohup php artisan serve --host=0.0.0.0 --port="$PORT" --no-reload \
-        >"$LOGS/live-web.log" 2>&1 < /dev/null & echo $! >"$PIDS/live-web.pid"
+    # PHP's built-in server with several workers, through bin/live-router.php (trusts the HTTPS proxy).
+    PHP_CLI_SERVER_WORKERS="${PHP_CLI_SERVER_WORKERS:-4}" setsid nohup php -S "0.0.0.0:$PORT" -t public bin/live-router.php \
+        >"$LOGS/live-web.log" 2>&1 < /dev/null &
+    echo $! >"$PIDS/live-web.pid"
+    disown || true
 
     wait_for "http://127.0.0.1:$ART_PORT/health" || echo "! art engine not answering (the site falls back to the CLI / built-in art)"
     wait_for "http://127.0.0.1:$PORT/up" || { echo "! Laravel did not start — see $LOGS/live-web.log"; exit 1; }
 
     if [ -n "${CODESPACE_NAME:-}" ] && command -v gh >/dev/null 2>&1; then
-        if gh codespace ports visibility "$PORT:public" -c "$CODESPACE_NAME" >/dev/null 2>&1; then
+        if timeout 60 gh codespace ports visibility "$PORT:public" -c "$CODESPACE_NAME" >/dev/null 2>&1; then
             echo "→ port $PORT is public"
         else
             echo "! could not change the port visibility automatically: in VS Code open the PORTS panel,"
@@ -85,7 +90,7 @@ stop() {
     stop_proc web
     stop_proc art
     php artisan optimize:clear --no-interaction >/dev/null 2>&1 || true
-    echo "✓ stopped; production caches cleared (back to the .env settings)"
+    echo "✓ stopped"
 }
 
 status() {

@@ -80,8 +80,8 @@
             </div>
             <div class="home-services__grid">
                 @foreach ($services as $service)
-                    <x-service-card :service="$service" :index="$loop->index" :variant="in_array($loop->index, [0, 9, 17], true) ? 'feature' : 'default'"
-                                    class="{{ in_array($loop->index, [0, 9, 17], true) ? 'home-services__wide' : '' }}" />
+                    <x-service-card :service="$service" :index="$loop->index" :variant="in_array($loop->index, [0, 11], true) ? 'feature' : 'default'"
+                                    class="{{ in_array($loop->index, [0, 11], true) ? 'home-services__wide' : '' }}" />
                 @endforeach
             </div>
             <p class="home-services__all">

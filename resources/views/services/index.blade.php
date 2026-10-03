@@ -43,8 +43,8 @@
 
             <div class="services-grid">
                 @foreach ($services as $service)
-                    <x-service-card :service="$service" :index="$loop->index" :variant="$loop->index % 7 === 0 ? 'feature' : 'default'"
-                                    class="{{ $loop->index % 7 === 0 ? 'services-grid__wide' : '' }}" />
+                    <x-service-card :service="$service" :index="$loop->index" :variant="in_array($loop->index, [0, 11], true) ? 'feature' : 'default'"
+                                    class="{{ in_array($loop->index, [0, 11], true) ? 'services-grid__wide' : '' }}" />
                 @endforeach
             </div>
         </div>

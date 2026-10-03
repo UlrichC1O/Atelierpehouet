@@ -106,7 +106,7 @@
 
 @media (max-width: 40em) {
     .home-hero__title .wordmark--hero {
-        --u: 13vw;
+        --u: 15.5vw;
     }
 }
 
@@ -234,9 +234,15 @@
 }
 
 @media (min-width: 64em) {
+    .home-services__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
     .home-services__wide {
         grid-column: span 2;
     }
+}
+
+@media (min-width: 80em) {
+    .home-services__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 .home-services__all {
@@ -267,6 +273,8 @@
 @media (min-width: 56em) {
     .home-process__stage {
         aspect-ratio: 600 / 520;
+        margin-top: 7rem;
+        margin-bottom: 4rem;
     }
 
     .home-process__tri {

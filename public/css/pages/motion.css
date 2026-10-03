@@ -238,6 +238,7 @@
 
 .mdemo--blocks {
     display: grid;
+    place-items: stretch;
     grid-template-columns: 1.4fr 1fr 0.6fr;
     grid-template-rows: 1fr 1fr;
     gap: 3px;
