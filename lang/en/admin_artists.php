@@ -187,6 +187,20 @@ return [
         'note' => 'HTML code is ignored, to keep the site safe.',
     ],
 
+    // Photo uploads of the artist screens while the CMS uploader script is not installed (artists.js).
+    'uploader' => [
+        'queued' => 'Waiting',
+        'preparing' => 'Preparing the photo…',
+        'uploading' => 'Uploading… :percent%',
+        'done' => 'Added',
+        'failed' => 'Failed',
+        'too_large' => 'photo too heavy, even reduced: try a smaller photo.',
+        'unreadable' => 'this file is not an image the browser can read (on an iPhone: Settings › Camera › Formats › “Most Compatible”).',
+        'network' => 'no connection, check your network and try again.',
+        'expired' => 'the session expired: reload the page and try again.',
+        'reloading' => 'Updating the page…',
+    ],
+
     'media' => [
         'choose' => 'Choose or add a photo',
         'clear' => 'Remove',

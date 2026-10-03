@@ -406,6 +406,16 @@ records `App\Cms\Activity::record('artists.{action}', __('admin_artists.activity
 The views push `js/admin/artists.js` and — only when the files exist — `js/admin/uploader.js` and `js/admin/media-picker.js`
 (`@push('scripts')`, deferred).
 
+**Stop-gap uploader** (until the CMS ships `public/js/admin/uploader.js`): `artists.js` enhances the CMS drop zones
+(`form[data-uploader]`) of the artist screens itself — on file choice or drop it decodes each photo, resizes it to
+`data-max-edge`, encodes WebP at `data-quality` (JPEG 0.86 when the browser cannot encode WebP), builds the variants
+of `data-widths` narrower than the main image, keeps each request under `data-max-request` (variants dropped first),
+posts `photo` + `variants[w]` + `original_name` with `Accept: application/json` (GIFs untouched), shows per-file status
+in the form's `.adm-uploads` list (CMS row classes) and reloads the page. Messages: `admin_artists.uploader.*`, passed
+by the `[data-artist-upload-i18n]` element of `partials/assets`. It disables itself whenever
+`script[src*="js/admin/uploader.js"]` is on the page. Checked end to end with PHP limits of 5 MB / 6 MB (Vercel-like):
+a 17.8 MB 5000×3750 photo became a 1920×1440 WebP + 480/960 variants on the artworks, portrait and exhibition screens.
+
 ### 6.4 CSS `public/css/admin/artists.css`
 Prefix `.adm-artist-*` (subnav, media field preview/placeholder at a ratio, artwork rows, accent swatches, example notice,
 exhibition groups). Tokens only; any keyframes named `ap-adm-artists-*` with an `@anim` comment. Mobile-friendly

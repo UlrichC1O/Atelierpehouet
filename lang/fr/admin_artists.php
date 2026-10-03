@@ -188,6 +188,20 @@ return [
         'note' => 'Le code HTML est ignoré, pour la sécurité du site.',
     ],
 
+    // Photo uploads of the artist screens while the CMS uploader script is not installed (artists.js).
+    'uploader' => [
+        'queued' => 'En attente',
+        'preparing' => 'Préparation de la photo…',
+        'uploading' => "Envoi… :percent\u{202F}%",
+        'done' => 'Ajoutée',
+        'failed' => 'Échec',
+        'too_large' => "photo trop lourde, même allégée\u{202F}: essayez une photo plus petite.",
+        'unreadable' => "ce fichier n’est pas une image lisible par le navigateur (sur iPhone\u{202F}: Réglages › Appareil photo › Formats › «\u{202F}Le plus compatible\u{202F}»).",
+        'network' => 'connexion impossible, vérifiez votre réseau puis réessayez.',
+        'expired' => "la session a expiré\u{202F}: rechargez la page puis réessayez.",
+        'reloading' => 'Mise à jour de la page…',
+    ],
+
     'media' => [
         'choose' => 'Choisir ou ajouter une photo',
         'clear' => 'Retirer',
