@@ -841,6 +841,11 @@ html.js .mobile-menu__close {
     border-top: 1px solid var(--ap-white-08);
 }
 
+/* After a page's closing call-to-action band, the footer follows on directly. */
+.site-footer--after-band {
+    margin-top: 0;
+}
+
 .site-footer__mondrian {
     display: grid;
     grid-template-columns: 3fr 1fr 5fr 0.6fr 2fr 1.4fr;

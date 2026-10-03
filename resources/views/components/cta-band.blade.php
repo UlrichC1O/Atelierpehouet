@@ -1,4 +1,7 @@
-{{-- Closing call-to-action band: black canvas, sliding colour fields, giant outlined title, buttons. --}}
+{{--
+    Closing call-to-action band: black canvas, sliding colour fields, giant outlined title, buttons.
+    Rendering it tells the footer (rendered later) not to repeat its own call to action.
+--}}
 @props([
     'title',
     'text' => null,
@@ -7,6 +10,7 @@
     'secondaryHref' => null,
     'secondaryButton' => null,
 ])
+@php(view()->share('apCtaBandShown', true))
 <section {{ $attributes->class(['cta-band']) }}>
     <div class="cta-band__fields ap-anim-scope" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
     <div class="container cta-band__inner">

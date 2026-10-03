@@ -10,13 +10,16 @@
         ->map(fn ($label, $key) => ['key' => $key, 'label' => $label, 'accent' => config("atelier.categories.$key.accent", 'yellow'), 'items' => $navServices->where('category', $key)->values()])
         ->filter(fn ($group) => $group['items']->isNotEmpty())
         ->values();
-    $pages = [
+    // Main pages only; the digital atelier and the motion catalogue are linked from the footer.
+    $pages = array_values(array_filter([
         ['route' => 'gallery', 'label' => __('ui.nav.gallery')],
-        ['route' => 'generator', 'label' => __('ui.nav.generator')],
-        ['route' => 'motion', 'label' => __('ui.nav.motion')],
+        \Illuminate\Support\Facades\Route::has('artists.index')
+            ? ['route' => 'artists.index', 'active' => 'artists.*', 'label' => \Illuminate\Support\Facades\Lang::has('artists.nav') ? __('artists.nav') : __('ui.nav.artists')]
+            : null,
         ['route' => 'community', 'label' => __('ui.nav.community')],
         ['route' => 'about', 'label' => __('ui.nav.about')],
-    ];
+        ['route' => 'contact', 'label' => __('ui.nav.contact')],
+    ]));
     $currentSlug = request()->route('slug');
 @endphp
 <header class="site-header" data-header>
@@ -62,7 +65,7 @@
                 </li>
                 @foreach ($pages as $page)
                     <li class="site-nav__item">
-                        <a class="site-nav__link" href="{{ route($page['route']) }}" @if (request()->routeIs($page['route'])) aria-current="page" @endif>{{ $page['label'] }}</a>
+                        <a class="site-nav__link" href="{{ route($page['route']) }}" @if (request()->routeIs($page['active'] ?? $page['route'])) aria-current="page" @endif>{{ $page['label'] }}</a>
                     </li>
                 @endforeach
             </ul>
@@ -90,9 +93,8 @@
                 <li class="mobile-menu__item" style="--i: 0"><a class="mobile-menu__link" href="{{ route('home') }}" @if (request()->routeIs('home')) aria-current="page" @endif>{{ __('ui.nav.home') }}</a></li>
                 <li class="mobile-menu__item" style="--i: 1"><a class="mobile-menu__link" href="{{ route('services.index') }}" @if (request()->routeIs('services.*')) aria-current="page" @endif>{{ __('ui.nav.services') }} <small>{{ $navServices->count() }}</small></a></li>
                 @foreach ($pages as $page)
-                    <li class="mobile-menu__item" style="--i: {{ $loop->index + 2 }}"><a class="mobile-menu__link" href="{{ route($page['route']) }}" @if (request()->routeIs($page['route'])) aria-current="page" @endif>{{ $page['label'] }}</a></li>
+                    <li class="mobile-menu__item" style="--i: {{ $loop->index + 2 }}"><a class="mobile-menu__link" href="{{ route($page['route']) }}" @if (request()->routeIs($page['active'] ?? $page['route'])) aria-current="page" @endif>{{ $page['label'] }}</a></li>
                 @endforeach
-                <li class="mobile-menu__item" style="--i: {{ count($pages) + 2 }}"><a class="mobile-menu__link" href="{{ route('contact') }}" @if (request()->routeIs('contact')) aria-current="page" @endif>{{ __('ui.nav.contact') }}</a></li>
             </ul>
         </nav>
 

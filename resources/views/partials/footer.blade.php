@@ -1,6 +1,8 @@
 {{--
-    Site footer: statement + CTA, the services by category, pages, contact (only what is configured),
-    socials (only when configured), motion toggle and language switch.
+    Site footer: statement + CTA (only when the page has no closing <x-cta-band> of its own, and
+    never on the contact page), the services by category, pages, contact (always a way to write to
+    the atelier, plus the details that are configured), socials (only when configured), motion
+    toggle and language switch.
     Data from App\View\Composers\NavigationComposer: $navServices, $navCategories.
 --}}
 @php
@@ -12,29 +14,36 @@
     $contact = config('atelier.contact', []);
     $socials = array_filter((array) config('atelier.socials', []));
     $whatsapp = preg_replace('/\D+/', '', (string) ($contact['whatsapp'] ?? ''));
-    $explore = [
+    $explore = array_filter([
         'home' => __('ui.nav.home'),
         'services.index' => __('ui.nav.services'),
         'gallery' => __('ui.nav.gallery'),
-        'generator' => __('ui.nav.generator'),
-        'motion' => __('ui.nav.motion'),
+        'artists.index' => \Illuminate\Support\Facades\Route::has('artists.index')
+            ? (\Illuminate\Support\Facades\Lang::has('artists.nav') ? __('artists.nav') : __('ui.nav.artists'))
+            : null,
         'community' => __('ui.nav.community'),
         'about' => __('ui.nav.about'),
+        'generator' => __('ui.nav.generator'),
+        'motion' => __('ui.nav.motion'),
         'contact' => __('ui.nav.contact'),
-    ];
+    ]);
+    // A page that ends with its own call to action (components/cta-band) doesn't get a second one.
+    $showCta = ! ($apCtaBandShown ?? false) && ! request()->routeIs('contact');
 @endphp
-<footer class="site-footer">
+<footer @class(['site-footer', 'site-footer--after-band' => $apCtaBandShown ?? false])>
     <div class="site-footer__mondrian" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
     <div class="container container--wide">
-        <div class="site-footer__cta">
-            <p class="site-footer__statement" aria-hidden="true">{{ __('ui.footer.statement') }}</p>
-            <div class="site-footer__cta-side">
-                <h2 class="visually-hidden">{{ __('ui.footer.statement') }}</h2>
-                <p class="site-footer__text">{{ __('ui.footer.text') }}</p>
-                <x-button :href="route('contact')" size="lg" icon="arrow-right" magnetic>{{ __('ui.cta.quote') }}</x-button>
+        @if ($showCta)
+            <div class="site-footer__cta">
+                <p class="site-footer__statement" aria-hidden="true">{{ __('ui.footer.statement') }}</p>
+                <div class="site-footer__cta-side">
+                    <h2 class="visually-hidden">{{ __('ui.footer.statement') }}</h2>
+                    <p class="site-footer__text">{{ __('ui.footer.text') }}</p>
+                    <x-button :href="route('contact')" size="lg" icon="arrow-right" magnetic>{{ __('ui.cta.quote') }}</x-button>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div class="site-footer__grid">
             <div class="site-footer__brand">
@@ -70,6 +79,7 @@
             <div>
                 <p class="site-footer__heading">{{ __('ui.footer.contact') }}</p>
                 <address class="site-footer__contact">
+                    <a href="{{ route('contact') }}"><x-icon name="arrow-right" />{{ __('ui.footer.write') }}</a>
                     @if (! empty($contact['email']))
                         <a href="mailto:{{ $contact['email'] }}"><x-icon name="mail" /><span class="visually-hidden">{{ __('ui.contact.email') }} : </span>{{ $contact['email'] }}</a>
                     @endif
