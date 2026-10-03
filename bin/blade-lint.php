@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use Illuminate\Contracts\Console\Kernel;
+
 /*
  * Compile Blade templates and syntax-check the generated PHP.
  *   php bin/blade-lint.php resources/views/pages/home.blade.php [more files or directories]
@@ -10,7 +12,7 @@
 require __DIR__.'/../vendor/autoload.php';
 
 $app = require __DIR__.'/../bootstrap/app.php';
-$app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+$app->make(Kernel::class)->bootstrap();
 
 $targets = array_slice($argv, 1) ?: [resource_path('views')];
 $files = [];
@@ -36,6 +38,7 @@ foreach ($files as $file) {
     } catch (Throwable $e) {
         echo "✗ {$file}: compile error: {$e->getMessage()}\n";
         $failed++;
+
         continue;
     }
     $base = tempnam(sys_get_temp_dir(), 'blade');

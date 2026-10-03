@@ -559,3 +559,31 @@ python3 python/tools/animations.py --check       # ≥ 100 animations, catalog f
 python3 python/tools/palette_audit.py            # logo colours only
 php artisan serve  # then open http://127.0.0.1:8000
 ```
+
+## 14. Admin CMS (`/admin`) — summary of `docs/CMS.md`
+
+The owner edits the site at **`/admin`** without code: every text of `lang/{fr,en}` (editable groups), every
+field of the services (and creates new ones), photos (library, gallery, service covers and "Réalisations", page
+photo spots), free pages (`/{slug}`, e.g. legal notice), contact requests (mini CRM), settings (contact, socials,
+announcement banner), accounts and maintenance. **`docs/CMS.md` is the binding contract** (its §13 amendments
+override its earlier sections); this section only lists what every area must know.
+
+- **Files stay the defaults.** `lang/*` and `resources/content/services/*.php` are never written by the CMS: the
+  database stores *overrides* (`translation_overrides`, `cms_services`, `settings`) and what the owner creates
+  (custom services, free pages, photos). `__()` and `ServiceCatalog` read files first, then apply overrides from
+  `App\Cms\Cms`, a cached snapshot. If the database is unreachable or the CMS tables are missing, the public site
+  renders the file defaults (circuit breaker `App\Cms\DatabaseHealth`, stale-if-error snapshot) — never a 500.
+- **Keep editing lang files normally:** new keys become editable automatically; overrides of removed keys are
+  ignored. Never rename a key casually — its override would be orphaned.
+- **Photos** live in the database (`media`, `media_files`, base64) and are served by `GET /media/{key}`; render them
+  with `App\Cms\MediaItem` (`url()`, `srcset()`, `alt()`), never with raw paths. Public photo partials render nothing
+  when there is no photo.
+- **Public templates** include the CMS partials listed in `docs/CMS.md` §12 (photos, announcement, footer pages,
+  preview banner, admin bar, generic scene for custom services).
+- **Admin conventions**: admin views use `admin.layouts.app` and `<x-admin.*>` components, CSS in
+  `public/css/admin/`, JS in `public/js/admin/` (CSP: no inline scripts), copy in `lang/*/admin*.php`; invalid forms are
+  re-rendered with HTTP 422 (`RendersInvalidForms`), never flashed into the 4 KB cookie session (Vercel).
+- **Postgres in production** (Supabase, emulated prepares): booleans only as PHP bools, strings cut to column size,
+  case-insensitive search with `whereLike(..., caseSensitive: false)`.
+- **Deploying a CMS change**: new migrations are applied from *Admin → Maintenance → Mettre à jour la base de
+  données* (Vercel has no shell). `php artisan atelier:admin {email}` creates an administrator on the Codespace.

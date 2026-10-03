@@ -48,6 +48,17 @@ return [
             'report' => false,
         ],
 
+        // Photos of the CMS library with CMS_MEDIA_DRIVER=filesystem (docs/CMS.md §4.5). Never public:
+        // files are always served through GET /media/{key}.
+        'media' => [
+            'driver' => 'local',
+            'root' => storage_path('app/media'),
+            'visibility' => 'private',
+            'serve' => false,
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

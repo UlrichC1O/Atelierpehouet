@@ -51,7 +51,8 @@ final class PageController extends Controller
             'animations' => $animations->all(),
             'groups' => $animations->grouped(),
             'total' => $animations->total(),
-            'scenes' => $this->catalog->all(),
+            // Services created in the CMS have no scene of their own (they use the generic one).
+            'scenes' => $this->catalog->all()->reject(fn (array $service): bool => $service['custom'])->values(),
         ]);
     }
 }

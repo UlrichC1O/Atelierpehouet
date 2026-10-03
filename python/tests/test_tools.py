@@ -117,6 +117,14 @@ class PaletteAuditTest(unittest.TestCase):
             colours = sorted(p["colour"] for p in problems)
             self.assertEqual(colours, sorted(["#123456", "rgb(10 20 30 / .5)", "hotpink", "#00ff00", "red", "teal"]))
 
+    def test_scans_scripts_in_subdirectories(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = tree(Path(tmp), {
+                "public/js/admin/uploader.js": "ctx.fillStyle = '#123456'; ctx.strokeStyle = '#fafcfd';",
+            })
+            problems = palette_audit.audit(root)
+            self.assertEqual([(p["file"], p["colour"]) for p in problems], [("public/js/admin/uploader.js", "#123456")])
+
     def test_accepts_palette(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = tree(Path(tmp), {

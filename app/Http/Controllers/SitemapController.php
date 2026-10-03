@@ -65,6 +65,7 @@ final class SitemapController extends Controller
             'User-agent: *',
             'Disallow: /atelier-numerique/oeuvre.svg',
             'Disallow: /langue/',
+            'Disallow: /admin',
             '',
             'Sitemap: '.route('sitemap'),
         ];

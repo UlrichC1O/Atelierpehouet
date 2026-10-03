@@ -58,6 +58,19 @@ class ServiceCatalogTest extends TestCase
         $this->assertNotContains('alpha-fresque', $related->pluck('slug')->all());
     }
 
+    public function test_without_the_cms_every_file_service_is_published_and_unmodified(): void
+    {
+        $catalog = $this->catalog();
+        $service = $catalog->find('alpha-fresque');
+
+        $this->assertSame([true, false, false], [$service['published'], $service['custom'], $service['modified']]);
+        $this->assertSame((require base_path('tests/Fixtures/services/alpha-fresque.php'))['fr'], $catalog->fileData('alpha-fresque')['fr']);
+        $this->assertNull($catalog->fileData('does-not-exist'));
+        $this->assertFalse($catalog->isCustom('alpha-fresque'));
+        $this->assertSame($catalog->slugs(), $catalog->withHidden()->slugs());
+        $this->assertSame($catalog->withHidden(), $catalog->withHidden()->withHidden());
+    }
+
     public function test_by_category_follows_the_configured_order(): void
     {
         $keys = $this->catalog()->byCategory()->keys()->all();

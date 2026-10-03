@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Middleware\TrustProxies;
+
 /*
  * Router for PHP's built-in server when the site is served live from a GitHub Codespace
  * (bin/live.sh). The Codespace port-forwarding proxy terminates HTTPS and forwards plain
@@ -18,7 +20,7 @@ if ($uri !== '/' && is_file($public.$uri)) {
 
 require __DIR__.'/../vendor/autoload.php';
 
-Illuminate\Http\Middleware\TrustProxies::at('*');
+TrustProxies::at('*');
 
 $_SERVER['SCRIPT_FILENAME'] = $public.'/index.php';
 $_SERVER['SCRIPT_NAME'] = '/index.php';

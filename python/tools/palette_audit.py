@@ -2,7 +2,7 @@
 """Palette audit: the site may only use the colours of the Ateliers Pehouet logo.
 
 Scans public/css/**/*.css (except 01-tokens.css, where the palette is declared),
-resources/views/**/*.blade.php and public/js/*.js for colour literals — hex, rgb()/rgba(),
+resources/views/**/*.blade.php and public/js/**/*.js for colour literals — hex, rgb()/rgba(),
 hsl()/hsla() and named colours in colour contexts — and reports every colour whose RGB value
 is not in the palette of config/atelier.php (+ pure #fff / #000).
 
@@ -110,7 +110,7 @@ def audit(root: Path) -> list[dict]:
         if p.name != "01-tokens.css":
             files.append((p, "css"))
     files += [(p, "blade") for p in sorted((root / "resources" / "views").rglob("*.blade.php"))]
-    files += [(p, "js") for p in sorted((root / "public" / "js").glob("*.js"))]
+    files += [(p, "js") for p in sorted((root / "public" / "js").rglob("*.js"))]
 
     problems = []
     for path, kind in files:

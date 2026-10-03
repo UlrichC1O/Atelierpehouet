@@ -41,6 +41,8 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+            // "Rester connecté" of the admin lasts 30 days, not Laravel's 5 years (docs/CMS.md §13 D17).
+            'remember' => 43200,
         ],
     ],
 

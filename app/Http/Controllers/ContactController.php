@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Cms\DatabaseHealth;
+use App\Cms\Text;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMessageReceived;
 use App\Models\ContactMessage;
@@ -15,13 +17,14 @@ use Illuminate\Support\Str;
 use Throwable;
 
 /**
- * The contact / quote form (docs/ARCHITECTURE.md §3).
+ * The contact / quote form (docs/ARCHITECTURE.md §3, docs/CMS.md §13 A6).
  *
- * A request is kept as long as it is either stored or e-mailed: a missing database
- * (e.g. a read-only serverless deployment) or a mail outage alone is only logged.
- * Only when both fail does the visitor get an error and their input back. In
- * production, a mailer that only records messages or a placeholder recipient does
- * not count as e-mailed.
+ * A request is kept as long as it is either e-mailed or stored: the e-mail goes first (the
+ * recipient set in the CMS survives database outages in the last-good snapshot), then the row
+ * is stored unless the database circuit breaker is open — an unreachable database costs the
+ * visitor no timeout. A database or mail outage alone is only logged; only when both fail does
+ * the visitor get an error and their input back. In production, a mailer that only records
+ * messages or a placeholder recipient does not count as e-mailed.
  */
 final class ContactController extends Controller
 {
@@ -51,15 +54,24 @@ final class ContactController extends Controller
             return $this->sent();
         }
 
-        $userAgent = $request->userAgent();
-        $message = new ContactMessage($request->safe()->only(['name', 'email', 'phone', 'service', 'budget', 'message']) + [
-            'locale' => app()->getLocale(),
+        $input = $request->safe();
+        $text = static fn (string $field, int $max): ?string => is_string($input[$field] ?? null) ? Text::column($input[$field], $max) : null;
+
+        // Every string storable as is in Postgres (valid UTF-8, no NUL byte, column sizes).
+        $message = new ContactMessage([
+            'name' => $text('name', 120),
+            'email' => $text('email', 190),
+            'phone' => $text('phone', 40),
+            'service' => $text('service', 80),
+            'budget' => $text('budget', 40),
+            'message' => $text('message', 5000),
+            'locale' => Text::column(app()->getLocale(), 5),
             'ip_hash' => ContactMessage::hashIp($request->ip()),
-            'user_agent' => $userAgent === null ? null : mb_substr(mb_scrub($userAgent, 'UTF-8'), 0, 255),
+            'user_agent' => Text::column($request->userAgent(), 255),
         ]);
 
-        $stored = $this->persist($message);
         $mailed = $this->notify($message);
+        $stored = $this->persist($message);
 
         if (! $stored && ! $mailed) {
             // The message itself is not flashed (see bootstrap/app.php): contact.js restores it.
@@ -71,31 +83,40 @@ final class ContactController extends Controller
         return $this->sent();
     }
 
+    /** Stores the request unless the database is known to be unreachable (circuit breaker). */
     private function persist(ContactMessage $message): bool
     {
+        $health = app(DatabaseHealth::class);
+
+        if (! $health->available()) {
+            Log::warning('Contact message not stored: the database is unreachable (circuit breaker open).');
+
+            return false;
+        }
+
         try {
             return $message->save();
         } catch (Throwable $e) {
+            $health->failed($e);
             Log::error('Contact message could not be stored: '.$e->getMessage());
 
             return false;
         }
     }
 
-    /** E-mails the atelier; a failure is logged, never shown to the visitor. */
+    /** E-mails the atelier (before storing: the e-mail must not wait for the database); a failure is logged, never shown. */
     private function notify(ContactMessage $message): bool
     {
         $recipient = (string) config('atelier.contact.notify');
-        $reference = $message->exists ? '#'.$message->id : '(not stored)';
 
         if ($recipient === '') {
-            Log::warning('Contact message '.$reference.' not e-mailed: atelier.contact.notify is empty.');
+            Log::warning('Contact message not e-mailed: atelier.contact.notify is empty.');
 
             return false;
         }
 
         if (app()->isProduction() && ($reason = $this->undeliverable($recipient)) !== null) {
-            Log::warning('Contact message '.$reference.' not e-mailed: '.$reason);
+            Log::warning('Contact message not e-mailed: '.$reason);
 
             return false;
         }
@@ -103,7 +124,7 @@ final class ContactController extends Controller
         try {
             Mail::to($recipient)->send(new ContactMessageReceived($message));
         } catch (Throwable $e) {
-            Log::warning('Contact message '.$reference.' could not be e-mailed: '.$e->getMessage());
+            Log::warning('Contact message could not be e-mailed: '.$e->getMessage());
 
             return false;
         }

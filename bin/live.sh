@@ -67,7 +67,9 @@ start() {
 
     echo "→ starting Laravel on 0.0.0.0:$PORT"
     # PHP's built-in server with several workers, through bin/live-router.php (trusts the HTTPS proxy).
-    PHP_CLI_SERVER_WORKERS="${PHP_CLI_SERVER_WORKERS:-4}" setsid nohup php -S "0.0.0.0:$PORT" -t public bin/live-router.php \
+    # Upload limits above PHP's 2M default: the admin CMS accepts photos (docs/CMS.md §13 C10).
+    PHP_CLI_SERVER_WORKERS="${PHP_CLI_SERVER_WORKERS:-4}" setsid nohup php -d upload_max_filesize=10M -d post_max_size=12M \
+        -S "0.0.0.0:$PORT" -t public bin/live-router.php \
         >"$LOGS/live-web.log" 2>&1 < /dev/null &
     echo $! >"$PIDS/live-web.pid"
     disown || true

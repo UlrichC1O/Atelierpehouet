@@ -104,7 +104,11 @@ return [
             'search_path' => env('DB_SEARCH_PATH', 'public'),
             'sslmode' => env('DB_SSLMODE', 'prefer'),
             // Poolers in transaction mode (e.g. Supabase on port 6543) need client-side prepares.
-            'options' => env('DB_EMULATE_PREPARES') ? [PDO::ATTR_EMULATE_PREPARES => true] : [],
+            // ATTR_TIMEOUT is pdo_pgsql's connect timeout (default 30 s; libpq applies it per resolved
+            // address): an unreachable or paused database must not hang the pages, which then fall back
+            // to the file defaults while the circuit breaker skips it (docs/CMS.md §1, §13 A1).
+            'options' => [PDO::ATTR_TIMEOUT => (int) env('DB_TIMEOUT', 2)]
+                + (env('DB_EMULATE_PREPARES') ? [PDO::ATTR_EMULATE_PREPARES => true] : []),
         ],
 
         'sqlsrv' => [

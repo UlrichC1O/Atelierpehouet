@@ -28,6 +28,12 @@ $defaults = [
     'SESSION_DRIVER' => 'cookie',
     'SESSION_SECURE_COOKIE' => 'true',
     'CACHE_STORE' => 'array',
+    // The CMS snapshot (docs/CMS.md §2) is shared by the requests of one instance through /tmp,
+    // and refreshed every minute since a flush only reaches the instance that saved.
+    'CMS_CACHE_STORE' => 'file',
+    'CMS_CACHE_TTL' => '60',
+    // An unreachable (e.g. paused) database is skipped for two minutes before the next try (§13 A1).
+    'CMS_CACHE_RETRY' => '120',
     'QUEUE_CONNECTION' => 'sync',
     'APP_PACKAGES_CACHE' => $tmp.'/bootstrap/packages.php',
     'APP_SERVICES_CACHE' => $tmp.'/bootstrap/services.php',

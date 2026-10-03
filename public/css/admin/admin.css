@@ -1,0 +1,3713 @@
+/* ==========================================================================
+   Ateliers Pehouet — Admin · design system (docs/CMS.md §6)
+   Loaded after 01-tokens, 02-base and 04-components on admin pages only.
+   Prefix adm-, logo palette tokens only, keyframes ap-adm-* (outside the public
+   animation catalogue). Calm and functional: the black canvas of the atelier,
+   Mondrian accents, the triangle as the recurring mark, Audiowide headings,
+   Exo 2 text. Mobile-first; breakpoints 40em / 48em / 64em / 80em.
+
+   Contents
+     1. Admin tokens & base          9. Tables (cards on mobile)
+     2. Shell: sidebar, nav, topbar 10. Forms, fields, toggles, save bar
+     3. Content & layout primitives 11. Tabs
+     4. Page head                   12. Photos: thumbs, grid, drop zone, uploads, spots, focal point
+     5. Cards, stats, empty states  13. Dialogs
+     6. Buttons & small controls    14. Sortable lists
+     7. Badges & language tags      15. Timeline & pagination
+     8. Flash messages & toasts     16. Sign-in (guest layout) · 17. Style guide · 18. Keyframes · 19. Motion, print
+   ========================================================================== */
+
+/* --- 1. Admin tokens & base --------------------------------------------------- */
+
+.admin {
+    --adm-sidebar-w: 16.5rem;
+    --adm-topbar-h: 3.75rem;
+    --adm-pad: clamp(1rem, 3vw, 2.25rem);
+    --adm-radius: var(--ap-radius-s);
+    --adm-line: var(--ap-white-08);
+    --adm-line-strong: var(--ap-white-16);
+    --adm-panel: linear-gradient(160deg, var(--ap-coal), var(--ap-ink) 70%);
+    --adm-gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+body.admin {
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+.admin p {
+    max-width: none;
+}
+
+.admin a:not([class]) {
+    color: var(--ap-yellow);
+}
+
+.admin :target {
+    scroll-margin-top: calc(var(--adm-topbar-h) + 1rem);
+}
+
+.admin .icon {
+    width: 1.15em;
+    height: 1.15em;
+}
+
+/* The shared #ap-signature symbol (partials.signature-sprite) takes no room. */
+.admin .signature-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+/* "Copie de test" warning (admin.partials.copy-warning). */
+.adm-copy {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.6rem var(--adm-pad);
+    background:
+        repeating-linear-gradient(-45deg, color-mix(in srgb, var(--ap-amber) 14%, transparent) 0 10px, transparent 10px 20px),
+        var(--ap-coal);
+    border-bottom: 1px solid color-mix(in srgb, var(--ap-amber) 45%, transparent);
+    color: var(--ap-white);
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.adm-copy__icon {
+    flex: none;
+    color: var(--ap-amber);
+}
+
+.adm-copy__link {
+    color: var(--ap-amber);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    white-space: nowrap;
+}
+
+.adm-copy__link:hover {
+    color: var(--ap-white);
+}
+
+.adm-guest__card .adm-copy {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--ap-amber) 45%, transparent);
+    border-radius: var(--adm-radius);
+}
+
+/* --- 2. Shell: sidebar, nav, topbar -------------------------------------------- */
+
+.adm-shell {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.adm-sidebar {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, var(--ap-ink), var(--ap-black) 85%);
+    border-right: 1px solid var(--adm-line);
+}
+
+.adm-sidebar__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 1.1rem 0.9rem 1rem 1.1rem;
+    border-bottom: 1px solid var(--adm-line);
+}
+
+.adm-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    color: var(--ap-white);
+}
+
+.adm-brand__mark {
+    flex: none;
+    width: 2.35rem;
+    height: auto;
+    overflow: visible;
+    filter: drop-shadow(0 6px 14px var(--ap-red-glow));
+    transition: transform var(--ap-dur) var(--ap-ease-spring);
+}
+
+.adm-brand:hover .adm-brand__mark {
+    transform: translateY(-2px) rotate(-4deg);
+}
+
+.adm-brand__text {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+    line-height: 1.1;
+}
+
+.adm-brand__name {
+    font-family: var(--ap-font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    background: var(--ap-gradient-teliers);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.adm-brand__sub {
+    font-family: var(--ap-font-tagline);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.adm-nav {
+    flex: 1;
+    display: grid;
+    align-content: start;
+    gap: 1.1rem;
+    padding: 0.9rem 0.65rem 1.25rem;
+}
+
+.adm-nav__heading {
+    margin-bottom: 0.35rem;
+    padding: 0 0.75rem;
+    font-family: var(--ap-font-tagline);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.adm-nav__list {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-nav__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 2.65rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--ap-radius-s);
+    color: var(--ap-text-soft);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background-color var(--ap-dur-fast) ease, color var(--ap-dur-fast) ease;
+}
+
+/* The accent bar of the current section. */
+.adm-nav__link::before {
+    content: "";
+    position: absolute;
+    left: -0.65rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.adm-nav__icon {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 1.95rem;
+    height: 1.95rem;
+    border-radius: var(--ap-radius-s);
+    color: var(--accent-bright);
+    background: color-mix(in srgb, var(--accent) 11%, transparent);
+    transition: background-color var(--ap-dur-fast) ease, color var(--ap-dur-fast) ease, transform var(--ap-dur) var(--ap-ease-spring);
+}
+
+.adm-nav__icon .icon {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.adm-nav__label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-nav__link:hover {
+    color: var(--ap-white);
+    background: var(--ap-white-04);
+}
+
+.adm-nav__link:hover .adm-nav__icon {
+    transform: rotate(-6deg) scale(1.06);
+}
+
+.adm-nav__link.is-active {
+    color: var(--ap-white);
+    font-weight: 600;
+    background: color-mix(in srgb, var(--accent) 13%, transparent);
+}
+
+.adm-nav__link.is-active::before {
+    transform: scaleY(1);
+}
+
+.adm-nav__link.is-active .adm-nav__icon {
+    color: var(--accent-ink);
+    background: var(--accent);
+}
+
+.adm-nav__link:focus-visible {
+    outline-offset: -2px;
+}
+
+.adm-nav__badge {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.4rem;
+    border-radius: var(--ap-radius-pill);
+    background: var(--ap-red);
+    color: var(--ap-white);
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    animation: ap-adm-pulse 2.4s var(--ap-ease-out) 0.6s 3;
+}
+
+.adm-sidebar__foot {
+    display: grid;
+    gap: 0.6rem;
+    padding: 1rem 1.1rem 1.25rem;
+    border-top: 1px solid var(--adm-line);
+}
+
+.adm-sidebar__tagline {
+    font-family: var(--ap-font-tagline);
+    font-size: 0.72rem;
+    color: var(--ap-text-muted);
+}
+
+/* A Mondrian strip: the five fields of the logo's triangle. */
+.adm-mondrian {
+    display: flex;
+    gap: 2px;
+    width: 100%;
+    height: 0.4rem;
+}
+
+.adm-mondrian span {
+    border-radius: 1px;
+}
+
+.adm-mondrian span:nth-child(1) { flex: 3; background: var(--ap-blue); }
+.adm-mondrian span:nth-child(2) { flex: 1.4; background: var(--ap-yellow); }
+.adm-mondrian span:nth-child(3) { flex: 0.8; background: var(--ap-white); }
+.adm-mondrian span:nth-child(4) { flex: 2; background: var(--ap-red); }
+.adm-mondrian span:nth-child(5) { flex: 1; background: var(--ap-steel); }
+
+.adm-backdrop {
+    display: none;
+}
+
+/* Drawer below 64em (JavaScript on). Without JavaScript the nav stays above the content. */
+@media (max-width: 63.99em) {
+    html.js .adm-sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: var(--ap-z-modal);
+        width: min(20rem, 86vw);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        visibility: hidden;
+        transform: translateX(-102%);
+        box-shadow: var(--ap-shadow-deep);
+        transition: transform var(--ap-dur) var(--ap-ease-out), visibility 0s linear var(--ap-dur);
+    }
+
+    html.adm-nav-open .adm-sidebar {
+        visibility: visible;
+        transform: none;
+        transition: transform var(--ap-dur) var(--ap-ease-out), visibility 0s;
+    }
+
+    html.js .adm-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: calc(var(--ap-z-modal) - 1);
+        background: var(--ap-black-70);
+        backdrop-filter: blur(3px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--ap-dur) ease;
+    }
+
+    html.adm-nav-open .adm-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    html.adm-nav-open {
+        overflow: hidden;
+    }
+
+    html.no-js .adm-sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--adm-line);
+    }
+
+    html.no-js .adm-nav__list {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+    }
+}
+
+@media (min-width: 64em) {
+    .adm-shell {
+        display: grid;
+        grid-template-columns: var(--adm-sidebar-w) minmax(0, 1fr);
+    }
+
+    .adm-sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+
+    .adm-topbar .adm-topbar__menu,
+    .adm-sidebar .adm-sidebar__close {
+        display: none;
+    }
+}
+
+html.no-js .adm-topbar .adm-topbar__menu,
+html.no-js .adm-sidebar .adm-sidebar__close {
+    display: none;
+}
+
+.adm-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.adm-topbar {
+    position: sticky;
+    top: 0;
+    z-index: var(--ap-z-header);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: var(--adm-topbar-h);
+    padding: 0.45rem var(--adm-pad);
+    background: var(--ap-black-90);
+    border-bottom: 1px solid var(--adm-line);
+    backdrop-filter: blur(12px) saturate(140%);
+}
+
+/* A short accent line under the bar: the colour of the current section. */
+.adm-topbar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: min(12rem, 40%);
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.adm-topbar__title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-family: var(--ap-font-display);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--ap-text-soft);
+}
+
+.adm-topbar__tools {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.adm-topbar__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+    justify-content: center;
+    padding: 0.4rem 0.65rem;
+    border-radius: var(--ap-radius-s);
+    color: var(--ap-text-soft);
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease;
+}
+
+.adm-topbar__link:hover {
+    color: var(--ap-white);
+    background: var(--ap-white-08);
+}
+
+.adm-topbar__link .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+}
+
+.adm-logout {
+    display: inline-flex;
+}
+
+.adm-user {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 13rem;
+    padding: 0.2rem 0.75rem 0.2rem 0.2rem;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: var(--ap-radius-pill);
+    color: var(--ap-white);
+    font-size: 0.86rem;
+    font-weight: 600;
+    transition: border-color var(--ap-dur-fast) ease;
+}
+
+.adm-user:hover {
+    border-color: var(--ap-yellow);
+}
+
+.adm-user__avatar {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.95rem;
+    height: 1.95rem;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background:
+        linear-gradient(var(--ap-ink), var(--ap-ink)) padding-box,
+        conic-gradient(var(--ap-blue) 0 33%, var(--ap-yellow) 0 66%, var(--ap-red) 0) border-box;
+    font-family: var(--ap-font-display);
+    font-size: 0.78rem;
+    color: var(--ap-white);
+}
+
+.adm-user__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-lang-switch {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: var(--ap-radius-pill);
+    font-family: var(--ap-font-display);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+}
+
+.adm-lang-switch__link {
+    display: inline-grid;
+    place-items: center;
+    min-width: 2.15rem;
+    min-height: 2.05rem;
+    padding: 0 0.4em;
+    border-radius: var(--ap-radius-pill);
+    color: var(--ap-text-muted);
+    transition: color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease;
+}
+
+.adm-lang-switch__link:hover {
+    color: var(--ap-white);
+}
+
+.adm-lang-switch__link[aria-current="true"] {
+    background: var(--ap-yellow);
+    color: var(--ap-black);
+}
+
+@media (max-width: 47.99em) {
+    .adm-topbar__label,
+    .adm-user__name {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    .adm-user {
+        padding: 0.15rem;
+    }
+}
+
+/* --- 3. Content & layout primitives --------------------------------------------- */
+
+.adm-content {
+    flex: 1;
+    width: 100%;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 3vw, 2.5rem) var(--adm-pad) 5rem;
+}
+
+.adm-content:focus-visible {
+    outline: none;
+}
+
+.adm-content > * + * {
+    margin-top: var(--adm-gap);
+}
+
+.adm-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--adm-stack-gap, 1rem);
+}
+
+.adm-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--adm-cluster-gap, 0.6rem);
+}
+
+.adm-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+}
+
+.adm-grid {
+    display: grid;
+    gap: var(--adm-grid-gap, 1.25rem);
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.adm-grid--auto {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+}
+
+/* Key figures (x-admin.stat): two per row on phones. */
+.adm-grid--stats {
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr));
+}
+
+@media (min-width: 48em) {
+    .adm-grid--stats {
+        gap: 1.25rem;
+        grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    }
+}
+
+@media (min-width: 48em) {
+    .adm-grid--2,
+    .adm-grid--3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 80em) {
+    .adm-grid--3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.adm-muted {
+    color: var(--ap-text-muted);
+}
+
+.adm-small {
+    font-size: 0.85rem;
+}
+
+.adm-mono {
+    font-family: var(--ap-font-mono);
+    font-size: 0.88em;
+}
+
+.adm-link {
+    color: var(--ap-yellow);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+}
+
+.adm-link:hover {
+    color: var(--ap-white);
+}
+
+/* Definition lists: label ⇒ value rows (environment summary, message details…). */
+.adm-dl {
+    display: grid;
+    gap: 0.6rem 1.25rem;
+    margin: 0;
+}
+
+.adm-dl dt {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ap-text-muted);
+}
+
+.adm-dl dd {
+    margin: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    color: var(--ap-white);
+}
+
+@media (min-width: 40em) {
+    .adm-dl {
+        grid-template-columns: minmax(8rem, max-content) minmax(0, 1fr);
+        align-items: baseline;
+    }
+}
+
+/* A search box for [data-adm-filter] inputs. */
+.adm-search {
+    position: relative;
+    display: block;
+    width: min(100%, 22rem);
+}
+
+.admin .adm-search .field__input {
+    padding-left: 2.6rem;
+}
+
+.adm-search > .icon {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    translate: 0 -50%;
+    color: var(--ap-text-muted);
+    pointer-events: none;
+}
+
+/* --- 4. Page head ------------------------------------------------------------------ */
+
+.adm-page-head {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--adm-line);
+}
+
+.adm-page-head::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 4.5rem;
+    height: 2px;
+    background: var(--accent);
+}
+
+.adm-page-head__text {
+    display: grid;
+    flex: 1 1 22rem;
+    gap: 0.55rem;
+    min-width: 0;
+}
+
+.adm-page-head__back {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.2rem;
+    color: var(--ap-text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: color var(--ap-dur-fast) ease;
+}
+
+.adm-page-head__back:hover {
+    color: var(--ap-white);
+}
+
+.adm-page-head__back:hover .icon {
+    transform: translateX(-3px);
+}
+
+.adm-page-head__back .icon {
+    transition: transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.adm-page-head__mark {
+    display: inline-flex;
+    gap: 3px;
+    height: 0.45rem;
+}
+
+.adm-page-head__mark span:nth-child(1) { width: 1.7rem; background: var(--accent); }
+.adm-page-head__mark span:nth-child(2) { width: 0.5rem; background: var(--ap-white); }
+.adm-page-head__mark span:nth-child(3) { width: 0.85rem; background: var(--ap-steel); }
+
+.adm-page-head__title {
+    font-family: var(--ap-font-display);
+    font-size: clamp(1.45rem, 1.1rem + 1.4vw, 2.15rem);
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ap-white);
+    overflow-wrap: anywhere;
+}
+
+.adm-page-head__lead {
+    max-width: 64ch;
+    color: var(--ap-text-soft);
+}
+
+.adm-page-head__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* --- 5. Cards, stats, empty states ---------------------------------------------- */
+
+.adm-card {
+    position: relative;
+    min-width: 0;
+    background: var(--adm-panel);
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+}
+
+.adm-card__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--adm-line);
+}
+
+.adm-card__title {
+    font-family: var(--ap-font-display);
+    font-size: 0.92rem;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.adm-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.adm-card__body {
+    padding: 1.25rem;
+}
+
+.adm-card__body > * + * {
+    margin-top: 1rem;
+}
+
+.adm-card__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--adm-line);
+}
+
+.adm-card > .adm-card__foot {
+    margin: 0;
+    padding: 1rem 1.25rem;
+}
+
+.adm-card--accent {
+    border-top: 2px solid var(--accent);
+}
+
+.adm-card--accent .adm-card__head {
+    padding-right: 2.5rem;
+}
+
+/* The corner triangle of the accent. */
+.adm-card--accent::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: var(--accent);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    pointer-events: none;
+}
+
+.adm-stat {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    align-content: start;
+    gap: 0.3rem;
+    overflow: hidden;
+    padding: 1.15rem 1.25rem 1.3rem;
+    background: var(--adm-panel);
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+    color: var(--ap-text);
+    transition: border-color var(--ap-dur) ease, transform var(--ap-dur) var(--ap-ease-out), box-shadow var(--ap-dur) ease;
+}
+
+.adm-stat::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--accent);
+}
+
+/* A large faint triangle of the accent in the corner. */
+.adm-stat::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -1.75rem;
+    right: -1.25rem;
+    width: 5.5rem;
+    height: 4.75rem;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    clip-path: var(--ap-clip-tri-down);
+}
+
+.adm-stat__icon {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-bottom: 0.4rem;
+    border-radius: var(--ap-radius-s);
+    color: var(--accent-bright);
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.adm-stat__value {
+    font-family: var(--ap-font-display);
+    font-size: clamp(1.7rem, 1.35rem + 1.1vw, 2.3rem);
+    line-height: 1;
+    color: var(--ap-white);
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-stat__label {
+    color: var(--ap-text-soft);
+    font-size: 0.9rem;
+}
+
+.adm-stat__go {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    color: var(--accent-bright);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity var(--ap-dur) ease, transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.adm-stat--link:hover,
+.adm-stat--link:focus-visible {
+    border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    box-shadow: 0 18px 40px -24px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+.adm-stat--link:hover .adm-stat__go,
+.adm-stat--link:focus-visible .adm-stat__go {
+    opacity: 1;
+    transform: none;
+}
+
+.adm-empty {
+    display: grid;
+    justify-items: center;
+    gap: 0.55rem;
+    padding: clamp(2rem, 5vw, 3.25rem) 1.25rem;
+    border: 1px dashed var(--adm-line-strong);
+    border-radius: var(--adm-radius);
+    background: radial-gradient(80% 90% at 50% 0%, var(--ap-white-04), transparent 70%);
+    text-align: center;
+}
+
+.adm-empty__art {
+    position: relative;
+    width: 6rem;
+    height: 5.2rem;
+    margin-bottom: 0.6rem;
+}
+
+.adm-empty__art::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--ap-white-08);
+    clip-path: var(--ap-clip-tri);
+}
+
+.adm-empty__block {
+    position: absolute;
+    border-radius: 1px;
+}
+
+.adm-empty__block--blue {
+    left: 0.4rem;
+    bottom: 0;
+    width: 1.35rem;
+    height: 1.35rem;
+    background: var(--ap-blue);
+}
+
+.adm-empty__block--yellow {
+    right: 0.9rem;
+    top: 0.35rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    background: var(--ap-yellow);
+}
+
+.adm-empty__block--red {
+    right: 0;
+    bottom: 0;
+    width: 1.75rem;
+    height: 0.8rem;
+    background: var(--ap-red);
+}
+
+.adm-empty__icon {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    display: grid;
+    place-items: center;
+    width: 2.3rem;
+    height: 2.3rem;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: 50%;
+    background: var(--ap-black);
+    color: var(--ap-mist);
+    translate: -50% -50%;
+}
+
+.adm-empty__title {
+    font-family: var(--ap-font-display);
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.adm-empty__text {
+    max-width: 46ch;
+    color: var(--ap-text-soft);
+}
+
+.adm-empty__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+}
+
+/* --- 6. Buttons & small controls ------------------------------------------------ */
+
+.admin .btn .icon {
+    width: 1.1em;
+    height: 1.1em;
+}
+
+.adm-btn--danger {
+    --btn-bg: var(--ap-red);
+    --btn-fg: var(--ap-white);
+}
+
+.adm-btn--danger:hover {
+    --btn-bg: var(--ap-red-bright);
+    box-shadow: 0 12px 30px -12px var(--ap-red-glow);
+}
+
+.admin .btn:disabled,
+.admin .btn[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Busy state: a spinning triangle after the label (e.g. while a request runs). */
+.admin .btn.is-busy {
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+.admin .btn.is-busy::after {
+    content: "";
+    flex: none;
+    width: 0.95em;
+    height: 0.82em;
+    background: currentColor;
+    clip-path: var(--ap-clip-tri);
+    animation: ap-adm-spin 0.9s linear infinite;
+}
+
+@media (max-width: 29.99em) {
+    .admin .btn {
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+.adm-icon-btn {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid transparent;
+    border-radius: var(--ap-radius-s);
+    background: transparent;
+    color: var(--ap-text-soft);
+    transition: color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease, border-color var(--ap-dur-fast) ease;
+}
+
+.adm-icon-btn:hover {
+    color: var(--ap-white);
+    background: var(--ap-white-08);
+}
+
+.adm-icon-btn .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.adm-icon-btn--outline {
+    border-color: var(--adm-line-strong);
+}
+
+.adm-icon-btn--sm {
+    width: 2rem;
+    height: 2rem;
+}
+
+.adm-icon-btn--sm .icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.adm-icon-btn--danger:hover {
+    color: var(--ap-red-bright);
+    background: color-mix(in srgb, var(--ap-red) 14%, transparent);
+}
+
+.adm-icon-btn[aria-disabled="true"] {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.adm-icon-btn[aria-disabled="true"]:hover {
+    background: transparent;
+    color: var(--ap-text-soft);
+}
+
+/* --- 7. Badges & language tags -------------------------------------------------- */
+
+.adm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.2em 0.6em;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: var(--ap-radius-pill);
+    background: var(--ap-white-04);
+    color: var(--ap-text-soft);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    line-height: 1.35;
+    text-transform: uppercase;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.adm-badge::before {
+    content: "";
+    flex: none;
+    width: 0.55em;
+    height: 0.48em;
+    background: currentColor;
+    clip-path: var(--ap-clip-tri);
+}
+
+.adm-badge--new {
+    background: var(--ap-yellow);
+    border-color: var(--ap-yellow);
+    color: var(--ap-black);
+}
+
+.adm-badge--modified {
+    background: color-mix(in srgb, var(--ap-amber) 10%, transparent);
+    border-color: color-mix(in srgb, var(--ap-amber) 55%, transparent);
+    color: var(--ap-amber);
+}
+
+.adm-badge--hidden {
+    border-style: dashed;
+    color: var(--ap-smoke);
+}
+
+.adm-badge--custom {
+    background: color-mix(in srgb, var(--ap-blue) 16%, transparent);
+    border-color: color-mix(in srgb, var(--ap-blue-bright) 55%, transparent);
+    color: var(--ap-blue-bright);
+}
+
+.adm-badge--success {
+    background: color-mix(in srgb, var(--ap-yellow) 9%, transparent);
+    border-color: color-mix(in srgb, var(--ap-yellow) 50%, transparent);
+    color: var(--ap-yellow);
+}
+
+.adm-badge--danger {
+    background: color-mix(in srgb, var(--ap-red) 16%, transparent);
+    border-color: color-mix(in srgb, var(--ap-red-bright) 55%, transparent);
+    color: var(--ap-red-bright);
+}
+
+.adm-badge--info {
+    border-color: var(--ap-white-32);
+    color: var(--ap-white);
+}
+
+.adm-lang {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.12em 0.45em;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: var(--ap-radius-xs);
+    color: var(--ap-text-soft);
+    font-family: var(--ap-font-display);
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    line-height: 1.3;
+    text-transform: uppercase;
+}
+
+.adm-lang--fr {
+    background: color-mix(in srgb, var(--ap-blue) 16%, transparent);
+    border-color: color-mix(in srgb, var(--ap-blue-bright) 55%, transparent);
+    color: var(--ap-blue-bright);
+}
+
+.adm-lang--en {
+    background: color-mix(in srgb, var(--ap-red) 14%, transparent);
+    border-color: color-mix(in srgb, var(--ap-red-bright) 55%, transparent);
+    color: var(--ap-red-bright);
+}
+
+/* --- 8. Flash messages & toasts --------------------------------------------------- */
+
+.adm-flashes {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.adm-flash,
+.adm-toast {
+    --flash: var(--ap-yellow);
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--flash) 35%, transparent);
+    border-left: 4px solid var(--flash);
+    border-radius: var(--adm-radius);
+}
+
+.adm-flash {
+    padding: 0.85rem 0.8rem 0.85rem 1rem;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--flash) 12%, var(--ap-coal)), var(--ap-coal) 65%);
+    animation: ap-adm-in 0.45s var(--ap-ease-out) both;
+    transition: opacity var(--ap-dur) ease, transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.adm-flash--success,
+.adm-toast--success {
+    --flash: var(--ap-yellow);
+}
+
+.adm-flash--error,
+.adm-toast--error {
+    --flash: var(--ap-red-bright);
+}
+
+.adm-flash--info,
+.adm-toast--info {
+    --flash: var(--ap-blue-bright);
+}
+
+.adm-flash__icon {
+    flex: none;
+    margin-top: 0.05rem;
+    color: var(--flash);
+}
+
+.adm-flash__icon .icon {
+    width: 1.35rem;
+    height: 1.35rem;
+}
+
+.adm-flash__text,
+.adm-flash__body {
+    flex: 1;
+    min-width: 0;
+    padding-top: 0.05rem;
+    color: var(--ap-white);
+    font-weight: 500;
+}
+
+.adm-flash__title {
+    font-weight: 700;
+}
+
+.adm-flash__list {
+    display: grid;
+    gap: 0.25rem;
+    margin: 0.45rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 400;
+}
+
+.adm-flash__list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.adm-flash__list li::before {
+    content: "";
+    flex: none;
+    width: 0.55em;
+    height: 0.48em;
+    background: var(--flash);
+    clip-path: var(--ap-clip-tri);
+}
+
+.adm-flash__list a {
+    color: var(--ap-white);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--flash) 70%, transparent);
+    text-underline-offset: 0.2em;
+}
+
+.adm-flash__list a:hover {
+    color: var(--ap-yellow);
+}
+
+.adm-flash__more {
+    margin-top: 0.35rem;
+    color: var(--ap-text-soft);
+    font-weight: 400;
+}
+
+.adm-flash--summary:focus-visible {
+    outline: 2px solid var(--ap-focus);
+    outline-offset: 3px;
+}
+
+.adm-flash__close,
+.adm-toast__close {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    margin: -0.2rem -0.1rem -0.2rem 0;
+    border-radius: var(--ap-radius-s);
+    color: var(--ap-text-muted);
+    transition: color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease;
+}
+
+.adm-flash__close:hover,
+.adm-toast__close:hover {
+    color: var(--ap-white);
+    background: var(--ap-white-08);
+}
+
+html.no-js .adm-flash__close {
+    display: none;
+}
+
+/* Notices written by admin.js (docs/CMS.md §13 D20): session gone, draft restored. */
+.adm-session .adm-flash__body,
+.adm-draft .adm-flash__body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 1rem;
+}
+
+.adm-session .adm-flash__body p,
+.adm-draft .adm-flash__body p {
+    flex: 1 1 18rem;
+}
+
+/* Long labels wrap on phones instead of overflowing the notice. */
+.adm-session__login,
+.adm-draft__discard {
+    flex: 0 1 auto;
+    max-width: 100%;
+    white-space: normal;
+}
+
+/* Inserted just before its form: .adm-content spaces its children itself. */
+.adm-draft {
+    margin-bottom: 1rem;
+}
+
+.adm-content > .adm-draft,
+.adm-flashes > .adm-draft {
+    margin-bottom: 0;
+}
+
+.adm-flash.is-leaving,
+.adm-toast.is-leaving {
+    opacity: 0;
+    transform: translateY(-6px);
+}
+
+/* Top right, under the top bar: never over the sticky save bar at the bottom. */
+.adm-toasts {
+    position: fixed;
+    z-index: calc(var(--ap-z-modal) + 10);
+    top: calc(var(--adm-topbar-h) + 0.75rem);
+    right: max(0.75rem, env(safe-area-inset-right));
+    left: max(0.75rem, env(safe-area-inset-left));
+    display: grid;
+    justify-items: end;
+    gap: 0.6rem;
+    pointer-events: none;
+}
+
+@media (min-width: 48em) {
+    .adm-toasts {
+        left: auto;
+        right: 1.25rem;
+        width: min(25rem, calc(100vw - 2.5rem));
+    }
+}
+
+.adm-toast {
+    width: min(100%, 25rem);
+    padding: 0.75rem 0.7rem 0.75rem 0.95rem;
+    background: var(--ap-graphite);
+    box-shadow: var(--ap-shadow-deep);
+    color: var(--ap-white);
+    font-weight: 500;
+    pointer-events: auto;
+    animation: ap-adm-toast 0.4s var(--ap-ease-spring) both;
+    transition: opacity var(--ap-dur) ease, transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.adm-toast__icon {
+    flex: none;
+    color: var(--flash);
+}
+
+.adm-toast__text {
+    flex: 1;
+    min-width: 0;
+    padding-top: 0.1rem;
+}
+
+/* --- 9. Tables (cards on mobile; data-label on each cell) --------------------------- */
+
+.adm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.94rem;
+}
+
+.adm-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.adm-table,
+.adm-table tbody,
+.adm-table tr,
+.adm-table td,
+.adm-table tbody th {
+    display: block;
+}
+
+.adm-table tbody {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.adm-table tr {
+    padding: 0.75rem 1rem;
+    background: var(--adm-panel);
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+}
+
+.adm-table td,
+.adm-table tbody th {
+    display: grid;
+    grid-template-columns: minmax(6.5rem, 34%) minmax(0, 1fr);
+    justify-items: start;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.35rem 0;
+    font-weight: 400;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.adm-table td::before,
+.adm-table tbody th::before {
+    content: attr(data-label);
+    color: var(--ap-text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-top: 0.15rem;
+}
+
+.adm-table td:not([data-label]),
+.adm-table td[data-label=""],
+.adm-table .adm-table__main,
+.adm-table .adm-table__actions {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.adm-table td:not([data-label])::before,
+.adm-table td[data-label=""]::before,
+.adm-table .adm-table__main::before,
+.adm-table .adm-table__actions::before {
+    content: none;
+}
+
+.adm-table .adm-table__main {
+    color: var(--ap-white);
+    font-weight: 600;
+}
+
+.adm-table__main a {
+    color: inherit;
+}
+
+.adm-table__main a:hover {
+    color: var(--ap-yellow);
+}
+
+.adm-table__actions {
+    padding-top: 0.6rem;
+}
+
+@media (min-width: 48em) {
+    .adm-table {
+        display: table;
+        border: 1px solid var(--adm-line);
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: var(--adm-radius);
+        background: var(--adm-panel);
+        overflow: hidden;
+    }
+
+    .adm-table thead {
+        position: static;
+        display: table-header-group;
+        width: auto;
+        height: auto;
+        overflow: visible;
+        clip-path: none;
+    }
+
+    .adm-table tbody {
+        display: table-row-group;
+    }
+
+    .adm-table tr {
+        display: table-row;
+        padding: 0;
+        background: none;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .adm-table th,
+    .adm-table td,
+    .adm-table tbody th {
+        display: table-cell;
+        padding: 0.8rem 1rem;
+        border-bottom: 1px solid var(--adm-line);
+        vertical-align: middle;
+    }
+
+    .adm-table td::before,
+    .adm-table tbody th::before {
+        content: none;
+    }
+
+    .adm-table thead th {
+        background: var(--ap-white-04);
+        color: var(--ap-text-muted);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-align: left;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .adm-table tbody tr:last-child > * {
+        border-bottom: 0;
+    }
+
+    .adm-table tbody tr {
+        transition: background-color var(--ap-dur-fast) ease;
+    }
+
+    .adm-table tbody tr:hover {
+        background: var(--ap-white-04);
+    }
+
+    .adm-table .adm-table__actions {
+        padding-top: 0.8rem;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .adm-table .adm-table__actions > .adm-cluster {
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+    }
+
+    .adm-table__shrink {
+        width: 1%;
+        white-space: nowrap;
+    }
+}
+
+/* --- 10. Forms, fields, toggles, save bar ------------------------------------------ */
+
+.adm-form {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.adm-fieldset {
+    display: grid;
+    gap: 1.1rem;
+    min-width: 0;
+    margin: 0;
+    padding: 1.1rem 1.25rem 1.3rem;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+}
+
+.adm-fieldset > legend {
+    margin-left: -0.45rem;
+    padding: 0 0.45rem;
+    font-family: var(--ap-font-display);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.admin .field {
+    gap: 0.4rem;
+    min-width: 0;
+}
+
+.admin .field__label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    color: var(--ap-white);
+}
+
+.admin .field__input {
+    min-height: 2.75rem;
+    padding: 0.6rem 0.85rem;
+    font-size: 1rem;
+}
+
+/* Height comes from rows (then from the text with data-autosize). */
+.admin textarea.field__input {
+    min-height: 2.75rem;
+}
+
+.admin textarea.field__input[data-autosize] {
+    overflow-y: hidden;
+    resize: none;
+}
+
+.admin .field--invalid .field__input {
+    border-color: var(--ap-red-bright);
+    animation: ap-adm-shake 0.4s var(--ap-ease-out);
+}
+
+.admin .field__input[aria-invalid="true"]:focus {
+    border-color: var(--ap-red-bright);
+    box-shadow: 0 0 0 3px var(--ap-red-glow);
+}
+
+.admin .field__hint {
+    font-size: 0.8rem;
+}
+
+/* The error triangle sits on the first line of a long message. */
+.admin .field__error {
+    align-items: baseline;
+}
+
+.adm-field__req {
+    color: var(--ap-red-bright);
+    font-weight: 700;
+}
+
+.adm-field__foot {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.adm-field__foot .field__hint {
+    flex: 1;
+    min-width: 0;
+}
+
+.adm-counter {
+    flex: none;
+    margin-left: auto;
+    color: var(--ap-text-muted);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    transition: color var(--ap-dur-fast) ease;
+}
+
+.adm-counter.is-near {
+    color: var(--ap-amber);
+}
+
+.adm-counter.is-over {
+    color: var(--ap-red-bright);
+    font-weight: 700;
+}
+
+.adm-field__control {
+    position: relative;
+}
+
+.adm-field__control .field__input {
+    padding-right: 3rem;
+}
+
+.adm-field__reveal {
+    position: absolute;
+    top: 50%;
+    right: 0.35rem;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--ap-radius-s);
+    color: var(--ap-text-muted);
+    translate: 0 -50%;
+    transition: color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease;
+}
+
+.adm-field__reveal:hover,
+.adm-field__reveal[aria-pressed="true"] {
+    color: var(--ap-yellow);
+    background: var(--ap-white-08);
+}
+
+/* FR | EN side by side from 64em. */
+.adm-pair {
+    display: grid;
+    gap: 1rem 1.25rem;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.adm-pair__head {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ap-text-soft);
+    font-size: 0.85rem;
+}
+
+@media (min-width: 64em) {
+    .adm-pair {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* The original text, shown under an overridden field. */
+.adm-default {
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.5rem 0.75rem;
+    border-left: 2px dashed var(--ap-amber);
+    border-radius: 0 var(--ap-radius-xs) var(--ap-radius-xs) 0;
+    background: color-mix(in srgb, var(--ap-amber) 7%, transparent);
+    color: var(--ap-text-soft);
+    font-size: 0.85rem;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+}
+
+.adm-default__label {
+    color: var(--ap-amber);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: normal;
+}
+
+/* "Rétablir l'original" check. */
+.adm-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ap-text-soft);
+    font-size: 0.82rem;
+    cursor: pointer;
+}
+
+.adm-reset input {
+    flex: none;
+    appearance: none;
+    display: grid;
+    place-items: center;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: 0;
+    border: 1px solid var(--ap-white-32);
+    border-radius: var(--ap-radius-xs);
+    background: var(--ap-ink);
+    cursor: pointer;
+}
+
+.adm-reset input::after {
+    content: "";
+    width: 0.6rem;
+    height: 0.52rem;
+    background: var(--ap-black);
+    clip-path: var(--ap-clip-tri);
+    transform: scale(0);
+    transition: transform var(--ap-dur) var(--ap-ease-spring);
+}
+
+.adm-reset input:checked {
+    background: var(--ap-amber);
+    border-color: var(--ap-amber);
+}
+
+.adm-reset input:checked::after {
+    transform: scale(1);
+}
+
+.adm-reset:hover {
+    color: var(--ap-white);
+}
+
+.adm-reset input:focus-visible {
+    outline: 2px solid var(--ap-focus);
+    outline-offset: 3px;
+}
+
+/* Toggle switch: hidden "0" + checkbox "1" (role=switch) over the track. */
+.adm-toggle {
+    position: relative;
+    display: grid;
+    gap: 0.3rem;
+}
+
+.adm-toggle__input {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 2.9rem;
+    height: 1.65rem;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.adm-toggle__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: fit-content;
+    min-height: 1.65rem;
+    color: var(--ap-white);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.adm-toggle__track {
+    position: relative;
+    flex: none;
+    width: 2.9rem;
+    height: 1.65rem;
+    border: 1px solid var(--ap-white-16);
+    border-radius: var(--ap-radius-pill);
+    background: var(--ap-steel);
+    transition: background-color var(--ap-dur-fast) ease, border-color var(--ap-dur-fast) ease;
+}
+
+.adm-toggle__thumb {
+    position: absolute;
+    top: 50%;
+    left: 0.2rem;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: -0.575rem;
+    border-radius: 50%;
+    background: var(--ap-mist);
+    transition: transform var(--ap-dur) var(--ap-ease-spring), background-color var(--ap-dur-fast) ease, border-radius var(--ap-dur) ease;
+}
+
+.adm-toggle__input:hover + .adm-toggle__label .adm-toggle__track {
+    border-color: var(--ap-white-32);
+}
+
+.adm-toggle__input:checked + .adm-toggle__label .adm-toggle__track {
+    background: var(--ap-yellow);
+    border-color: var(--ap-yellow);
+}
+
+.adm-toggle__input:checked + .adm-toggle__label .adm-toggle__thumb {
+    background: var(--ap-black);
+    transform: translateX(1.25rem);
+}
+
+.adm-toggle__input:focus-visible + .adm-toggle__label .adm-toggle__track {
+    outline: 2px solid var(--ap-focus);
+    outline-offset: 3px;
+}
+
+.adm-toggle__input:disabled + .adm-toggle__label {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.adm-toggle.field--invalid .adm-toggle__track {
+    border-color: var(--ap-red-bright);
+}
+
+.adm-toggle__hint,
+.adm-toggle__error {
+    padding-left: 3.65rem;
+}
+
+/* Sticky save bar: the last child of a form[data-adm-dirty]. */
+.adm-savebar {
+    position: sticky;
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    z-index: var(--ap-z-sticky);
+    margin-top: 0.5rem;
+}
+
+.adm-savebar__inner {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem 1rem;
+    overflow: hidden;
+    padding: 0.6rem 0.65rem 0.6rem 1.1rem;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: var(--ap-radius-m);
+    background: color-mix(in srgb, var(--ap-graphite) 90%, transparent);
+    box-shadow: var(--ap-shadow-deep);
+    backdrop-filter: blur(14px) saturate(140%);
+}
+
+.adm-savebar__inner::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    background: var(--ap-gradient-teliers);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--ap-dur-slow) var(--ap-ease-out);
+}
+
+.adm-savebar.is-dirty .adm-savebar__inner::before {
+    transform: scaleX(1);
+}
+
+.adm-savebar__status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.55rem;
+    min-width: 0;
+    color: var(--ap-text-muted);
+    font-size: 0.88rem;
+}
+
+.adm-savebar__dot {
+    flex: none;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--ap-steel);
+}
+
+.adm-savebar.is-dirty .adm-savebar__status {
+    color: var(--ap-yellow);
+}
+
+.adm-savebar.is-dirty .adm-savebar__dot {
+    --adm-pulse: var(--ap-yellow-glow);
+    background: var(--ap-yellow);
+    animation: ap-adm-pulse 1.8s var(--ap-ease-out) infinite;
+}
+
+.adm-savebar__extra {
+    color: var(--ap-text-soft);
+}
+
+.adm-savebar__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+
+/* --- 11. Tabs ([data-adm-tabs]; without JS every panel shows with its heading) ----- */
+
+.adm-tabs {
+    min-width: 0;
+}
+
+.adm-tabs__list {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--adm-line);
+    scrollbar-width: none;
+}
+
+.adm-tabs__tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1rem;
+    border-radius: var(--ap-radius-s) var(--ap-radius-s) 0 0;
+    color: var(--ap-text-muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease;
+}
+
+.adm-tabs__tab::after {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: -1px;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.adm-tabs__tab:hover {
+    color: var(--ap-white);
+    background: var(--ap-white-04);
+}
+
+.adm-tabs__tab[aria-selected="true"] {
+    color: var(--ap-white);
+}
+
+.adm-tabs__tab[aria-selected="true"]::after {
+    transform: scaleX(1);
+}
+
+.adm-tabs__tab:focus-visible {
+    outline-offset: -2px;
+}
+
+.adm-tabs__panel:focus-visible {
+    outline: none;
+}
+
+.adm-tabs__heading {
+    margin-bottom: 1rem;
+    font-family: var(--ap-font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+html.no-js .adm-tabs__list {
+    display: none;
+}
+
+html.no-js .adm-tabs__panel + .adm-tabs__panel {
+    margin-top: 2rem;
+}
+
+html.js [data-adm-tabs] .adm-tabs__heading {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* --- 12. Photos: thumbs, grid, drop zone, uploads, spots, focal point --------------- */
+
+.adm-thumb {
+    --adm-thumb: 96px;
+    display: block;
+    flex: none;
+    width: var(--adm-thumb);
+    height: var(--adm-thumb);
+    object-fit: cover;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--ap-radius-s);
+    background: var(--ap-graphite);
+}
+
+.adm-thumb--empty {
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--ap-coal), var(--ap-graphite));
+    color: var(--ap-smoke);
+}
+
+.adm-thumb--empty::before {
+    content: "";
+    position: absolute;
+    left: 20%;
+    bottom: 0;
+    width: 60%;
+    height: 52%;
+    background: var(--ap-white-08);
+    clip-path: var(--ap-clip-tri);
+}
+
+.adm-thumb--empty .icon {
+    position: relative;
+    width: 36%;
+    height: 36%;
+}
+
+/* Two photos per row on phones, then as many 11.5rem columns as fit. */
+.adm-media-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+@media (min-width: 48em) {
+    .adm-media-grid {
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+    }
+}
+
+.adm-media-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    background: var(--adm-panel);
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+    transition: border-color var(--ap-dur) ease, box-shadow var(--ap-dur) ease, transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.adm-media-card:hover {
+    border-color: var(--ap-white-32);
+}
+
+.adm-media-card.is-selected {
+    border-color: var(--ap-yellow);
+    box-shadow: 0 0 0 1px var(--ap-yellow), var(--ap-shadow-glow-yellow);
+}
+
+/* Selected: a yellow corner triangle with a check. */
+.adm-media-card.is-selected::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.1rem;
+    height: 2.1rem;
+    background: var(--ap-yellow);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.adm-media-card__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--ap-graphite);
+}
+
+.adm-media-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--ap-dur-slow) var(--ap-ease-out);
+}
+
+.adm-media-card:hover .adm-media-card__img {
+    transform: scale(1.04);
+}
+
+.adm-media-card__body {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+    padding: 0.7rem 0.8rem 0.75rem;
+}
+
+.adm-media-card__name {
+    overflow: hidden;
+    color: var(--ap-white);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-media-card__meta {
+    color: var(--ap-text-muted);
+    font-size: 0.76rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-media-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.adm-media-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding: 0 0.8rem 0.8rem;
+}
+
+/* Upload form: .adm-dropzone (+ .is-enhanced once uploader.js runs, .is-dragover, .is-busy). */
+.adm-dropzone {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.adm-dropzone__zone {
+    position: relative;
+    display: grid;
+    /* minmax(0, 1fr): the native file input (~300px) must not widen the page on 320px phones. */
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 0.7rem;
+    padding: 1.6rem 1.25rem 1.4rem;
+    border: 2px dashed var(--ap-white-16);
+    border-radius: var(--ap-radius-m);
+    background:
+        radial-gradient(110% 90% at 50% 0%, color-mix(in srgb, var(--ap-blue) 12%, transparent), transparent 70%),
+        var(--ap-ink);
+    text-align: center;
+    transition: border-color var(--ap-dur) ease, background-color var(--ap-dur) ease, opacity var(--ap-dur) ease;
+}
+
+.adm-dropzone__zone:hover {
+    border-color: var(--ap-white-32);
+}
+
+.adm-dropzone__art {
+    position: relative;
+    display: grid;
+    place-items: end center;
+    width: 3.6rem;
+    height: 3.1rem;
+}
+
+.adm-dropzone__tri {
+    position: absolute;
+    inset: 0;
+    background: var(--ap-gradient-tri);
+    clip-path: var(--ap-clip-tri);
+    transition: transform var(--ap-dur) var(--ap-ease-spring);
+}
+
+.adm-dropzone__art .icon {
+    position: relative;
+    width: 1.7rem;
+    height: 1.7rem;
+    margin-bottom: -0.35rem;
+    padding: 0.3rem;
+    border-radius: 50%;
+    background: var(--ap-black);
+    color: var(--ap-white);
+}
+
+.adm-dropzone__text {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.adm-dropzone__title {
+    font-family: var(--ap-font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.adm-dropzone__hint {
+    color: var(--ap-text-soft);
+    font-size: 0.92rem;
+}
+
+.adm-dropzone__or {
+    color: var(--ap-text-muted);
+}
+
+.adm-dropzone__formats {
+    max-width: 52ch;
+    color: var(--ap-text-muted);
+    font-size: 0.78rem;
+}
+
+/* The native file input: visible (and styled) until uploader.js enhances the form. */
+.adm-dropzone__input {
+    min-width: 0;
+    max-width: 100%;
+    color: var(--ap-text-soft);
+    font-size: 0.9rem;
+}
+
+.adm-dropzone__input::file-selector-button {
+    margin-right: 0.75rem;
+    padding: 0.55em 1em;
+    border: 0;
+    border-radius: var(--ap-radius-xs);
+    background: var(--ap-gradient-teliers);
+    color: var(--ap-black);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.adm-dropzone__browse {
+    display: none;
+}
+
+.adm-dropzone.is-enhanced .adm-dropzone__browse {
+    display: inline-flex;
+}
+
+.adm-dropzone.is-enhanced .adm-dropzone__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+}
+
+.adm-dropzone__input:focus-visible + .adm-dropzone__browse,
+.adm-dropzone.is-enhanced .adm-dropzone__input:focus-visible ~ .adm-dropzone__browse {
+    outline: 2px solid var(--ap-focus);
+    outline-offset: 4px;
+    clip-path: none;
+}
+
+.adm-dropzone.is-dragover .adm-dropzone__zone {
+    border-color: transparent;
+    background:
+        linear-gradient(90deg, var(--ap-yellow) 50%, transparent 0) repeat-x 0 0 / 1rem 2px,
+        linear-gradient(90deg, var(--ap-yellow) 50%, transparent 0) repeat-x 0 100% / 1rem 2px,
+        linear-gradient(0deg, var(--ap-yellow) 50%, transparent 0) repeat-y 0 0 / 2px 1rem,
+        linear-gradient(0deg, var(--ap-yellow) 50%, transparent 0) repeat-y 100% 0 / 2px 1rem,
+        color-mix(in srgb, var(--ap-yellow) 8%, var(--ap-ink));
+    animation: ap-adm-march 0.8s linear infinite;
+}
+
+.adm-dropzone.is-dragover .adm-dropzone__tri {
+    transform: translateY(-4px) scale(1.06);
+}
+
+.adm-dropzone.is-busy .adm-dropzone__zone {
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.adm-dropzone.is-busy .adm-dropzone__tri {
+    animation: ap-adm-spin 1.4s linear infinite;
+}
+
+/* Upload status rows (built by uploader.js):
+   <li class="adm-uploads__item is-uploading|is-done|is-error"><img class="adm-uploads__thumb">
+   <span class="adm-uploads__name"></span><span class="adm-uploads__status"></span>
+   <progress class="adm-progress" max="100" value="40"></progress><span class="adm-uploads__error"></span></li> */
+.adm-uploads {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-uploads__item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+        "thumb name status"
+        "thumb bar bar"
+        "thumb error error";
+    align-items: center;
+    gap: 0.3rem 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--ap-radius-s);
+    background: var(--ap-coal);
+}
+
+.adm-uploads__thumb {
+    grid-area: thumb;
+    width: 2.75rem;
+    height: 2.75rem;
+    object-fit: cover;
+    border-radius: var(--ap-radius-xs);
+    background: var(--ap-graphite);
+}
+
+.adm-uploads__name {
+    grid-area: name;
+    overflow: hidden;
+    color: var(--ap-white);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-uploads__status {
+    grid-area: status;
+    color: var(--ap-text-muted);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.adm-uploads__item .adm-progress {
+    grid-area: bar;
+}
+
+.adm-uploads__error {
+    grid-area: error;
+    color: var(--ap-red-bright);
+    font-size: 0.8rem;
+}
+
+.adm-uploads__error:empty {
+    display: none;
+}
+
+.adm-uploads__item.is-done {
+    border-color: color-mix(in srgb, var(--ap-yellow) 40%, transparent);
+}
+
+.adm-uploads__item.is-done .adm-uploads__status {
+    color: var(--ap-yellow);
+}
+
+.adm-uploads__item.is-error {
+    border-color: color-mix(in srgb, var(--ap-red-bright) 50%, transparent);
+}
+
+.adm-uploads__item.is-error .adm-uploads__status {
+    color: var(--ap-red-bright);
+}
+
+/* Progress: native <progress class="adm-progress"> (or <div class="adm-progress"><span class="adm-progress__bar" style="--value: 40%">). */
+.adm-progress {
+    display: block;
+    width: 100%;
+    height: 0.35rem;
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--ap-radius-pill);
+    background: var(--ap-steel);
+    color: var(--ap-yellow);
+    appearance: none;
+}
+
+.adm-progress::-webkit-progress-bar {
+    border-radius: inherit;
+    background: var(--ap-steel);
+}
+
+.adm-progress::-webkit-progress-value {
+    border-radius: inherit;
+    background: var(--ap-gradient-teliers);
+    transition: width 0.2s ease;
+}
+
+.adm-progress::-moz-progress-bar {
+    border-radius: inherit;
+    background: var(--ap-gradient-teliers);
+}
+
+.adm-progress:indeterminate,
+.adm-progress.is-indeterminate {
+    background: linear-gradient(90deg, transparent, var(--ap-yellow), transparent) no-repeat -40% 0 / 40% 100%, var(--ap-steel);
+    animation: ap-adm-progress 1.1s var(--ap-ease-in-out) infinite;
+}
+
+.adm-progress:indeterminate::-webkit-progress-bar {
+    background: transparent;
+}
+
+.adm-progress:indeterminate::-moz-progress-bar {
+    background: transparent;
+}
+
+.adm-progress__bar {
+    display: block;
+    width: var(--value, 0%);
+    height: 100%;
+    background: var(--ap-gradient-teliers);
+    transition: width 0.25s ease;
+}
+
+/* A fixed photo spot (admin.media.partials.slot). */
+.adm-slot {
+    display: grid;
+    overflow: hidden;
+    background: var(--adm-panel);
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+}
+
+@media (min-width: 40em) {
+    .adm-slot {
+        grid-template-columns: minmax(9rem, 15rem) minmax(0, 1fr);
+        align-items: start;
+    }
+}
+
+.adm-slot__frame {
+    position: relative;
+    overflow: hidden;
+    background: repeating-linear-gradient(135deg, var(--ap-ink) 0 10px, var(--ap-coal) 10px 20px);
+}
+
+.adm-slot__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.adm-slot__empty {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    color: var(--ap-text-muted);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.adm-slot__tri {
+    width: 2.6rem;
+    height: 2.25rem;
+    background: var(--ap-gradient-tri);
+    clip-path: var(--ap-clip-tri);
+    opacity: 0.4;
+}
+
+.adm-slot__ratio {
+    position: absolute;
+    left: 0.5rem;
+    bottom: 0.5rem;
+    padding: 0.12rem 0.45rem;
+    border-radius: var(--ap-radius-xs);
+    background: var(--ap-black-70);
+    color: var(--ap-mist);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.adm-slot__body {
+    display: grid;
+    align-content: start;
+    gap: 0.4rem;
+    min-width: 0;
+    padding: 1rem 1.1rem 1.1rem;
+}
+
+.adm-slot__label {
+    color: var(--ap-white);
+    font-weight: 700;
+}
+
+.adm-slot__meta {
+    color: var(--ap-text-muted);
+    font-size: 0.82rem;
+    overflow-wrap: anywhere;
+}
+
+.adm-slot__meta span {
+    margin-left: 0.4rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-slot__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+}
+
+.adm-slot__form {
+    display: inline-flex;
+}
+
+.adm-slot__remove {
+    --btn-fg: var(--ap-text-soft);
+}
+
+/* Focal point picker: <div class="adm-focal" style="--x: 30; --y: 60"><img><span class="adm-focal__dot"></span></div> */
+.adm-focal {
+    --x: 50;
+    --y: 50;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--adm-radius);
+    background: var(--ap-graphite);
+    cursor: crosshair;
+    touch-action: none;
+    user-select: none;
+}
+
+.adm-focal img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+}
+
+.adm-focal__dot {
+    position: absolute;
+    left: calc(var(--x) * 1%);
+    top: calc(var(--y) * 1%);
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: -1.375rem 0 0 -1.375rem;
+    border: 2px solid var(--ap-white);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--ap-black), inset 0 0 0 2px var(--ap-black-70), 0 0 0 100vmax var(--ap-black-40);
+    pointer-events: none;
+    transition: left var(--ap-dur-fast) ease, top var(--ap-dur-fast) ease;
+}
+
+/* Crosshair ticks + a small triangle at the exact point, readable on any photo. */
+.adm-focal__dot::before {
+    content: "";
+    position: absolute;
+    inset: -0.55rem;
+    background:
+        linear-gradient(var(--ap-white), var(--ap-white)) 50% 0 / 2px 0.45rem no-repeat,
+        linear-gradient(var(--ap-white), var(--ap-white)) 50% 100% / 2px 0.45rem no-repeat,
+        linear-gradient(var(--ap-white), var(--ap-white)) 0 50% / 0.45rem 2px no-repeat,
+        linear-gradient(var(--ap-white), var(--ap-white)) 100% 50% / 0.45rem 2px no-repeat;
+}
+
+.adm-focal__dot::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.7rem;
+    height: 0.62rem;
+    margin: -0.36rem 0 0 -0.35rem;
+    background: var(--ap-yellow);
+    clip-path: var(--ap-clip-tri);
+    filter: drop-shadow(0 0 1px var(--ap-black));
+}
+
+.adm-focal:focus-visible {
+    outline: 2px solid var(--ap-focus);
+    outline-offset: 3px;
+}
+
+/* --- 13. Dialogs (<dialog class="adm-dialog">; AP.admin.openDialog / closeDialog) -------- */
+
+.adm-dialog {
+    width: min(32rem, calc(100vw - 2rem));
+    max-width: none;
+    margin: auto;
+    max-height: min(88dvh, 52rem);
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: var(--ap-radius-m);
+    background: linear-gradient(160deg, var(--ap-graphite), var(--ap-coal) 45%, var(--ap-ink));
+    color: var(--ap-text);
+    box-shadow: var(--ap-shadow-deep);
+}
+
+.adm-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    animation: ap-adm-dialog 0.35s var(--ap-ease-out) both;
+}
+
+.adm-dialog::backdrop {
+    background: var(--ap-black-70);
+    backdrop-filter: blur(4px);
+}
+
+/* Browsers without showModal(): admin.js sets [open] + .is-fallback. */
+.adm-dialog.is-fallback {
+    position: fixed;
+    inset: 0;
+    z-index: var(--ap-z-modal);
+    height: fit-content;
+    margin: auto;
+}
+
+.adm-dialog--wide {
+    width: min(72rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+}
+
+.adm-dialog__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 0.9rem 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--adm-line);
+}
+
+.adm-dialog__title {
+    font-family: var(--ap-font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.07em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.adm-dialog__body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 1.25rem;
+}
+
+.adm-dialog__body > * + * {
+    margin-top: 0.9rem;
+}
+
+.adm-dialog__foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    padding: 0.9rem 1.25rem;
+    border-top: 1px solid var(--adm-line);
+    background: var(--ap-black-40);
+}
+
+.adm-dialog--confirm .adm-dialog__body {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.adm-dialog--confirm .adm-dialog__body > * + * {
+    margin-top: 0;
+}
+
+.adm-dialog__icon {
+    flex: none;
+    color: var(--ap-red-bright);
+}
+
+.adm-dialog__icon .icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+.adm-dialog__message {
+    color: var(--ap-text-soft);
+    white-space: pre-line;
+}
+
+html.adm-dialog-open {
+    overflow: hidden;
+}
+
+/* --- 14. Sortable lists ([data-sortable]; sortable.js) ------------------------------- */
+
+.adm-sortable {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-sortable__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 0.55rem 0.6rem;
+    background: var(--adm-panel);
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+    transition: border-color var(--ap-dur-fast) ease, opacity var(--ap-dur-fast) ease, box-shadow var(--ap-dur) ease;
+}
+
+.adm-sortable__item:hover {
+    border-color: var(--ap-white-16);
+}
+
+.adm-sortable__item.is-dragging {
+    opacity: 0.4;
+    border-style: dashed;
+    border-color: var(--ap-yellow);
+}
+
+.adm-sortable__item.is-moved {
+    box-shadow: 0 0 0 1px var(--ap-yellow);
+}
+
+/* The floating copy that follows the pointer while dragging. */
+.adm-sortable__ghost {
+    position: fixed;
+    z-index: var(--ap-z-modal);
+    margin: 0;
+    opacity: 0.95;
+    pointer-events: none;
+    box-shadow: var(--ap-shadow-deep), 0 0 0 1px var(--ap-yellow);
+    rotate: -1deg;
+}
+
+.adm-sortable__number {
+    flex: none;
+    min-width: 1.9rem;
+    color: var(--ap-text-muted);
+    font-family: var(--ap-font-display);
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-sortable__label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--ap-white);
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-sortable__moves {
+    display: inline-flex;
+    gap: 0.2rem;
+    margin-left: auto;
+}
+
+.adm-handle {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2.4rem;
+    border-radius: var(--ap-radius-s);
+    color: var(--ap-text-muted);
+    cursor: grab;
+    touch-action: none;
+    transition: color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease;
+}
+
+.adm-handle:hover {
+    color: var(--ap-white);
+    background: var(--ap-white-08);
+}
+
+.adm-handle:focus-visible {
+    outline-offset: -2px;
+}
+
+html.adm-sorting,
+html.adm-sorting body * {
+    cursor: grabbing;
+    user-select: none;
+}
+
+/* --- 15. Timeline & pagination --------------------------------------------------------- */
+
+.adm-timeline {
+    position: relative;
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-timeline__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0.15rem 0.75rem;
+    padding: 0.6rem 0;
+}
+
+.adm-timeline__item::before {
+    content: "";
+    position: absolute;
+    left: 0.7rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--adm-line-strong);
+}
+
+.adm-timeline__item:first-child::before {
+    top: 1.2rem;
+}
+
+.adm-timeline__item:last-child::before {
+    bottom: calc(100% - 1.2rem);
+}
+
+.adm-timeline__item:only-child::before {
+    content: none;
+}
+
+.adm-timeline__dot {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    width: 0.85rem;
+    height: 0.75rem;
+    margin-left: 0.3rem;
+    background: var(--accent, var(--ap-yellow));
+    clip-path: var(--ap-clip-tri);
+}
+
+.adm-timeline__text {
+    min-width: 0;
+    color: var(--ap-text);
+    font-size: 0.92rem;
+}
+
+.adm-timeline__meta {
+    grid-column: 2 / -1;
+    color: var(--ap-text-muted);
+    font-size: 0.78rem;
+}
+
+.adm-timeline__time {
+    color: var(--ap-text-muted);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.adm-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.adm-pagination__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.5rem;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: var(--ap-radius-s);
+    color: var(--ap-white);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: border-color var(--ap-dur-fast) ease, color var(--ap-dur-fast) ease;
+}
+
+.adm-pagination__link:hover {
+    border-color: var(--ap-yellow);
+    color: var(--ap-yellow);
+}
+
+.adm-pagination__link.is-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.adm-pagination__info {
+    color: var(--ap-text-muted);
+    font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
+}
+
+/* --- 16. Sign-in (admin.layouts.guest) ---------------------------------------------- */
+
+.adm-guest {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.adm-guest__art {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    min-height: 13rem;
+    overflow: hidden;
+    background:
+        radial-gradient(70% 60% at 50% 55%, color-mix(in srgb, var(--ap-red) 16%, transparent), transparent 70%),
+        radial-gradient(60% 70% at 15% 10%, color-mix(in srgb, var(--ap-blue) 18%, transparent), transparent 70%),
+        var(--ap-black);
+    border-bottom: 1px solid var(--adm-line);
+}
+
+/* Mondrian fields with white seams, dissolving into the black. */
+.adm-guest__fields {
+    position: absolute;
+    z-index: -1;
+    display: grid;
+    gap: 2px;
+    padding: 2px;
+    background: var(--ap-white);
+    animation: ap-adm-drift 18s var(--ap-ease-in-out) infinite alternate;
+}
+
+.adm-guest__fields span:nth-child(1) { background: var(--ap-blue); }
+.adm-guest__fields span:nth-child(2) { background: var(--ap-yellow); }
+.adm-guest__fields span:nth-child(3) { background: var(--ap-black); }
+.adm-guest__fields span:nth-child(4) { background: var(--ap-red); }
+.adm-guest__fields span:nth-child(5) { background: var(--ap-black); }
+.adm-guest__fields span:nth-child(6) { background: var(--ap-coal); }
+
+.adm-guest__fields--a {
+    --dx: 0.9rem;
+    --dy: 0.6rem;
+    top: -2.5rem;
+    left: -2.5rem;
+    width: min(24rem, 62%);
+    aspect-ratio: 1.15;
+    grid-template-columns: 2.2fr 1fr 1.6fr;
+    grid-template-rows: 1.8fr 1fr 1.4fr;
+    -webkit-mask-image: radial-gradient(115% 115% at 0% 0%, var(--ap-black) 30%, transparent 72%);
+    mask-image: radial-gradient(115% 115% at 0% 0%, var(--ap-black) 30%, transparent 72%);
+}
+
+.adm-guest__fields--a span:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+.adm-guest__fields--a span:nth-child(2) { grid-column: 2 / 4; grid-row: 1; }
+.adm-guest__fields--a span:nth-child(3) { grid-column: 2; grid-row: 2; }
+.adm-guest__fields--a span:nth-child(4) { grid-column: 3; grid-row: 2 / 4; }
+.adm-guest__fields--a span:nth-child(5) { grid-column: 1; grid-row: 3; }
+.adm-guest__fields--a span:nth-child(6) { grid-column: 2; grid-row: 3; }
+
+.adm-guest__fields--b {
+    --dx: -0.8rem;
+    --dy: -0.7rem;
+    right: -2rem;
+    bottom: -2rem;
+    width: min(18rem, 46%);
+    aspect-ratio: 1.3;
+    grid-template-columns: 1fr 1.8fr;
+    grid-template-rows: 1.3fr 1fr;
+    animation-duration: 22s;
+    -webkit-mask-image: radial-gradient(120% 120% at 100% 100%, var(--ap-black) 28%, transparent 70%);
+    mask-image: radial-gradient(120% 120% at 100% 100%, var(--ap-black) 28%, transparent 70%);
+}
+
+.adm-guest__fields--b span:nth-child(1) { background: var(--ap-coal); }
+.adm-guest__fields--b span:nth-child(2) { background: var(--ap-red); }
+.adm-guest__fields--b span:nth-child(3) { background: var(--ap-yellow); }
+.adm-guest__fields--b span:nth-child(4) { background: var(--ap-blue); }
+
+/* Signature-like slashes: long thin strokes at −20° and a steep one at 65°. */
+.adm-guest__slash {
+    position: absolute;
+    z-index: -1;
+    display: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ap-white-64) 30%, var(--ap-white) 70%, transparent);
+    transform-origin: 0 50%;
+    animation: ap-adm-slash 1.4s var(--ap-ease-out) both;
+}
+
+.adm-guest__slash--1 {
+    left: 3%;
+    top: 95%;
+    width: 50%;
+    rotate: -20deg;
+    animation-delay: 1.2s;
+}
+
+.adm-guest__slash--2 {
+    left: 18%;
+    top: 99%;
+    width: 56%;
+    rotate: -20deg;
+    opacity: 0.55;
+    animation-delay: 1.35s;
+}
+
+.adm-guest__slash--3 {
+    left: 74%;
+    top: 4%;
+    width: 34%;
+    rotate: 65deg;
+    opacity: 0.7;
+    animation-delay: 1.5s;
+}
+
+.adm-guest__brand {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.7rem;
+    padding: 1.75rem 1.25rem;
+    text-align: center;
+}
+
+.admin .logo-mark__piece {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.adm-guest__mark {
+    width: clamp(4.25rem, 11vw, 10rem);
+    height: auto;
+    overflow: visible;
+    filter: drop-shadow(0 18px 36px var(--ap-red-glow));
+}
+
+.adm-guest__mark.logo-mark--animated .logo-mark__piece {
+    animation: ap-adm-mark-fly 1.1s var(--ap-ease-spring) both;
+}
+
+.adm-guest__mark .logo-mark__piece--yellow { --from: translate(12%, -130%) rotate(-22deg); animation-delay: 0.1s; }
+.adm-guest__mark .logo-mark__piece--blue { --from: translate(-160%, -20%) rotate(28deg); animation-delay: 0.22s; }
+.adm-guest__mark .logo-mark__piece--red { --from: translate(150%, 30%) rotate(-26deg); animation-delay: 0.34s; }
+.adm-guest__mark .logo-mark__piece--black { --from: translate(-40%, 160%) rotate(8deg); animation-delay: 0.46s; }
+.adm-guest__mark .logo-mark__piece--white { --from: scale(0) rotate(90deg); animation-delay: 0.62s; }
+
+.adm-guest__mark.logo-mark--animated .logo-mark__outline {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: ap-adm-mark-draw 1s var(--ap-ease-in-out) 0.85s forwards;
+}
+
+.adm-guest__word {
+    font-family: var(--ap-font-display);
+    font-size: clamp(1.25rem, 0.95rem + 1.6vw, 2.35rem);
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    background: var(--ap-gradient-teliers);
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0 0.3em var(--ap-red-glow));
+}
+
+.adm-guest__tagline {
+    color: var(--ap-mist);
+    font-family: var(--ap-font-tagline);
+    font-size: clamp(0.82rem, 0.75rem + 0.3vw, 1rem);
+}
+
+.adm-guest__panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: linear-gradient(180deg, var(--ap-ink), var(--ap-black) 70%);
+}
+
+.adm-guest__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem clamp(1rem, 4vw, 2.5rem);
+}
+
+.adm-guest__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.5rem;
+    color: var(--ap-text-soft);
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: color var(--ap-dur-fast) ease;
+}
+
+.adm-guest__back:hover {
+    color: var(--ap-white);
+}
+
+.adm-guest__main {
+    flex: 1;
+    display: grid;
+    align-items: center;
+    padding: 0.5rem clamp(1rem, 4vw, 2.5rem) 2rem;
+}
+
+.adm-guest__main:focus-visible {
+    outline: none;
+}
+
+.adm-guest__card {
+    display: grid;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 25rem;
+    margin-inline: auto;
+}
+
+.adm-guest__foot {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem clamp(1rem, 4vw, 2.5rem) 1.25rem;
+    color: var(--ap-text-muted);
+    font-size: 0.78rem;
+}
+
+.adm-guest__foot .adm-mondrian {
+    flex: none;
+    width: 4.5rem;
+}
+
+@media (min-width: 64em) {
+    .adm-guest {
+        grid-template-columns: minmax(0, 1.2fr) minmax(27rem, 34rem);
+        grid-template-rows: none;
+    }
+
+    .adm-guest__art {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
+        border-right: 1px solid var(--adm-line);
+        border-bottom: 0;
+    }
+
+    .adm-guest__brand {
+        gap: 1rem;
+    }
+
+    .adm-guest__slash {
+        display: block;
+    }
+}
+
+.adm-login {
+    display: grid;
+    gap: 1.6rem;
+}
+
+.adm-login__head {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.adm-login__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--ap-yellow);
+    font-family: var(--ap-font-tagline);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.adm-login__tri {
+    flex: none;
+    width: 0.85rem;
+    height: 0.74rem;
+    background: var(--ap-gradient-tri);
+    clip-path: var(--ap-clip-tri);
+}
+
+.adm-login__title {
+    font-family: var(--ap-font-display);
+    font-size: clamp(1.55rem, 1.25rem + 1.2vw, 2.2rem);
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.adm-login__lead {
+    color: var(--ap-text-soft);
+}
+
+.adm-login__form {
+    gap: 1.1rem;
+}
+
+.adm-login__remember {
+    display: grid;
+    gap: 0.3rem;
+    font-size: 0.92rem;
+}
+
+/* Aligned with the checkbox label (box 1.35rem + gap 0.8rem). */
+.adm-login__hint {
+    padding-left: 2.15rem;
+    color: var(--ap-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.45;
+}
+
+.adm-login__submit {
+    width: 100%;
+    margin-top: 0.3rem;
+}
+
+.adm-login__forgot,
+.adm-login__link {
+    justify-self: center;
+    color: var(--ap-text-soft);
+    font-size: 0.88rem;
+    text-decoration: underline;
+    text-decoration-color: var(--ap-white-32);
+    text-underline-offset: 0.25em;
+}
+
+.adm-login__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+}
+
+.adm-login__forgot:hover,
+.adm-login__link:hover {
+    color: var(--ap-yellow);
+    text-decoration-color: currentColor;
+}
+
+/* Forgot password without a mailer, expired session: a calm note with a blue mark. */
+.adm-login__note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--adm-line-strong);
+    border-left: 4px solid var(--ap-blue-bright);
+    border-radius: var(--adm-radius);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--ap-blue) 14%, var(--ap-coal)), var(--ap-coal) 70%);
+}
+
+.adm-login__note-icon {
+    flex: none;
+    color: var(--ap-blue-bright);
+}
+
+.adm-login__note-icon .icon {
+    width: 1.3rem;
+    height: 1.3rem;
+}
+
+.adm-login__note-body {
+    display: grid;
+    gap: 0.6rem;
+    color: var(--ap-text-soft);
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+/* --- 17. Style guide (admin.guide) ------------------------------------------------- */
+
+.adm-guide__toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-guide__toc a {
+    display: inline-flex;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: var(--ap-radius-pill);
+    color: var(--ap-text-soft);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: border-color var(--ap-dur-fast) ease, color var(--ap-dur-fast) ease;
+}
+
+.adm-guide__toc a:hover {
+    border-color: var(--ap-yellow);
+    color: var(--ap-white);
+}
+
+.adm-guide__swatches {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+}
+
+.adm-guide__swatch {
+    display: grid;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--ap-text-soft);
+}
+
+.adm-guide__chip {
+    height: 3.5rem;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--ap-radius-s);
+    background: var(--accent);
+}
+
+.adm-guide__chip--surface { background: var(--ap-coal); }
+.adm-guide__chip--graphite { background: var(--ap-graphite); }
+.adm-guide__chip--steel { background: var(--ap-steel); }
+.adm-guide__chip--mist { background: var(--ap-mist); }
+
+.adm-guide__type > * + * {
+    margin-top: 0.75rem;
+}
+
+.adm-guide__focal {
+    max-width: 24rem;
+}
+
+.adm-guide__h2 {
+    font-family: var(--ap-font-display);
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.adm-guide__label {
+    color: var(--ap-text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* --- 18. Keyframes (ap-adm-*, outside the public catalogue) --------------------------- */
+
+/** @anim group=ui demo=panel dur=0.45s ease=var(--ap-ease-out) iter=1 fr="Message de l’administration qui apparaît" en="Admin message entrance" */
+@keyframes ap-adm-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=ui demo=panel dur=0.4s ease=var(--ap-ease-spring) iter=1 fr="Notification qui glisse" en="Sliding notification" */
+@keyframes ap-adm-toast {
+    from {
+        opacity: 0;
+        transform: translateY(-12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=ui demo=panel dur=0.35s ease=var(--ap-ease-out) iter=1 fr="Ouverture d’un dialogue" en="Dialog opening" */
+@keyframes ap-adm-dialog {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=loader demo=shape dur=1s ease=linear fr="Triangle qui tourne pendant un chargement" en="Spinning triangle while loading" */
+@keyframes ap-adm-spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+/** @anim group=loader demo=bar dur=1.1s ease=var(--ap-ease-in-out) fr="Barre de progression indéterminée" en="Indeterminate progress bar" */
+@keyframes ap-adm-progress {
+    from {
+        background-position: -40% 0, 0 0;
+    }
+
+    to {
+        background-position: 140% 0, 0 0;
+    }
+}
+
+/** @anim group=ui demo=shape dur=0.4s ease=var(--ap-ease-out) iter=1 fr="Champ en erreur qui frémit" en="Invalid field shake" */
+@keyframes ap-adm-shake {
+    0%,
+    100% {
+        transform: none;
+    }
+
+    20% {
+        transform: translateX(-4px);
+    }
+
+    40% {
+        transform: translateX(4px);
+    }
+
+    60% {
+        transform: translateX(-2px);
+    }
+
+    80% {
+        transform: translateX(2px);
+    }
+}
+
+/** @anim group=ui demo=ring dur=2.4s ease=var(--ap-ease-out) fr="Pastille qui pulse" en="Pulsing badge" */
+@keyframes ap-adm-pulse {
+    0% {
+        box-shadow: 0 0 0 0 var(--adm-pulse, var(--ap-red-glow));
+    }
+
+    70% {
+        box-shadow: 0 0 0 0.55rem transparent;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 transparent;
+    }
+}
+
+/** @anim group=ui demo=bar dur=0.8s ease=linear fr="Pointillés qui défilent au dépôt d’une photo" en="Marching dashes on photo drop" */
+@keyframes ap-adm-march {
+    to {
+        background-position: 1rem 0, -1rem 100%, 0 -1rem, 100% 1rem, 0 0;
+    }
+}
+
+/** @anim group=brand demo=shape dur=1.1s ease=var(--ap-ease-spring) iter=1 fr="Le triangle du logo se compose" en="The logo triangle assembles" */
+@keyframes ap-adm-mark-fly {
+    from {
+        opacity: 0;
+        transform: var(--from, translateY(-40%));
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/** @anim group=brand demo=path dur=1s ease=var(--ap-ease-in-out) iter=1 fr="Contour du triangle qui se trace" en="Triangle outline drawing itself" */
+@keyframes ap-adm-mark-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/** @anim group=ambient demo=blocks dur=18s dir=alternate fr="Champs de Mondrian qui dérivent" en="Drifting Mondrian fields" */
+@keyframes ap-adm-drift {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(var(--dx, 1rem), var(--dy, 0.6rem));
+    }
+}
+
+/** @anim group=brand demo=bar dur=1.4s ease=var(--ap-ease-out) iter=1 fr="Trait de signature qui se dessine" en="Signature stroke drawing" */
+@keyframes ap-adm-slash {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/* --- 19. Motion, forced colours, print --------------------------------------------------- */
+
+/* 02-base.css already collapses every animation/transition under html.motion-off and
+   prefers-reduced-motion; these keep the admin's end states explicit. */
+html.motion-off .adm-guest__fields,
+html.motion-off .adm-savebar__dot {
+    animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html:not(.motion-on) .adm-guest__fields,
+    html:not(.motion-on) .adm-savebar__dot {
+        animation: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .adm-toggle__track,
+    .adm-badge,
+    .adm-nav__link.is-active {
+        border: 1px solid CanvasText;
+    }
+
+    .adm-toggle__thumb {
+        background: CanvasText;
+    }
+}
+
+@media print {
+    .adm-sidebar,
+    .adm-topbar,
+    .adm-savebar,
+    .adm-toasts,
+    .adm-flash__close,
+    .adm-page-head__actions {
+        display: none;
+    }
+
+    .adm-shell {
+        display: block;
+    }
+
+    .adm-content {
+        max-width: none;
+        padding: 0;
+    }
+}
