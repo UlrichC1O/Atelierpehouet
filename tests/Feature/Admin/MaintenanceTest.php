@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Admin;
 
+use App\Cms\DatabaseHealth;
 use App\Cms\DatabaseMigrator;
+use App\Http\Controllers\Admin\MaintenanceController;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
@@ -203,6 +205,13 @@ class MaintenanceTest extends TestCase
     {
         $this->admin();
         $this->breakDatabase();
+
+        // One connect attempt: the outage opens the circuit breaker (the rest of the page and the public
+        // site then skip the database) instead of a second timeout probing the migrations table.
+        $state = MaintenanceController::migrationState();
+        $this->assertNull($state['pending']);
+        $this->assertTrue($state['outage']);
+        $this->assertFalse(app(DatabaseHealth::class)->available());
 
         $response = $this->get('/admin/maintenance')->assertOk()
             ->assertSee(__('admin.maintenance.migrations.unknown'))

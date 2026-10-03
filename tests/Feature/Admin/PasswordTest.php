@@ -286,6 +286,13 @@ class PasswordTest extends TestCase
 
         $this->assertTrue(Hash::check('old-password-123', $user->fresh()->password));
         $this->assertTrue(Password::broker()->tokenExists($user, $token));
+
+        // A forged array field is invalid input too, never a 500.
+        $this->post(route('admin.password.update', ['token' => $token]), [
+            'email' => [self::EMAIL],
+            'password' => 'new-password-456',
+            'password_confirmation' => 'new-password-456',
+        ])->assertStatus(422);
     }
 
     // --- Shared rules ---------------------------------------------------------------------------

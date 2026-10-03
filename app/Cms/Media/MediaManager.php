@@ -23,7 +23,8 @@ use Throwable;
  * the main file and its responsive variants, and creates, replaces or deletes the Media rows.
  *
  * The browser resizes photos and builds the variants before uploading. When it sent none, GD may
- * resize them here — only with cms.media.server_variants on, never for a GIF (an animation).
+ * resize them here — only with cms.media.server_variants on. An animation (GIF, APNG, animated WebP)
+ * never has variants: they would be still images.
  *
  * Replaced and deleted files are retired (RetiredFiles) rather than deleted: pages still cached with
  * the old URLs keep working for a while, and each later write purges what has expired.
@@ -287,7 +288,7 @@ final class MediaManager
     {
         $main = $this->read($photo);
 
-        if ($main['mime'] === 'image/gif') {
+        if ($main['animated']) {
             return ['main' => $main, 'variants' => []]; // an animation has no still copies: served as it is
         }
 
@@ -307,7 +308,8 @@ final class MediaManager
                 continue;
             }
 
-            if (abs($variant['width'] - $width) <= self::WIDTH_TOLERANCE && self::sameRatio($variant, $main)) {
+            // A variant is a smaller copy of a still image: never an animation (it would move at some widths only).
+            if (! $variant['animated'] && abs($variant['width'] - $width) <= self::WIDTH_TOLERANCE && self::sameRatio($variant, $main)) {
                 $valid[$width] = $variant;
             }
         }
@@ -362,7 +364,7 @@ final class MediaManager
      * Sniffs, checks and rebuilds an image without its metadata. Width and height are the displayed
      * ones (a JPEG's kept EXIF orientation applied), so the pages reserve the right box.
      *
-     * @return array{bytes: string, mime: string, extension: string, width: int, height: int, size: int}
+     * @return array{bytes: string, mime: string, extension: string, width: int, height: int, size: int, animated: bool}
      *
      * @throws InvalidImage
      */
@@ -423,6 +425,13 @@ final class MediaManager
             'width' => $width,
             'height' => $height,
             'size' => strlen($bytes),
+            // Every GIF counts as one: the uploader sends them untouched, and a still GIF is small anyway.
+            'animated' => match ($mime) {
+                'image/gif' => true,
+                'image/png' => PngSanitizer::animated($bytes),
+                'image/webp' => WebpSanitizer::animated($bytes),
+                default => false,
+            },
         ];
     }
 
@@ -473,8 +482,12 @@ final class MediaManager
 
                 imagesavealpha($scaled, true);
                 ob_start();
-                $encoded = $encode($scaled);
-                $bytes = (string) ob_get_clean();
+
+                try {
+                    $encoded = $encode($scaled);
+                } finally {
+                    $bytes = (string) ob_get_clean(); // never leave the buffer open: it would swallow the response
+                }
 
                 if (! $encoded || $bytes === '') {
                     continue;

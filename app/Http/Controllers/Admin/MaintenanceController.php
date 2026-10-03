@@ -67,14 +67,20 @@ final class MaintenanceController extends Controller
 
             return ['pending' => array_values(array_diff(array_keys(self::migrationFiles()), $migrator->getRepository()->getRan())), 'error' => null, 'outage' => false];
         } catch (Throwable $e) {
-            if (rescue(fn (): bool => ! app('migrator')->repositoryExists(), false, false)) {
+            $outage = class_exists(DatabaseHealth::class) && DatabaseHealth::isOutage($e);
+
+            if ($outage) {
+                // Unreachable: no second connect timeout probing the table; the rest of the page (and the
+                // public site) skips the database for a while (circuit breaker, §13 A1).
+                rescue(fn () => app(DatabaseHealth::class)->failed($e), null, false);
+            } elseif (rescue(fn (): bool => ! app('migrator')->repositoryExists(), false, false)) {
                 return ['pending' => array_keys(self::migrationFiles()), 'error' => null, 'outage' => false];
             }
 
             return [
                 'pending' => null,
                 'error' => Str::limit(trim(get_class($e).': '.$e->getMessage()), self::ERROR_MAX),
-                'outage' => class_exists(DatabaseHealth::class) && DatabaseHealth::isOutage($e),
+                'outage' => $outage,
             ];
         }
     }

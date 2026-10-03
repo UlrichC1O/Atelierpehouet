@@ -11,6 +11,11 @@ use InvalidArgumentException;
  * camera…), XMP and unknown chunks are dropped, the VP8X flags are rewritten to match what is left,
  * the RIFF size is recomputed and anything after the RIFF chunk is cut. Phone uploads normally arrive
  * re-encoded by the admin's uploader (no metadata); this covers WebP files sent as they are.
+ *
+ * Files browsers refuse to decode (libwebp's demuxer) are refused too, instead of being stored as a
+ * broken image: an image chunk whose header is unreadable, a still image whose size differs from the
+ * canvas, a frame reaching outside the canvas (it would also escape the pixel limit, which is checked
+ * on the canvas), two images in one still or frame, an ALPH chunk before a lossless (VP8L) image.
  */
 final class WebpSanitizer
 {
@@ -50,7 +55,8 @@ final class WebpSanitizer
         [$first, $header] = $chunks[0];
 
         if ($first === 'VP8 ' || $first === 'VP8L') {
-            $body = self::chunk($first, $header); // a simple file: its image chunk only
+            self::size($first, $header); // a simple file: its image chunk only
+            $body = self::chunk($first, $header);
         } elseif ($first === 'VP8X' && strlen($header) === 10) {
             $body = self::extended($header, array_slice($chunks, 1));
         } else {
@@ -58,6 +64,12 @@ final class WebpSanitizer
         }
 
         return 'RIFF'.pack('V', 4 + strlen($body)).'WEBP'.$body;
+    }
+
+    /** Whether a WebP rebuilt by strip() is an animation (VP8X with the animation flag). */
+    public static function animated(string $webp): bool
+    {
+        return substr($webp, 12, 4) === 'VP8X' && strlen($webp) > 20 && (ord($webp[20]) & self::FLAG_ANIMATION) !== 0;
     }
 
     /**
@@ -69,22 +81,32 @@ final class WebpSanitizer
     {
         $flags = ord($header[0]);
         $animated = ($flags & self::FLAG_ANIMATION) !== 0;
+        $canvas = [self::uint24($header, 4) + 1, self::uint24($header, 7) + 1];
         $kept = '';
         $found = [];
+        $still = [];
 
         foreach ($chunks as [$fourcc, $data]) {
             if (! in_array($fourcc, $animated ? self::ANIMATED : self::STILL, true)) {
                 continue;
             }
 
-            $kept .= self::chunk($fourcc, $fourcc === 'ANMF' ? self::frame($data) : $data);
+            if ($fourcc === 'ANMF') {
+                $data = self::frame($data, $canvas);
+            } elseif ($fourcc !== 'ICCP') {
+                $still[] = [$fourcc, $data];
+            }
+
+            $kept .= self::chunk($fourcc, $data);
             $found[$fourcc] = true;
         }
 
-        $image = $animated ? isset($found['ANIM'], $found['ANMF']) : isset($found['VP8 ']) || isset($found['VP8L']);
-
-        if (! $image) {
+        if ($animated && ! isset($found['ANIM'], $found['ANMF'])) {
             throw new InvalidArgumentException('Corrupt WebP: no image in the extended file.');
+        }
+
+        if (! $animated && self::image($still) !== $canvas) {
+            throw new InvalidArgumentException('Corrupt WebP: the image is not the size of the canvas.');
         }
 
         $flags = ($flags & (self::FLAG_ALPHA | self::FLAG_ANIMATION)) | (isset($found['ICCP']) ? self::FLAG_ICC : 0);
@@ -93,28 +115,85 @@ final class WebpSanitizer
         return self::chunk('VP8X', chr($flags)."\x00\x00\x00".substr($header, 4, 6)).$kept;
     }
 
-    /** An animation frame: its header (position, size, duration, flags) and its image chunks only. */
-    private static function frame(string $data): string
+    /**
+     * An animation frame: its header (position, size, duration, flags) and its image chunks only.
+     * The image, placed at the frame's offset, must fit in the canvas.
+     *
+     * @param  array{int, int}  $canvas
+     */
+    private static function frame(string $data, array $canvas): string
     {
         if (strlen($data) < 16) {
             throw new InvalidArgumentException('Corrupt WebP: animation frame too short.');
         }
 
         $kept = '';
-        $image = false;
+        $image = [];
 
         foreach (self::chunks($data, 16, strlen($data)) as [$fourcc, $chunk]) {
             if (in_array($fourcc, self::FRAME, true)) {
                 $kept .= self::chunk($fourcc, $chunk);
-                $image = $image || $fourcc !== 'ALPH';
+                $image[] = [$fourcc, $chunk];
             }
         }
 
-        if (! $image) {
-            throw new InvalidArgumentException('Corrupt WebP: animation frame without an image.');
+        [$width, $height] = self::image($image);
+
+        if (2 * self::uint24($data, 0) + $width > $canvas[0] || 2 * self::uint24($data, 3) + $height > $canvas[1]) {
+            throw new InvalidArgumentException('Corrupt WebP: animation frame outside the canvas.');
         }
 
         return substr($data, 0, 16).$kept;
+    }
+
+    /**
+     * Size of the one image of a still or a frame: its chunks are an optional ALPH, then a VP8 (a
+     * lossless VP8L carries its own alpha).
+     *
+     * @param  list<array{string, string}>  $chunks  ALPH, VP8 and VP8L chunks, in their order
+     * @return array{int, int}
+     */
+    private static function image(array $chunks): array
+    {
+        $fourccs = array_column($chunks, 0);
+
+        if (! in_array($fourccs, [['VP8 '], ['VP8L'], ['ALPH', 'VP8 ']], true)) {
+            throw new InvalidArgumentException('Corrupt WebP: not one image (optionally with its alpha) per still or frame.');
+        }
+
+        return self::size(...end($chunks));
+    }
+
+    /**
+     * Width and height written in the header of a VP8 (lossy) or VP8L (lossless) bitstream, read as
+     * libwebp does.
+     *
+     * @return array{int, int}
+     */
+    private static function size(string $fourcc, string $data): array
+    {
+        if ($fourcc === 'VP8 ') {
+            // Frame tag (key frame, profile ≤ 3, shown, first partition inside the chunk), start code, 14-bit sizes.
+            $tag = strlen($data) >= 10 ? ord($data[0]) | ord($data[1]) << 8 | ord($data[2]) << 16 : 1;
+            $size = ($tag & 1) === 0 && (($tag >> 1) & 7) <= 3 && (($tag >> 4) & 1) === 1 && ($tag >> 5) < strlen($data)
+                && substr($data, 3, 3) === "\x9D\x01\x2A" ? [unpack('v', $data, 6)[1] & 0x3FFF, unpack('v', $data, 8)[1] & 0x3FFF] : [0, 0];
+        } else {
+            // Signature, then 14 bits width − 1, 14 bits height − 1, 1 bit alpha, 3 bits version (0).
+            $bits = strlen($data) >= 5 && $data[0] === "\x2F" ? unpack('V', $data, 1)[1] : 0xFFFFFFFF;
+            $size = ($bits >> 29) === 0 ? [($bits & 0x3FFF) + 1, (($bits >> 14) & 0x3FFF) + 1] : [0, 0];
+        }
+
+        if ($size[0] < 1 || $size[1] < 1) {
+            throw new InvalidArgumentException('Corrupt WebP: unreadable '.trim($fourcc).' image header.');
+        }
+
+        return $size;
+    }
+
+    /** A little-endian 24-bit number. */
+    private static function uint24(string $bytes, int $pos): int
+    {
+        return unpack('V', substr($bytes, $pos, 3)."\x00")[1];
     }
 
     /**

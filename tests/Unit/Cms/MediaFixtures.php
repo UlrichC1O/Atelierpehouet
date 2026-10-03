@@ -153,6 +153,23 @@ trait MediaFixtures
         return 'RIFF'.pack('V', 4 + strlen($chunks)).'WEBP'.$chunks;
     }
 
+    /**
+     * A lossy VP8 image chunk as far as its header goes (what the sanitizer and getimagesize read):
+     * the frame tag of a shown key frame, the start code, the size, then $data as the partitions.
+     */
+    protected static function vp8Chunk(int $w, int $h, string $data = "\x00\x00\x00\x00"): string
+    {
+        return self::webpChunk('VP8 ', "\x10\x00\x00\x9D\x01\x2A".pack('vv', $w, $h).$data);
+    }
+
+    /** An ANMF frame chunk: the image chunks $image placed at ($x, $y) — even numbers — sized $w × $h, shown 0.1 s. */
+    protected static function anmfChunk(int $x, int $y, int $w, int $h, string $image): string
+    {
+        $uint24 = static fn (int $value): string => substr(pack('V', $value), 0, 3);
+
+        return self::webpChunk('ANMF', $uint24(intdiv($x, 2)).$uint24(intdiv($y, 2)).$uint24($w - 1).$uint24($h - 1).$uint24(100)."\x00".$image);
+    }
+
     /** A VP8X header chunk: $flags, then the canvas size. */
     protected static function vp8x(int $flags, int $w, int $h): string
     {

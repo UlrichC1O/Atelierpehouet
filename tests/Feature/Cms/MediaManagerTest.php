@@ -387,6 +387,36 @@ class MediaManagerTest extends TestCase
         $this->assertSame(self::gifBytes(1200, 900, 2), $this->stored($media, $media->key()));
     }
 
+    public function test_an_animated_png_or_webp_never_gets_variants(): void
+    {
+        config(['cms.media.server_variants' => true]);
+
+        $png = self::pngBytes(1200, 900);
+        $apng = substr($png, 0, 8 + 25).self::pngChunk('acTL', pack('NN', 1, 0)).substr($png, 8 + 25);
+        $webp = self::webpFileBytes(self::vp8x(0x02, 1200, 900).self::webpChunk('ANIM', str_repeat("\x00", 6))
+            .self::anmfChunk(0, 0, 1200, 900, substr(self::webpBytes(1200, 900), 12)));
+        $variants = fn (): array => [480 => $this->webpFile('a.webp', 480, 360), 960 => $this->pngFile('b.png', 960, 720)];
+
+        foreach (['anim.png' => $apng, 'anim.webp' => $webp] as $name => $bytes) {
+            $media = $this->manager()->store($this->fileWith($bytes, $name), $variants());
+
+            $this->assertSame([1200, 900, []], [$media->width, $media->height, $media->variants], $name);
+            $this->assertSame($bytes, $this->stored($media, $media->key()), $name);
+        }
+
+        // Still images keep the variants sent with them.
+        $still = $this->manager()->store($this->pngFile('still.png', 1200, 900), $variants());
+        $this->assertSame([480, 960], array_column($still->variants, 'width'));
+
+        // …but never an animated copy: it would move at some screen widths only.
+        $small = self::pngBytes(960, 720);
+        $mixed = $this->manager()->store($this->pngFile('still.png', 1200, 900), [
+            480 => $this->gifFile('a.gif', 480, 360),
+            960 => $this->fileWith(substr($small, 0, 8 + 25).self::pngChunk('acTL', pack('NN', 1, 0)).substr($small, 8 + 25), 'b.png'),
+        ]);
+        $this->assertSame([], $mixed->variants);
+    }
+
     public function test_the_server_resizes_nothing_unless_enabled(): void
     {
         $this->assertFalse(config('cms.media.server_variants'), 'off by default');

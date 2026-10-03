@@ -66,6 +66,11 @@ Route::get('/media/{key}', MediaFileController::class)
     ->where('key', '[0-9a-z]{26}(?:-[0-9]{2,4})?\.(?:jpg|png|webp|gif)')
     ->withoutMiddleware($stateless)
     ->name('media.show');
+// Any other URL under /media: the same plain, uncached 404 as an unknown key (no HTML page, no session).
+Route::get('/media/{path}', [MediaFileController::class, 'missing'])
+    ->where('path', '.*')
+    ->withoutMiddleware($stateless)
+    ->name('media.missing');
 
 // Artist pages (docs/ARTISTS.md, built by the "artists" session): /artistes, /artistes/{slug}.
 if (is_file(__DIR__.'/artists.php')) {

@@ -71,7 +71,7 @@ return [
         // Total size of the stored photo files, in MB (0 = no limit): uploads beyond it are refused
         // ("quota"). 300 by default in the database (Supabase's free plan holds 500 MB, base64 adds a third).
         'quota_mb' => (int) env('CMS_MEDIA_QUOTA_MB', env('CMS_MEDIA_DRIVER', 'database') === 'database' ? 300 : 0),
-        // Resize the variants on the server (GD) when the browser sent none — never for GIFs (§13 C11).
+        // Resize the variants on the server (GD) when the browser sent none — never for animations (§13 C11).
         'server_variants' => (bool) env('CMS_MEDIA_SERVER_VARIANTS', false),
     ],
 
@@ -107,7 +107,8 @@ return [
 
     // Cache store of the login limiter (docs/CMS.md §13 D15). It must outlive a request — not Vercel's
     // "array" default store: "database" is the cache table every install already has.
-    'login_limiter_store' => env('CMS_LOGIN_LIMITER_STORE', 'database'),
+    // An empty CMS_LOGIN_LIMITER_STORE= keeps "database" (an empty name would pick the default store).
+    'login_limiter_store' => env('CMS_LOGIN_LIMITER_STORE') ?: 'database',
 
     // The official site (docs/CMS.md §13 F25): every other copy (the Codespace…) says so on each admin page.
     // Set it when the site moves to its own domain.

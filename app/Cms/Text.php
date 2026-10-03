@@ -2,6 +2,8 @@
 
 namespace App\Cms;
 
+use Throwable;
+
 /**
  * Strings on their way into the database (docs/CMS.md §13 B7).
  *
@@ -48,10 +50,28 @@ final class Text
 
     /**
      * LIKE pattern matching $term anywhere: % and _ (and the escape character itself) are escaped
-     * with a backslash, the default escape character of Postgres and MySQL.
+     * with a backslash, the default escape character of Postgres and MySQL. SQLite's LIKE has no
+     * escape character unless the query names one (whereLike() does not): there the term is kept
+     * as is — a "_" or "%" in it then also matches itself, so "IMG_2041" still finds IMG_2041.jpg.
+     *
+     * @param  string|null  $driver  driver of the queried connection (default: the default connection's)
      */
-    public static function like(string $term): string
+    public static function like(string $term, ?string $driver = null): string
     {
-        return '%'.addcslashes(str_replace("\0", '', mb_scrub($term, 'UTF-8')), '\\%_').'%';
+        $term = str_replace("\0", '', mb_scrub($term, 'UTF-8'));
+
+        return '%'.(($driver ?? self::driver()) === 'sqlite' ? $term : addcslashes($term, '\\%_')).'%';
+    }
+
+    /** Driver of the default database connection, read from the configuration (no connection opened). */
+    private static function driver(): ?string
+    {
+        try {
+            $driver = config('database.connections.'.config('database.default').'.driver');
+        } catch (Throwable) {
+            return null;
+        }
+
+        return is_string($driver) ? $driver : null;
     }
 }

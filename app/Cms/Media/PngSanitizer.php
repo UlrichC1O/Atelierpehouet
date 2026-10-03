@@ -69,4 +69,27 @@ final class PngSanitizer
 
         throw new InvalidArgumentException('Truncated PNG: no IEND chunk.');
     }
+
+    /** Whether a PNG rebuilt by strip() is an animation (APNG: an acTL chunk before the image data). */
+    public static function animated(string $png): bool
+    {
+        $length = strlen($png);
+        $pos = strlen(self::SIGNATURE);
+
+        while ($pos + 8 <= $length) {
+            $type = substr($png, $pos + 4, 4);
+
+            if ($type === 'acTL') {
+                return true;
+            }
+
+            if ($type === 'IDAT' || $type === 'IEND') {
+                return false;
+            }
+
+            $pos += 12 + unpack('N', $png, $pos)[1];
+        }
+
+        return false;
+    }
 }

@@ -212,7 +212,7 @@ the wrapped file loader (the admin reads defaults through it).
   `attributes` accepted: `alt_fr, alt_en, caption_fr, caption_en, service_slug, in_gallery, position,
   focal_x, focal_y, original_name`.
 - `App\Http\Controllers\MediaFileController` — **GET `/media/{key}`** (`media.show`), stateless (no session),
-  `throttle:600,1`, key regex `[0-9a-z]{26}(?:-[0-9]{2,4})?\.(?:jpg|png|webp|gif|avif)`; finds the `Media` by
+  no throttle (§13 A5), key regex `[0-9a-z]{26}(?:-[0-9]{2,4})?\.(?:jpg|png|webp|gif)`; finds the `Media` by
   ulid, reads through the media's own `driver`; 404 when missing; `ETag: "{key}"` + 304 on `If-None-Match`;
   headers `Content-Type`, `Content-Length`, cache headers of §13 C12,
   `X-Content-Type-Options: nosniff`, `Content-Security-Policy: default-src 'none'`,
@@ -378,6 +378,8 @@ per minute, lockout message with seconds; session regenerated; `intended` (inter
 **Bootstrap**: while `users` is empty, credentials equal (hash_equals) to `cms.bootstrap_admin` create that
 user then log in. DB errors on the login page ⇒ friendly message, never a 500. Logout invalidates the session
 and regenerates the token. `Activity::record('auth.login', …)`.
+On Vercel sessions live in an encrypted cookie: logout only forgets the copy of this browser, so a copied
+cookie session dies only with a password change (reset included) or "Se déconnecter des autres appareils" (§13 D17).
 
 ### 7.2 Dashboard, settings, account, maintenance, messages (admin-shell)
 - **Dashboard**: greeting; stats (photos, photos in gallery, modified texts, visible/total services, free pages,

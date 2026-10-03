@@ -138,6 +138,21 @@ class JpegSanitizerTest extends TestCase
         $this->assertSame($scan, JpegSanitizer::strip($scan));
     }
 
+    public function test_a_progressive_image_keeps_every_scan_and_the_tables_between_them(): void
+    {
+        $jpeg = self::jpegBytes(16, 8);
+        $sos = strpos($jpeg, "\xFF\xDA");
+        $head = str_replace("\xFF\xC0", "\xFF\xC2", substr($jpeg, 0, $sos)); // progressive frame
+        $scan = substr($jpeg, $sos, -2);
+        $tables = self::jpegSegment(0xC4, "\x10".str_repeat("\x00", 15)."\x01\x00").self::jpegSegment(0xDD, pack('n', 0));
+        $metadata = self::jpegSegment(0xFE, 'Secret comment').self::jpegSegment(0xE1, "http://ns.adobe.com/xap/1.0/\x00".self::xmpPacket());
+
+        $clean = JpegSanitizer::strip($head.$scan.$metadata.$tables.$scan.$metadata.$scan."\xFF\xD9");
+
+        $this->assertSame($head.$scan.$tables.$scan.$scan."\xFF\xD9", $clean);
+        $this->assertSame([16, 8, IMAGETYPE_JPEG], array_slice(getimagesizefromstring($clean), 0, 3));
+    }
+
     /** @return array<string, array{string}> */
     public static function corrupt(): array
     {

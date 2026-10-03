@@ -94,8 +94,11 @@ final class MediaFileController extends Controller
         return $response;
     }
 
-    /** A plain 404 (no HTML page for an image URL); never cached, the key may appear later. */
-    private function missing(): Response
+    /**
+     * A plain 404 (no HTML page for an image URL); never cached, the key may appear later. Also the
+     * answer to every other URL under /media (route media.missing).
+     */
+    public function missing(): Response
     {
         return new Response('Not Found', Response::HTTP_NOT_FOUND, [
             'Content-Type' => 'text/plain; charset=utf-8',

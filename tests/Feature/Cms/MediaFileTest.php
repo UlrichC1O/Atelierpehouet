@@ -111,7 +111,12 @@ class MediaFileTest extends TestCase
         $media = $this->uploadPhoto();
 
         foreach ([strtoupper($media->ulid).'.webp', $media->ulid.'.svg', $media->ulid.'.avif', $media->ulid.'.webp.php', '..%2F..%2F.env', $media->ulid.'-5.webp', 'x.webp'] as $key) {
-            $this->get('/media/'.$key)->assertNotFound();
+            $this->assertNotFoundUncached($this->get('/media/'.$key));
+        }
+
+        // Any other URL under /media gets the same plain, uncached 404 (no HTML page, no session).
+        foreach (['a/b', $media->ulid.'/'.$media->key(), 'thumbs/'.$media->key()] as $path) {
+            $this->assertNotFoundUncached($this->get('/media/'.$path));
         }
     }
 

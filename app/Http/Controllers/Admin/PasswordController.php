@@ -146,7 +146,9 @@ final class PasswordController extends Controller
     /** POST /admin/reinitialiser/{token} (admin.password.update). */
     public function update(Request $request, string $token): RedirectResponse|Response
     {
-        $data = ['token' => $token, 'email' => (string) $request->input('email', ''), 'linkFailed' => false];
+        // A forged array field must give the 422 below, never an "Array to string" 500.
+        $typed = $request->input('email');
+        $data = ['token' => $token, 'email' => is_string($typed) ? mb_substr($typed, 0, 190) : '', 'linkFailed' => false];
 
         $validator = Validator::make(
             $request->only('email', 'password', 'password_confirmation'),

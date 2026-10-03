@@ -73,6 +73,18 @@ class PngSanitizerTest extends TestCase
         $this->assertSame(str_replace($iend, $frame.$iend, $png), PngSanitizer::strip($apng));
     }
 
+    public function test_an_animation_is_told_by_an_actl_chunk_before_the_image_data(): void
+    {
+        $png = self::pngBytes(4, 4);
+        $actl = self::pngChunk('acTL', pack('NN', 1, 0));
+        $iend = self::pngChunk('IEND', '');
+
+        $this->assertFalse(PngSanitizer::animated($png));
+        $this->assertTrue(PngSanitizer::animated(PngSanitizer::strip(substr($png, 0, 8 + 25).$actl.substr($png, 8 + 25))));
+        // After the image data, an acTL chunk animates nothing (APNG decoders ignore it).
+        $this->assertFalse(PngSanitizer::animated(str_replace($iend, $actl.$iend, $png)));
+    }
+
     public function test_a_clean_png_is_unchanged(): void
     {
         foreach ([self::pngBytes(3, 2), self::pngBytes(300, 200, [38, 95, 165])] as $png) {

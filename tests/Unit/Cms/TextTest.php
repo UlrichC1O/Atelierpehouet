@@ -29,7 +29,9 @@ class TextTest extends TestCase
 
     public function test_like_escapes_the_wildcards(): void
     {
-        $this->assertSame('%50\\%\\_off\\\\%', Text::like('50%_off\\'));
-        $this->assertSame('%fresque%', Text::like('fresque'));
+        $this->assertSame('%50\\%\\_off\\\\%', Text::like('50%_off\\', 'pgsql'));
+        $this->assertSame('%fresque%', Text::like('fresque', 'pgsql'));
+        // SQLite's LIKE has no escape character: the wildcards stay (they also match themselves).
+        $this->assertSame('%50%_off%', Text::like("50%_o\0ff", 'sqlite'));
     }
 }

@@ -46,12 +46,27 @@ class WebpSanitizerTest extends TestCase
 
     public function test_the_alpha_flag_and_chunk_are_kept(): void
     {
-        $image = substr(self::webpBytes(4, 4), 12);
+        $image = self::vp8Chunk(4, 4);
         $alpha = self::webpChunk('ALPH', "\x00".str_repeat("\xFF", 16));
 
         $clean = WebpSanitizer::strip(self::webpFileBytes(self::vp8x(0x10 | 0x04, 4, 4).$alpha.$image.self::webpChunk('XMP ', self::xmpPacket())));
 
         $this->assertSame(self::webpFileBytes(self::vp8x(0x10, 4, 4).$alpha.$image), $clean);
+        $this->assertSame([4, 4, IMAGETYPE_WEBP], array_slice(getimagesizefromstring($clean), 0, 3));
+    }
+
+    public function test_animation_frames_may_be_smaller_than_the_canvas_and_placed_inside_it(): void
+    {
+        $frames = self::anmfChunk(0, 0, 8, 6, self::vp8Chunk(8, 6))
+            .self::anmfChunk(4, 2, 3, 3, substr(self::webpBytes(3, 3), 12))
+            .self::anmfChunk(2, 4, 6, 2, self::webpChunk('ALPH', "\x00\xFF").self::vp8Chunk(6, 2));
+        $webp = self::webpFileBytes(self::vp8x(0x02 | 0x10, 8, 6).self::webpChunk('ANIM', str_repeat("\x00", 6)).$frames);
+
+        $this->assertSame($webp, WebpSanitizer::strip($webp));
+        $this->assertSame([8, 6, IMAGETYPE_WEBP], array_slice(getimagesizefromstring($webp), 0, 3));
+        $this->assertTrue(WebpSanitizer::animated($webp));
+        $this->assertFalse(WebpSanitizer::animated(self::cleanWebp()));
+        $this->assertFalse(WebpSanitizer::animated(self::webpBytes()));
     }
 
     public function test_an_animation_keeps_its_frames_without_their_metadata(): void
@@ -102,6 +117,21 @@ class WebpSanitizerTest extends TestCase
             'animation without frames' => [self::webpFileBytes(self::vp8x(0x02, 4, 4).self::webpChunk('ANIM', str_repeat("\x00", 6)))],
             'frame header too short' => [self::webpFileBytes(self::vp8x(0x02, 4, 4).self::webpChunk('ANIM', str_repeat("\x00", 6)).self::webpChunk('ANMF', str_repeat("\x00", 10)))],
             'frame without an image' => [self::webpFileBytes(self::vp8x(0x02, 4, 4).self::webpChunk('ANIM', str_repeat("\x00", 6)).self::webpChunk('ANMF', str_repeat("\x00", 16).self::webpChunk('ALPH', 'aa')))],
+            // What libwebp's demuxer (hence browsers) refuses to decode is not stored as a broken image.
+            'still smaller than its canvas' => [self::webpFileBytes(self::vp8x(0, 4000, 4000).$image)],
+            'still larger than its canvas' => [self::webpFileBytes(self::vp8x(0, 2, 2).$image)],
+            'two images in a still' => [self::webpFileBytes(self::vp8x(0, 4, 4).$image.self::vp8Chunk(4, 4))],
+            'alpha before a lossless image' => [self::webpFileBytes(self::vp8x(0x10, 4, 4).self::webpChunk('ALPH', "\x00\xFF").$image)],
+            'alpha after the image' => [self::webpFileBytes(self::vp8x(0x10, 4, 4).self::vp8Chunk(4, 4).self::webpChunk('ALPH', "\x00\xFF"))],
+            'vp8 that is not a key frame' => [self::webpFileBytes(self::webpChunk('VP8 ', "\x11\x00\x00\x9D\x01\x2A".pack('vv', 4, 4)."\x00\x00"))],
+            'vp8 without its start code' => [self::webpFileBytes(self::webpChunk('VP8 ', "\x10\x00\x00\x9D\x01\x2B".pack('vv', 4, 4)."\x00\x00"))],
+            'vp8 of width 0' => [self::webpFileBytes(self::vp8Chunk(0, 4))],
+            'vp8 header cut' => [self::webpFileBytes(self::webpChunk('VP8 ', "\x10\x00\x00\x9D\x01\x2A\x04"))],
+            'vp8l without its signature' => [self::webpFileBytes(self::webpChunk('VP8L', "\x2E".substr($image, 9)))],
+            'vp8l of an unknown version' => [self::webpFileBytes(self::webpChunk('VP8L', "\x2F".pack('V', 3 | 3 << 14 | 1 << 29)."\x00"))],
+            'frame outside the canvas' => [self::webpFileBytes(self::vp8x(0x02, 4, 4).self::webpChunk('ANIM', str_repeat("\x00", 6)).self::anmfChunk(2, 0, 4, 4, $image))],
+            'frame image larger than the canvas' => [self::webpFileBytes(self::vp8x(0x02, 4, 4).self::webpChunk('ANIM', str_repeat("\x00", 6)).self::anmfChunk(0, 0, 4, 4, self::vp8Chunk(16000, 16000)))],
+            'two images in a frame' => [self::webpFileBytes(self::vp8x(0x02, 4, 4).self::webpChunk('ANIM', str_repeat("\x00", 6)).self::anmfChunk(0, 0, 4, 4, $image.$image))],
         ];
     }
 
