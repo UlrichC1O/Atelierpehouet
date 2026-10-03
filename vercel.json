@@ -11,7 +11,7 @@
         }
     },
     "routes": [
-        { "src": "/(index\\.php|\\.htaccess)", "dest": "/api/index.php" },
+        { "src": "/(index\\.php|\\.htaccess)?", "dest": "/api/index.php" },
         { "handle": "filesystem" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ]

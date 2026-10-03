@@ -11,3 +11,7 @@
 /storage/framework/cache/data/*
 /storage/framework/sessions/*
 /storage/framework/views/*
+# public/ is served as static files: never ship PHP source there (Vercel would serve
+# public/index.php as the page for "/"). The function boots through api/index.php.
+/public/index.php
+/public/.htaccess
