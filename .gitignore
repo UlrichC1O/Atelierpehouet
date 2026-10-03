@@ -30,3 +30,4 @@ Thumbs.db
 !.env.example
 __pycache__/
 *.py[cod]
+/storage/framework/live-*.pid
