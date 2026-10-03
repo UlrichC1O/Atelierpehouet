@@ -69,6 +69,7 @@
     @stack('head')
 </head>
 <body class="@yield('body_class')">
+    @include('partials.signature-sprite')
     <a class="skip-link" href="#main">{{ __('ui.a11y.skip') }}</a>
 
     @include('partials.loader')

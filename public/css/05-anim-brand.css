@@ -204,11 +204,20 @@
     overflow: visible;
 }
 
-.signature__path {
-    stroke: var(--ap-white);
+/* The traced shape (#ap-signature, defined once per page); the sprite takes no room. */
+.signature-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.signature__ink {
+    fill: var(--ap-white);
     filter: drop-shadow(0 0 2px rgb(250 252 253 / 0.45));
 }
 
+/* Guide strokes inside the reveal mask of an animated signature. */
 .signature--animated .signature__path {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
