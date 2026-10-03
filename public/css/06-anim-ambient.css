@@ -222,8 +222,9 @@
     pointer-events: none;
 }
 
-.orbit--s { --orbit: 8rem; }
-.orbit--l { --orbit: 22rem; }
+.orbit { --orbit: min(14rem, 60vw); }
+.orbit--s { --orbit: min(8rem, 40vw); }
+.orbit--l { --orbit: min(22rem, 80vw); }
 
 .orbit__core {
     position: absolute;
@@ -268,8 +269,9 @@
     pointer-events: none;
 }
 
-.kaleidoscope--s { --k: 9rem; }
-.kaleidoscope--l { --k: 26rem; }
+.kaleidoscope { --k: min(16rem, 70vw); }
+.kaleidoscope--s { --k: min(9rem, 45vw); }
+.kaleidoscope--l { --k: min(26rem, 84vw); }
 
 .kaleidoscope__wheel {
     position: absolute;

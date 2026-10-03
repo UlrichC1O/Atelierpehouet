@@ -31,6 +31,8 @@
 .section {
     position: relative;
     padding-block: var(--ap-section);
+    /* decorations may bleed out of a section, never out of the page (clip keeps position: sticky working) */
+    overflow-x: clip;
 }
 
 .section--tight {
@@ -123,6 +125,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.7em;
+    max-width: 100%;
     font-family: var(--ap-font-tagline);
     font-size: var(--ap-step--1);
     font-weight: 700;
@@ -257,12 +260,12 @@ html.menu-open .site-header::after {
     z-index: 2;
 }
 
-.site-header__cta {
+.site-header .site-header__cta {
     display: none;
 }
 
 @media (min-width: 40em) {
-    .site-header__cta {
+    .site-header .site-header__cta {
         display: inline-flex;
     }
 }

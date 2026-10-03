@@ -56,10 +56,13 @@
 .split__word {
     display: inline-block;
     white-space: nowrap;
+    max-width: 100%;
 }
 
 .split__unit {
     display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
     will-change: transform;
 }
 

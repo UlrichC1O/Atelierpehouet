@@ -177,7 +177,7 @@
     --ap-step-1: clamp(1.18rem, 1.1rem + 0.4vw, 1.4rem);
     --ap-step-2: clamp(1.42rem, 1.25rem + 0.85vw, 1.95rem);
     --ap-step-3: clamp(1.75rem, 1.45rem + 1.5vw, 2.7rem);
-    --ap-step-4: clamp(2.15rem, 1.6rem + 2.75vw, 3.9rem);
+    --ap-step-4: clamp(1.8rem, 1.3rem + 2.9vw, 3.9rem);
     --ap-step-5: clamp(2.6rem, 1.7rem + 4.5vw, 5.6rem);
     --ap-step-6: clamp(3.1rem, 1.6rem + 7.5vw, 8.4rem);
 
