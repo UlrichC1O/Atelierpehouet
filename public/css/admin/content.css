@@ -1,0 +1,623 @@
+/* ==========================================================================
+   Ateliers Pehouet — admin: « Textes des pages » and « Pages libres »
+   (docs/CMS.md §7.3, §7.4). Prefix adm-; logo tokens only. Keyframes: ap-adm-content-*
+   ========================================================================== */
+
+/* --- Texts: index ---------------------------------------------------------- */
+
+.adm-text-groups {
+    align-items: start;
+}
+
+.adm-text-group__body {
+    --adm-stack-gap: 0.85rem;
+}
+
+.adm-text-group__count {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin: 0;
+    color: var(--ap-text-soft);
+    font-size: 0.85rem;
+}
+
+.adm-text-group__spots {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.35rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--adm-line-strong);
+}
+
+.adm-text-group__spots-title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+    color: var(--ap-blue-bright);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.adm-text-group__spots-title .icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* --- Texts: editor --------------------------------------------------------- */
+
+.adm-text-spots__list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 0.85rem;
+}
+
+@media (min-width: 80em) {
+    .adm-text-spots__list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.adm-text-nothing-saved {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+}
+
+.adm-texts {
+    gap: 1rem;
+}
+
+/* Filter, "modified only" and the counter; they stay reachable while scrolling from 64em
+   (on a phone the sticky save bar already takes its share of the screen). */
+.adm-texts__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    padding: 0.75rem 0.9rem;
+    background: color-mix(in srgb, var(--ap-ink) 92%, transparent);
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+    backdrop-filter: blur(8px);
+}
+
+@media (min-width: 64em) {
+    .adm-texts__toolbar {
+        position: sticky;
+        top: calc(var(--adm-topbar-h) + 0.5rem);
+        z-index: 3;
+    }
+}
+
+.adm-texts__toolbar .adm-search {
+    flex: 1 1 16rem;
+    width: auto;
+    max-width: 26rem;
+}
+
+.adm-texts__only {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ap-text-soft);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.adm-texts__only[hidden] {
+    display: none;
+}
+
+.adm-texts__only input {
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: 0;
+    accent-color: var(--ap-amber);
+}
+
+.adm-texts__counter {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0 0 0 auto;
+    color: var(--ap-white);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.adm-texts__counter-dot {
+    width: 0.6rem;
+    height: 0.52rem;
+    background: var(--ap-amber);
+    clip-path: var(--ap-clip-tri);
+}
+
+.adm-texts__counter.is-zero .adm-texts__counter-dot {
+    background: var(--ap-steel);
+}
+
+.adm-texts__counter.is-bumped .adm-texts__counter-dot {
+    animation: ap-adm-content-bump 0.5s var(--ap-ease-spring);
+}
+
+.adm-texts__total {
+    color: var(--ap-text-muted);
+    font-weight: 400;
+}
+
+.adm-texts__results:empty {
+    display: none;
+}
+
+.adm-texts__list {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.adm-texts__section {
+    gap: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.adm-texts__section > legend {
+    color: var(--ap-yellow);
+}
+
+.adm-texts__section[hidden],
+.adm-texts.is-only-modified .adm-texts__section.is-unmodified,
+.adm-texts.is-only-modified .adm-text-row:not(.is-modified) {
+    display: none;
+}
+
+/* One text: label, then FR | EN. */
+.adm-text-row {
+    position: relative;
+    padding: 1rem 0 1.1rem;
+    scroll-margin-top: calc(var(--adm-topbar-h) + 6rem);
+}
+
+.adm-text-row + .adm-text-row {
+    border-top: 1px solid var(--adm-line);
+}
+
+.adm-text-row[hidden] {
+    display: none;
+}
+
+/* A changed text gets the amber seam of the "modifié" badge. */
+.adm-text-row::before {
+    content: "";
+    position: absolute;
+    left: calc(-1.25rem - 1px);
+    top: 1rem;
+    bottom: 1.1rem;
+    width: 3px;
+    background: var(--ap-amber);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--ap-dur) var(--ap-ease-out);
+}
+
+.adm-text-row.is-modified::before {
+    transform: scaleY(1);
+}
+
+.adm-text-row__head {
+    min-width: 0;
+}
+
+.adm-text-row__label {
+    color: var(--ap-white);
+    font-size: 0.92rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.adm-text-row__key {
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--ap-radius-xs);
+    background: var(--ap-white-04);
+    color: var(--ap-text-muted);
+    font-family: var(--ap-font-mono);
+    font-size: 0.72rem;
+    overflow-wrap: anywhere;
+}
+
+.adm-text-row__head .adm-badge[hidden] {
+    display: none;
+}
+
+.adm-text-cell {
+    align-content: start;
+}
+
+.adm-text-cell__label {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.adm-text-cell__lang {
+    color: var(--ap-text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.adm-text-cell .field__input {
+    min-height: 2.6rem;
+}
+
+.adm-text-cell textarea.field__input {
+    resize: vertical;
+    line-height: var(--ap-leading-snug);
+}
+
+.adm-text-cell.is-reset .field__input {
+    border-style: dashed;
+    color: var(--ap-text-muted);
+    background: var(--ap-white-04);
+}
+
+.adm-text-cell__hint {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+}
+
+.adm-text-cell__keep {
+    color: var(--ap-text-muted);
+    transition: color var(--ap-dur-fast) ease;
+}
+
+.adm-text-cell__keep.is-missing {
+    color: var(--ap-red-bright);
+    font-weight: 600;
+}
+
+.adm-text-cell__default[hidden] {
+    display: none;
+}
+
+.adm-text-cell__default:not([hidden]) {
+    animation: ap-adm-content-in 0.35s var(--ap-ease-out) both;
+}
+
+/* --- Free pages: list --------------------------------------------------------- */
+
+.adm-content-heading {
+    margin: 0;
+    font-family: var(--ap-font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.adm-legal__list {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-legal__item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 1rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+    background: var(--ap-white-04);
+}
+
+.adm-legal__mark {
+    flex: none;
+    width: 1.1rem;
+    height: 0.95rem;
+    background: var(--ap-gradient-tri);
+    clip-path: var(--ap-clip-tri);
+}
+
+.adm-legal__text {
+    flex: 1 1 12rem;
+    min-width: 0;
+}
+
+.adm-legal__name {
+    margin: 0;
+    color: var(--ap-white);
+    font-weight: 600;
+}
+
+.adm-legal__url {
+    margin: 0;
+    color: var(--ap-text-muted);
+}
+
+.adm-legal__missing {
+    flex-basis: 100%;
+    margin: 0;
+}
+
+.adm-pages-table__title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.adm-pages-table__url .adm-mono {
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.adm-pages-table__title .adm-thumb {
+    --adm-thumb: 48px;
+    border-radius: var(--ap-radius-xs);
+}
+
+/* --- Free pages: form -------------------------------------------------------- */
+
+.adm-page-form__layout {
+    display: grid;
+    gap: var(--adm-gap);
+    align-items: start;
+}
+
+@media (min-width: 80em) {
+    .adm-page-form__layout {
+        grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+    }
+
+    .adm-page-form__side {
+        position: sticky;
+        top: calc(var(--adm-topbar-h) + 1rem);
+    }
+}
+
+.adm-page-form__main,
+.adm-page-form__side {
+    --adm-stack-gap: var(--adm-gap);
+    min-width: 0;
+}
+
+.adm-page-slug {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 1rem;
+}
+
+.adm-page-slug__url {
+    margin: 0;
+    padding: 0.45rem 0.7rem;
+    border-left: 2px solid var(--ap-orange);
+    background: var(--ap-white-04);
+    color: var(--ap-text-muted);
+    font-family: var(--ap-font-mono);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+}
+
+.adm-page-slug__url strong {
+    color: var(--ap-yellow);
+    font-weight: 600;
+}
+
+.adm-page-slug__url strong:empty::before {
+    content: "…";
+    color: var(--ap-text-muted);
+}
+
+.adm-page-insert {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.adm-page-insert[hidden],
+.adm-page-insert__preview[hidden] {
+    display: none;
+}
+
+.adm-page-insert .field__hint {
+    margin: 0;
+}
+
+.adm-page-body textarea.field__input {
+    min-height: 16rem;
+    font-family: var(--ap-font-mono);
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+/* Markdown help. */
+.adm-md-help {
+    margin-top: 1rem;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+    background: var(--ap-white-04);
+}
+
+.adm-md-help__summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 0.9rem;
+    color: var(--ap-yellow);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.adm-md-help__summary .icon {
+    width: 1.05rem;
+    height: 1.05rem;
+}
+
+.adm-md-help__body {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0 0.9rem 0.9rem;
+    color: var(--ap-text-soft);
+    font-size: 0.88rem;
+}
+
+.adm-md-help__body p {
+    margin: 0;
+}
+
+.adm-md-help__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.adm-md-help__table th,
+.adm-md-help__table td {
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid var(--adm-line);
+    text-align: left;
+    vertical-align: top;
+}
+
+.adm-md-help__table th {
+    color: var(--ap-text-muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.adm-md-help__table code {
+    color: var(--ap-white);
+    font-family: var(--ap-font-mono);
+    font-size: 0.82rem;
+    overflow-wrap: anywhere;
+}
+
+/* Rendered Markdown (the same .prose as the public page, on the admin panel). */
+.adm-page-preview {
+    max-width: 70ch;
+    margin: 0.5rem 0 1rem;
+    padding: 1rem 1.15rem;
+    border-left: 2px solid var(--ap-blue-bright);
+    background: var(--ap-black-40);
+    overflow-wrap: anywhere;
+}
+
+.adm-page-preview--empty {
+    font-style: italic;
+}
+
+.adm-page-preview h2 {
+    font-size: var(--ap-step-1);
+}
+
+.adm-page-preview h3 {
+    font-size: var(--ap-step-0);
+}
+
+.adm-page-preview img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--ap-white-16);
+}
+
+.adm-page-preview table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.adm-page-preview th,
+.adm-page-preview td {
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--adm-line-strong);
+}
+
+.adm-page-previewing {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    --flash: var(--ap-blue-bright);
+}
+
+/* Cover photo field. */
+.adm-page-cover {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.adm-page-cover__frame {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--adm-radius);
+    background: repeating-linear-gradient(135deg, var(--ap-ink) 0 10px, var(--ap-coal) 10px 20px);
+    clip-path: polygon(0 0, 100% 0, 100% 78%, 82% 100%, 0 100%);
+}
+
+.adm-page-cover__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.adm-page-cover__img[hidden],
+.adm-page-cover__empty[hidden],
+.adm-page-cover__fallback[hidden],
+.adm-page-cover__actions[hidden],
+.adm-page-cover [data-media-clear][hidden] {
+    display: none;
+}
+
+.adm-page-cover__empty {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 0.6rem;
+    color: var(--ap-text-muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.adm-page-cover__tri {
+    width: 2.6rem;
+    height: 2.25rem;
+    background: var(--ap-gradient-tri);
+    clip-path: var(--ap-clip-tri);
+    opacity: 0.6;
+}
+
+.adm-page-cover__fallback {
+    display: grid;
+    gap: 0.4rem;
+}
+
+/* --- Motion ------------------------------------------------------------------- */
+
+/** @anim group=ui demo=shape dur=0.5s fr="Compteur de textes qui rebondit" en="Bouncing texts counter" */
+@keyframes ap-adm-content-bump {
+    0%,
+    100% { transform: scale(1); }
+    45% { transform: scale(1.7) rotate(-12deg); }
+}
+
+/** @anim group=reveal demo=panel dur=0.35s fr="Texte d’origine qui apparaît" en="Original text appearing" */
+@keyframes ap-adm-content-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: none; }
+}

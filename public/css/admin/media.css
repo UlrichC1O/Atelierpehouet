@@ -1,0 +1,831 @@
+/* ==========================================================================
+   Ateliers Pehouet — admin: photo library, picker, photo page, gallery order
+   (docs/CMS.md §7.6). Loaded by the photo screens and by the uploader / slot
+   partials (@pushOnce 'admin-media-css'); media-picker.js adds it to pages that
+   open the picker without it. Tokens only (01-tokens.css), prefix adm-.
+   ========================================================================== */
+
+/* --- 1. Uploader extras: destination choice, result notice, retry ------------------------- */
+
+.adm-destination {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.adm-destination__legend {
+    margin-bottom: 0.6rem;
+    padding: 0;
+    color: var(--ap-white);
+    font-weight: 700;
+}
+
+.adm-destination__options {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 48em) {
+    .adm-destination__options {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.adm-destination__option {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.adm-destination__input {
+    position: absolute;
+    top: 1rem;
+    left: 0.95rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: 0;
+    accent-color: var(--ap-yellow);
+}
+
+.adm-destination__box {
+    display: grid;
+    gap: 0.15rem;
+    height: 100%;
+    padding: 0.75rem 0.9rem 0.8rem 2.6rem;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: var(--ap-radius-s);
+    background: var(--ap-ink);
+    transition: border-color var(--ap-dur-fast) ease, background-color var(--ap-dur-fast) ease, box-shadow var(--ap-dur) ease;
+}
+
+.adm-destination__option:hover .adm-destination__box {
+    border-color: var(--ap-white-32);
+}
+
+.adm-destination__input:checked + .adm-destination__box {
+    border-color: var(--ap-yellow);
+    background: color-mix(in srgb, var(--ap-yellow) 7%, var(--ap-ink));
+    box-shadow: inset 3px 0 0 var(--ap-yellow);
+}
+
+.adm-destination__input:focus-visible + .adm-destination__box {
+    outline: 2px solid var(--ap-focus);
+    outline-offset: 2px;
+}
+
+.adm-destination__title {
+    color: var(--ap-white);
+    font-weight: 700;
+}
+
+.adm-destination__hint {
+    color: var(--ap-text-muted);
+    font-size: 0.8rem;
+}
+
+.adm-destination__service {
+    max-width: 28rem;
+}
+
+/* The service select only matters for "Pour un service" (always shown where :has() is unknown). */
+@supports selector(:has(*)) {
+    .adm-destination:not(:has(.adm-destination__option--service input:checked)) .adm-destination__service {
+        display: none;
+    }
+}
+
+.adm-dropzone__extra {
+    display: block;
+    margin-top: 0.25rem;
+}
+
+.adm-upload-notice-slot:empty {
+    display: none;
+}
+
+.adm-upload-notice {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 0.9rem;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--ap-yellow) 45%, transparent);
+    border-radius: var(--ap-radius-s);
+    background: color-mix(in srgb, var(--ap-yellow) 7%, var(--ap-ink));
+    animation: ap-adm-in 0.45s var(--ap-ease-out) both;
+}
+
+.adm-upload-notice--page {
+    border: 0;
+    padding: 0;
+    background: none;
+    animation: none;
+}
+
+.adm-upload-notice--error {
+    border-color: color-mix(in srgb, var(--ap-red-bright) 55%, transparent);
+    background: color-mix(in srgb, var(--ap-red) 10%, var(--ap-ink));
+}
+
+.adm-upload-notice__icon {
+    flex: none;
+    color: var(--ap-yellow);
+}
+
+.adm-upload-notice--error .adm-upload-notice__icon {
+    color: var(--ap-red-bright);
+}
+
+.adm-upload-notice__icon .icon,
+.adm-upload-notice__icon svg {
+    display: block;
+    width: 1.35rem;
+    height: 1.35rem;
+}
+
+.adm-upload-notice__text {
+    flex: 1 1 14rem;
+    min-width: 0;
+    color: var(--ap-white);
+    font-size: 0.92rem;
+}
+
+.adm-upload-notice__close {
+    margin-left: auto;
+}
+
+/* Upload rows: a "Réessayer" button next to the error (rows documented in admin.css). */
+.adm-uploads__item {
+    grid-template-areas:
+        "thumb name status"
+        "thumb bar bar"
+        "thumb error retry";
+}
+
+.adm-uploads__retry {
+    grid-area: retry;
+    justify-self: end;
+}
+
+.adm-uploads__name a {
+    color: inherit;
+}
+
+/* --- 2. Library: filters, notes, grid ------------------------------------------------------ */
+
+.adm-library {
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.adm-media-filters {
+    display: grid;
+    gap: 0.9rem;
+    padding: 0.9rem 1rem 1rem;
+    border: 1px solid var(--adm-line);
+    border-radius: var(--adm-radius);
+    background: var(--adm-panel);
+}
+
+.adm-media-filters__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-media-filters__fields {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: end;
+}
+
+.adm-media-filters__search .adm-search {
+    width: 100%;
+}
+
+@media (min-width: 48em) {
+    .adm-media-filters__fields {
+        grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr) auto;
+    }
+
+    .adm-media-filters__fields:not(:has(.adm-media-filters__service)) {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+}
+
+.adm-media-filters__submit {
+    justify-self: start;
+}
+
+.adm-library__note {
+    padding: 0.6rem 0.85rem;
+    border-left: 3px solid var(--ap-amber);
+    background: var(--ap-white-04);
+    color: var(--ap-text-soft);
+    font-size: 0.88rem;
+}
+
+.adm-library__count {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.9rem;
+    color: var(--ap-text-muted);
+    font-size: 0.85rem;
+}
+
+.adm-library__reset {
+    font-weight: 600;
+}
+
+.adm-library__pages:empty {
+    display: none;
+}
+
+/* Cards: the picker's image is a button (choose), the library's a link (edit). */
+button.adm-media-card__media {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.adm-media-card__type {
+    position: absolute;
+    top: 0.45rem;
+    left: 0.45rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--ap-radius-xs);
+    background: var(--ap-black-70);
+    color: var(--ap-white);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.adm-media-card--nowhere .adm-media-card__img {
+    opacity: 0.72;
+}
+
+.adm-media-card--nowhere:hover .adm-media-card__img {
+    opacity: 1;
+}
+
+.adm-media-card__use {
+    display: inline-flex;
+}
+
+.adm-badge--nowhere {
+    border-color: color-mix(in srgb, var(--ap-amber) 60%, transparent);
+    color: var(--ap-amber);
+}
+
+/* Long badges ("Visible nulle part sur le site") wrap inside a narrow card. */
+.adm-media-card__badges .adm-badge {
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.3;
+}
+
+.adm-media-card__badges .adm-badge--nowhere {
+    border-radius: var(--ap-radius-xs);
+}
+
+/* The no-JS spot chooser (?slot=…): what the owner is choosing for. */
+.adm-slot-mode {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem 1rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--ap-blue-bright) 50%, transparent);
+    border-radius: var(--adm-radius);
+    background: color-mix(in srgb, var(--ap-blue) 14%, var(--ap-ink));
+}
+
+.adm-slot-mode__mark {
+    flex: none;
+    width: 2rem;
+    height: 1.75rem;
+    background: var(--ap-gradient-tri);
+    clip-path: var(--ap-clip-tri);
+}
+
+.adm-slot-mode__text {
+    flex: 1 1 18rem;
+    min-width: 0;
+    color: var(--ap-text-soft);
+    font-size: 0.9rem;
+}
+
+.adm-slot-mode__title {
+    color: var(--ap-white);
+    font-weight: 700;
+}
+
+/* --- 3. Picker dialog (media-picker.js) ---------------------------------------------------- */
+
+.adm-picker-dialog .adm-dialog__body {
+    padding: 1rem;
+}
+
+.adm-picker {
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.adm-picker__upload {
+    border: 1px dashed var(--adm-line-strong);
+    border-radius: var(--adm-radius);
+    background: var(--ap-ink);
+}
+
+.adm-picker__upload-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 0.9rem;
+    color: var(--ap-white);
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+}
+
+.adm-picker__upload-toggle::-webkit-details-marker {
+    display: none;
+}
+
+.adm-picker__upload-toggle::after {
+    content: "";
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-left: auto;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    rotate: 45deg;
+    transition: rotate var(--ap-dur-fast) ease;
+}
+
+.adm-picker__upload[open] .adm-picker__upload-toggle::after {
+    rotate: 225deg;
+}
+
+.adm-picker__upload-toggle .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    color: var(--ap-yellow);
+}
+
+.adm-picker__upload-body {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0 0.9rem 0.9rem;
+}
+
+/* Compact filters in the dialog: the labels stay for screen readers, the placeholders say the rest. */
+.adm-picker .adm-media-filters {
+    gap: 0.6rem;
+    padding: 0.65rem;
+}
+
+.adm-picker .adm-media-filters .field__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.adm-picker .adm-media-filters__fields {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem;
+}
+
+.adm-picker .adm-media-filters__service {
+    grid-column: 1 / -1;
+}
+
+/* Phones: the search button keeps its icon (its label stays for screen readers). */
+@media (max-width: 47.99em) {
+    .adm-picker .adm-media-filters__submit .btn__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+}
+
+@media (min-width: 48em) {
+    .adm-picker .adm-media-filters__fields {
+        grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr) auto;
+    }
+
+    .adm-picker .adm-media-filters__service {
+        grid-column: auto;
+    }
+}
+
+.adm-picker .adm-media-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
+}
+
+@media (min-width: 48em) {
+    .adm-picker .adm-media-grid {
+        grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    }
+}
+
+/* Loading / error states written by media-picker.js. */
+.adm-picker-state {
+    display: grid;
+    justify-items: center;
+    gap: 0.8rem;
+    padding: 2.5rem 1rem;
+    color: var(--ap-text-soft);
+    text-align: center;
+}
+
+.adm-picker-state .adm-progress {
+    max-width: 16rem;
+}
+
+.adm-picker-dialog [aria-busy="true"] .adm-media-grid {
+    opacity: 0.55;
+    transition: opacity var(--ap-dur-fast) ease;
+}
+
+/* --- 4. Photo page: focal point, crops, usage, details ------------------------------------- */
+
+/* The heading is the photo's file name: long names without spaces must wrap on phones. */
+.adm-media-head .adm-page-head__title {
+    overflow-wrap: anywhere;
+}
+
+.adm-media-edit__grid {
+    display: grid;
+    gap: var(--adm-gap);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+}
+
+@media (min-width: 64em) {
+    .adm-media-edit__grid {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+
+    .adm-media-edit__visual {
+        position: sticky;
+        top: calc(var(--adm-topbar-h) + 1rem);
+    }
+}
+
+.adm-media-edit__focal {
+    max-height: 70vh;
+    margin-inline: auto;
+}
+
+.adm-media-edit__focal img {
+    height: 100%;
+    object-fit: contain;
+}
+
+html.js .adm-media-edit__focal:hover .adm-focal__dot {
+    border-color: var(--ap-yellow);
+}
+
+/* FR | EN fields of the same row start together (the grid would stretch the shorter one). */
+.adm-media-edit .adm-pair {
+    align-items: start;
+}
+
+.adm-media-edit__help {
+    margin-top: 0.6rem;
+}
+
+.adm-media-edit__focal-fields {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 0.75rem;
+    margin-top: 0.9rem;
+}
+
+.adm-media-edit__focal-fields .field {
+    flex: 1 1 8rem;
+    max-width: 11rem;
+}
+
+.adm-media-edit__center {
+    margin-bottom: 0.15rem;
+}
+
+.adm-media-edit__more {
+    display: grid;
+    gap: var(--adm-gap);
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: var(--adm-gap);
+}
+
+@media (min-width: 64em) {
+    .adm-media-edit__more {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+    }
+}
+
+.adm-crops {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1.1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--adm-line);
+}
+
+.adm-crops__title {
+    color: var(--ap-text-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.adm-crops__list {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.15fr;
+    align-items: end;
+    gap: 0.6rem;
+}
+
+.adm-crops__item {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+    margin: 0;
+}
+
+.adm-crops__frame {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: var(--ap-radius-xs);
+    background: var(--ap-graphite);
+}
+
+.adm-crops__frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: object-position var(--ap-dur-fast) ease;
+}
+
+.adm-crops__item figcaption {
+    overflow: hidden;
+    color: var(--ap-text-muted);
+    font-size: 0.72rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-usage__list {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-usage__item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.3rem 1rem;
+    padding: 0.55rem 0.75rem 0.55rem 0.9rem;
+    border: 1px solid var(--adm-line);
+    border-left: 3px solid var(--ap-yellow);
+    border-radius: var(--ap-radius-xs);
+    background: var(--ap-white-04);
+}
+
+.adm-usage__item--service {
+    border-left-color: var(--ap-red-bright);
+}
+
+.adm-usage__item--slot {
+    border-left-color: var(--ap-blue-bright);
+}
+
+.adm-usage__item--cover,
+.adm-usage__item--artists {
+    border-left-color: var(--ap-orange);
+}
+
+.adm-usage__label {
+    min-width: 0;
+    color: var(--ap-white);
+    font-size: 0.92rem;
+    overflow-wrap: anywhere;
+}
+
+.adm-usage__links {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.adm-usage__none {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ap-text-soft);
+}
+
+.adm-media-replace .adm-card__body,
+.adm-media-danger .adm-card__body {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.adm-media-replace__note {
+    padding-left: 0.75rem;
+    border-left: 2px dashed var(--ap-white-16);
+}
+
+.adm-media-details__url {
+    overflow-wrap: anywhere;
+    font-size: 0.85rem;
+}
+
+.adm-media-danger__list {
+    display: grid;
+    gap: 0.25rem;
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--ap-text-soft);
+}
+
+.adm-media-danger__list li::marker {
+    color: var(--ap-red-bright);
+}
+
+/* --- 5. Gallery order ------------------------------------------------------------------------ */
+
+.adm-gallery__head {
+    display: grid;
+    gap: 0.3rem;
+}
+
+.adm-gallery__title {
+    font-family: var(--ap-font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ap-white);
+}
+
+.adm-gallery__grid {
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr));
+}
+
+@media (min-width: 48em) {
+    .adm-gallery__grid {
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    }
+}
+
+.adm-gallery__item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.adm-gallery__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--ap-graphite);
+}
+
+.adm-gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.adm-gallery__number {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.4rem;
+    min-width: 0;
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--ap-radius-xs);
+    background: var(--ap-black-70);
+    color: var(--ap-white);
+}
+
+.adm-gallery__body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+    padding: 0.6rem 0.7rem 0.2rem;
+}
+
+.adm-gallery__name {
+    flex: 1 1 100%;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--ap-white);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-gallery__tools {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.15rem 0.45rem 0.1rem;
+}
+
+.adm-gallery__tools .adm-handle {
+    width: 2rem;
+    height: 2rem;
+}
+
+.adm-gallery__tools .adm-sortable__moves {
+    margin-left: 0;
+}
+
+.adm-gallery__edit {
+    margin-left: auto;
+}
+
+.adm-gallery__foot {
+    display: flex;
+    margin-top: auto;
+    padding: 0.1rem 0.7rem 0.6rem;
+    border-top: 1px solid var(--adm-line);
+}
+
+.adm-gallery__remove {
+    --btn-fg: var(--ap-text-soft);
+    padding-inline: 0;
+    font-size: 0.78rem;
+}
+
+.adm-gallery__remove:hover {
+    --btn-fg: var(--ap-red-bright);
+}
+
+.adm-gallery__tools [aria-disabled="true"] {
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.adm-gallery__save {
+    margin-top: 1rem;
+}
+
+.adm-gallery__note {
+    color: var(--ap-text-muted);
+    font-size: 0.85rem;
+}
+
+/* --- 6. Forced colours ------------------------------------------------------------------------- */
+
+@media (forced-colors: active) {
+    .adm-destination__input:checked + .adm-destination__box {
+        border: 2px solid Highlight;
+    }
+
+    .adm-usage__item {
+        border-left-width: 3px;
+    }
+}

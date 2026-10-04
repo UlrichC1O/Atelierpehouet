@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Artists\ArtistDirectory;
+use App\Cms\Cms;
 use App\Support\ServiceCatalog;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 /**
  * sitemap.xml (every page and service in every language, absolute URLs, hreflang
- * alternates) and robots.txt.
+ * alternates — the free pages and artist pages of the CMS included) and robots.txt.
+ *
+ * While the CMS cannot read its data at all, the sitemap answers 503 (route middleware
+ * "cms.data:always", docs/CMS.md §13 A3) rather than a list without the CMS pages.
  */
 final class SitemapController extends Controller
 {
@@ -27,7 +35,7 @@ final class SitemapController extends Controller
         'contact' => ['views/pages/contact.blade.php', 'lang/fr/contact.php'],
     ];
 
-    public function index(ServiceCatalog $catalog): Response
+    public function index(ServiceCatalog $catalog, Cms $cms): Response
     {
         $pages = [];
 
@@ -35,12 +43,23 @@ final class SitemapController extends Controller
             $pages[route($route)] = $this->lastModified(array_map($this->path(...), $files));
         }
 
+        // Visible services, those created in the CMS included (no content file: path() is null).
         foreach ($catalog->slugs() as $slug) {
             $pages[route('services.show', ['slug' => $slug])] = $this->lastModified([
                 $catalog->path($slug),
                 resource_path('views/services/scenes/'.$slug.'.blade.php'),
                 resource_path('views/services/show.blade.php'),
             ]);
+        }
+
+        // Published free pages (docs/CMS.md §7.4).
+        foreach ($cms->pages() as $page) {
+            $pages[route('pages.custom', ['slug' => $page['slug']])] = $this->isoDate($page['updated_at'] ?? null);
+        }
+
+        // Artist pages (docs/ARTISTS.md), once that module exists: URL ⇒ unix time or null.
+        foreach ($this->artistEntries() as $url => $time) {
+            $pages[$url] = is_int($time) ? date(DATE_ATOM, $time) : null;
         }
 
         // One entry per language version, each listing all of them (hreflang).
@@ -100,6 +119,47 @@ final class SitemapController extends Controller
         return str_starts_with($relative, 'lang/')
             ? lang_path(substr($relative, 5))
             : resource_path($relative);
+    }
+
+    /**
+     * Sitemap entries of the artist pages (App\Artists\ArtistDirectory, docs/ARTISTS.md): none while
+     * that module is not installed or cannot answer.
+     *
+     * @return array<string, int|null> absolute URL ⇒ unix time of the last change, or null
+     */
+    private function artistEntries(): array
+    {
+        if (! class_exists(ArtistDirectory::class)) {
+            return [];
+        }
+
+        try {
+            $entries = app(ArtistDirectory::class)->sitemapEntries();
+        } catch (Throwable $e) {
+            Log::warning('Sitemap without the artist pages: '.$e->getMessage());
+
+            return [];
+        }
+
+        return array_filter(
+            is_array($entries) ? $entries : [],
+            fn (mixed $time, mixed $url): bool => is_string($url) && ($time === null || is_int($time)),
+            ARRAY_FILTER_USE_BOTH,
+        );
+    }
+
+    /** An ISO 8601 date of the CMS as a W3C date, or null. */
+    private function isoDate(?string $date): ?string
+    {
+        if ($date === null || $date === '') {
+            return null;
+        }
+
+        try {
+            return Carbon::parse($date)->format(DATE_ATOM);
+        } catch (Throwable) {
+            return null;
+        }
     }
 
     /**

@@ -86,6 +86,8 @@ Route::middleware(['auth', 'auth.session'])->group(function (): void {
 
         Route::get('/galerie', [GalleryController::class, 'index'])->name('gallery.index');
         Route::post('/galerie/ordre', [GalleryController::class, 'reorder'])->name('gallery.reorder');
+        // Add a photo to the gallery or take it out (in_gallery 0|1) — admin-media, phase 2.
+        Route::post('/galerie/{media}', [GalleryController::class, 'toggle'])->whereNumber('media')->name('gallery.toggle');
 
         Route::post('/emplacements', [SlotController::class, 'update'])->name('slots.update');
 

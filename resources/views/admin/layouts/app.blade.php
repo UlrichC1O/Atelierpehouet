@@ -80,7 +80,8 @@
     }
 @endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', $locale) }}" class="no-js">
+{{-- The admin is designed dark: the public light theme (docs/THEME.md) never applies here (docs/CMS.md §13 G35). --}}
+<html lang="{{ str_replace('_', '-', $locale) }}" class="no-js" data-theme="dark" data-theme-lock>
 <head>
     @include('admin.partials.head', ['pageTitle' => $pageTitle])
 </head>

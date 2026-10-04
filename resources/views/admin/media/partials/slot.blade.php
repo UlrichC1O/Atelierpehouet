@@ -8,6 +8,7 @@
     a[data-media-picker][data-slot] opens the picker (media-picker.js fills that form's media_id and
     submits) and, without JavaScript, leads to admin.media.index?slot=…&redirect=… ("Utiliser ici").
     "Retirer" is a second form posting an empty media_id.
+    The partial pushes js/admin/media-picker.js and js/admin/uploader.js once per page (admin-media).
 --}}
 @php
     $slotKey = (string) $slot;
@@ -20,18 +21,14 @@
     $libraryUrl = route('admin.media.index', ['slot' => $slotKey, 'redirect' => $redirect]);
 
     // "Voir sur la page" (docs/CMS.md §13 F31): the public page showing this spot, at #spot-{slot-with-dashes}.
-    $viewUrl = null;
-    if ($hasMedia) {
-        $anchor = '#spot-'.str_replace('.', '-', $slotKey);
-        if (preg_match('/^service\.([a-z0-9-]+)\.cover$/', $slotKey, $serviceMatch)) {
-            $viewUrl = \Illuminate\Support\Facades\Route::has('services.show') ? route('services.show', $serviceMatch[1]).$anchor : null;
-        } elseif ($slotKey !== 'site.share') {
-            $slotPage = ((array) config('cms.slots', []))[$slotKey]['page'] ?? null;
-            $pageRoute = is_string($slotPage) ? (((array) config('cms.editable_groups', []))[$slotPage] ?? null) : null;
-            $viewUrl = is_string($pageRoute) && \Illuminate\Support\Facades\Route::has($pageRoute) ? route($pageRoute).$anchor : null;
-        }
-    }
+    $viewUrl = $hasMedia ? \App\Http\Controllers\Admin\SlotController::pageUrl($slotKey) : null;
 @endphp
+@pushOnce('scripts', 'admin-uploader-js')
+    <script src="{{ ap_asset('js/admin/uploader.js') }}" defer></script>
+@endPushOnce
+@pushOnce('scripts', 'admin-media-picker-js')
+    <script src="{{ ap_asset('js/admin/media-picker.js') }}" defer></script>
+@endPushOnce
 <div class="adm-slot" id="{{ $slotId }}" data-slot-card data-slot-key="{{ $slotKey }}">
     <div class="adm-slot__frame" style="aspect-ratio: {{ str_replace('/', ' / ', $ratio) }}">
         @if ($hasMedia)
@@ -68,7 +65,8 @@
                 <input type="hidden" name="slot" value="{{ $slotKey }}">
                 <input type="hidden" name="media_id" value="{{ $hasMedia ? $media->id : '' }}">
                 <input type="hidden" name="redirect" value="{{ $redirect }}">
-                <a class="btn btn--sm btn--secondary" href="{{ $libraryUrl }}" data-media-picker data-slot="{{ $slotKey }}">
+                <a class="btn btn--sm btn--secondary" href="{{ $libraryUrl }}" data-media-picker data-slot="{{ $slotKey }}"
+                   data-picker-i18n="{{ json_encode(['title' => __('admin_media.picker.title'), 'loading' => __('admin_media.picker.loading'), 'failed' => __('admin_media.picker.failed'), 'retry' => __('admin_media.picker.retry')], JSON_UNESCAPED_UNICODE) }}">
                     <x-admin.icon name="image" />
                     <span class="btn__label">{{ $hasMedia ? __('admin.slot.change') : __('admin.slot.choose') }}</span>
                 </a>

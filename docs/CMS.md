@@ -498,6 +498,12 @@ cookie session dies only with a password change (reset included) or "Se déconne
   `class_exists`.
 
 ### 7.7 Public photos (public-photos)
+
+> **Status (orchestrator-maintained): IN PROGRESS — being built by the artists session (atelierpehouet-98) since
+> 2026-10-03 14:00 UTC.** Until this line says **DONE**, nobody else edits the files of the public-photos row (§10).
+> The CMS phase-2 agent "public-photos" is therefore a **review pass**: if the status is not DONE when it starts, it
+> makes NO edits and only reports its findings (the orchestrator relays them); once DONE, it reviews the files against
+> this section and §13 F31/A2/A3, fixes real defects with minimal edits and reports them. It never rebuilds them.
 - Components: `<x-photo :media sizes="…" :lazy="true" :alt="null" />` (`<img>` with `src` (960 variant),
   `srcset`, `sizes`, `width`/`height`, `alt`, `loading`, `decoding="async"`, `style="object-position: …"`);
   `<x-photo-frame :media :ratio="'4/3'" variant="tri|seam|mondrian" accent="red" :caption="true" lightbox="group" />`
@@ -556,7 +562,7 @@ NEW files listed below; integration into existing templates is done by that sess
 | **admin-content** (phase 2) | `Admin/{TextController,PageController}.php`, `app/Http/Controllers/CustomPageController.php`, `SitemapController@index`, views `admin/texts/**`, `admin/pages/**`, `pages/custom.blade.php`, `partials/footer-pages.blade.php`, `public/css/admin/content.css`, `public/css/pages/custom.css`, `public/js/admin/text-editor.js`, `lang/{fr,en}/{admin_content,pages}.php`, tests `tests/Feature/Admin/{Text,Page}Test.php`, `tests/Feature/CustomPageTest.php` |
 | **admin-services** (phase 2) | `Admin/ServiceController.php`, public `ServiceController@show` (`$preview`), `app/Support/Icons.php`, views `admin/services/**`, `services/partials/generic-scene.blade.php`, `public/css/admin/services.css`, `public/css/pages/service-generic.css`, `public/js/admin/service-editor.js`, `lang/{fr,en}/admin_services.php`, tests `tests/Feature/Admin/ServiceTest.php` |
 | **admin-media** (phase 2) | `Admin/{MediaController,GalleryController,SlotController}.php`, views `admin/media/**`, `admin/gallery/**`, `public/css/admin/media.css`, `public/js/admin/{uploader,media-picker,focal-point}.js`, `lang/{fr,en}/admin_media.php`, tests `tests/Feature/Admin/{Media,Gallery,Slot}Test.php` |
-| **public-photos** (phase 2) | `resources/views/components/{photo,photo-frame,photo-mosaic}.blade.php`, `partials/photo-spot.blade.php`, `pages/partials/{gallery,home,community}-photos.blade.php`, `services/partials/{cover,realisations}.blade.php`, `public/css/08-photos.css`, `lang/{fr,en}/photos.php`, `tests/Feature/PublicPhotosTest.php` |
+| **public-photos** (phase 2) — **BUILT BY THE ARTISTS SESSION (atelierpehouet-98), see §7.7 status** | `resources/views/components/{photo,photo-frame,photo-mosaic}.blade.php`, `partials/photo-spot.blade.php`, `pages/partials/{gallery,home,community}-photos.blade.php`, `services/partials/{cover,realisations}.blade.php`, `public/css/08-photos.css`, `lang/{fr,en}/photos.php`, `tests/Feature/PublicPhotosTest.php` — the CMS "public-photos" agent only REVIEWS these files (see §7.7 status) |
 
 **A third session ("artists", contract `docs/ARTISTS.md`) builds artist pages on top of this CMS with NEW files
 only**: `database/migrations/2026_10_03_100000_create_artists_tables.php`, `app/Models/{Artist,Artwork,Exhibition}.php`,
@@ -776,6 +782,16 @@ Owner tags: **[core-h]** = phase-1.5 "core hardening" agent (core's files + `Con
     agent's in-progress keyframes is not yours to fix [orch re-runs it after each phase].
 34. Contract intro exclusions (not editable): the 257 animation names, the generated artwork titles, form validation
     messages, the brand name (`config('atelier.name')`); built-in pages can't be hidden.
+
+**G. Light theme (added 2026-10-03)**
+35. The public site gets a light theme (`html[data-theme="light"]`, contract `docs/THEME.md`, built by the artists
+    session). Every PUBLIC stylesheet or partial the CMS writes (`pages/custom.css`, `09-notices.css`,
+    `pages/service-generic.css`, the announcement / preview-banner / admin-bar / footer-pages partials) styles surfaces
+    and text with the semantic tokens of `docs/THEME.md` (`--ap-bg`, `--ap-surface`, `--ap-text`, `--ap-text-soft`,
+    `--ap-border`, `--ap-fg-NN`) — never raw `--ap-black`/`--ap-white` for backgrounds or text — so both themes work;
+    check both themes in screenshots. **The admin stays dark**: both admin layouts render
+    `<html … data-theme="dark" data-theme-lock>` (done) and the public theme script must never change `data-theme`
+    when `data-theme-lock` is present; admin CSS keeps its own palette.
 
 ## 11. Verification
 ```bash
